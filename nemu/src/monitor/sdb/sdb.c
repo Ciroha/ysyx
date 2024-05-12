@@ -56,7 +56,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-  int steps = 0; //变量定义
+  int steps = 0; //变量定义,test
   if (args == NULL)
     steps = 1; //如果没有接参数，就将步数设置为1
   else
