@@ -56,7 +56,12 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-  cpu_exec(1);
+  int steps = 0; //变量定义
+  if (args == NULL)
+    steps = 1; //如果没有接参数，就将步数设置为1
+  else
+	steps = atoi(args); //将char型转换成int 
+  cpu_exec(steps);
   return 0;
 }
 
