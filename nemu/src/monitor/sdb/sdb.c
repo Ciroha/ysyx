@@ -23,6 +23,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+word_t paddr_read(paddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -77,6 +78,25 @@ static int cmd_info(char *args) {
 	return 0;
 }
 
+static int cmd_x(char *args) {
+	if (args == NULL)
+		printf("No args.\n");
+	else {
+		char *n = strtok(args, " ");
+		char *addr = strtok(NULL, " "); //zi fu fen ge
+		int len = 0;
+		paddr_t baseaddr = 0;
+		sscanf(n, "%d", &len);
+		sscanf(addr, "%x", &baseaddr);
+		for (int i = 0; i < len ;i++)
+		{
+			printf("%x\n", paddr_read(baseaddr,4));
+			baseaddr = baseaddr + 4;
+		}
+		}
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -87,6 +107,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "single step", cmd_si },
   { "info", "program information", cmd_info},
+  { "x", "scan memory", cmd_x},
   /* TODO: Add more commands */
 
 };
