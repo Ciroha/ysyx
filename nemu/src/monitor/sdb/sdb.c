@@ -73,7 +73,7 @@ static int cmd_info(char *args) {
 //	else if (strcmp(args, "w") == 0)
 //		sda_watchpoint_display();
 	else
-		printf("Usage:info r or info w");
+		printf("Usage:info r or info w!\n");
 	return 0;
 }
 
