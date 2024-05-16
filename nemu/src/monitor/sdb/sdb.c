@@ -65,6 +65,16 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+static int cmd_info(char *args) {
+	if (args == NULL)
+		printf("No args.\n");
+	else if (strcmp(args, "r") == 0)
+		isa_reg_display();
+//	else if (strcmp(args, "w") == 0)
+//		sda_watchpoint_display();
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -74,6 +84,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "single step", cmd_si },
+  { "info", "program information", cmd_info},
   /* TODO: Add more commands */
 
 };
