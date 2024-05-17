@@ -115,6 +115,15 @@ static bool make_token(char *e) {
 			case '*':
 				tokens[nr_token++].type = '*';
 				break;
+			case '/':
+				tokens[nr_token++].type = '/';
+				break;
+			case TK_LEFT:
+				tokens[nr_token++].type = TK_LEFT;
+				break;
+			case TK_RIGHT:
+				tokens[nr_token++].type = TK_RIGHT;
+				break;
 			case TK_NOTYPE:
 				tokens[nr_token++].type = TK_NOTYPE;
 				break;
