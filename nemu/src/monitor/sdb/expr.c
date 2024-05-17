@@ -21,7 +21,11 @@
 #include <regex.h>
 
 enum { //枚举类型
-  TK_NOTYPE = 256, TK_EQ, TK_NUMBER, TK_LEFT, TK_RIGHT,
+  TK_NOTYPE = 256, 
+  TK_EQ, 
+  TK_NUMBER,
+  TK_LEFT, 
+  TK_RIGHT,
 
   /* TODO: Add more token types */
 
@@ -102,7 +106,21 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
+			case '+':
+				tokens[nr_token++].type = '+';
+				break;
+			case '-':
+				tokens[nr_token++].type = '-';
+				break;
+			case '*':
+				tokens[nr_token++].type = '*';
+				break;
+			
+			case TK_NUMBER:
+				tokens[nr_token++].type = TK_NUMBER;
+				strncpy(tokens[nr_token].str, substr_start, substr_len);
+				break;
+			default: TODO();
         }
 
         break;
