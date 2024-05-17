@@ -115,7 +115,9 @@ static bool make_token(char *e) {
 			case '*':
 				tokens[nr_token++].type = '*';
 				break;
-			
+			case TK_NOTYPE:
+				tokens[nr_token++].type = TK_NOTYPE;
+				break;
 			case TK_NUMBER:
 				tokens[nr_token++].type = TK_NUMBER;
 				strncpy(tokens[nr_token].str, substr_start, substr_len);
