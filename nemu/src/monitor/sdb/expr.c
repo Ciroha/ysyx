@@ -20,8 +20,8 @@
  */
 #include <regex.h>
 
-enum {
-  TK_NOTYPE = 256, TK_EQ,
+enum { //枚举类型
+  TK_NOTYPE = 256, TK_EQ, TK_NUMBER, TK_LEFT, TK_RIGHT,
 
   /* TODO: Add more token types */
 
@@ -37,8 +37,15 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"\\+", '+'},         // plus 用到了转义字符，单个反斜杠将被视为转义字符的开始
   {"==", TK_EQ},        // equal
+	{"-", '-'},
+	{"\\b[0-9]+\\b", TK_NUMBER},
+	{"\\*", '*'},		//乘法操作
+	{"/", '/'},			//除法操作
+	{"\\(", TK_LEFT},	//左括号
+	{"\\)", TK_RIGHT},	//右括号
+	
 };
 
 #define NR_REGEX ARRLEN(rules)
