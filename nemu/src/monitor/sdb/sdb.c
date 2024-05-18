@@ -99,7 +99,8 @@ static int cmd_x(char *args) {
 
 static int cmd_p(char *args) {
 	bool success;
-	expr(args, &success);
+	//expr(args, &success);
+	printf("%d\n", expr(args, &success));
 	return 0;
 }
 
