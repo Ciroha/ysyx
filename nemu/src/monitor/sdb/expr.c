@@ -132,7 +132,7 @@ static bool make_token(char *e) {
 			case TK_NUMBER:
 				tokens[nr_token].type = TK_NUMBER;
 				strncpy(tokens[nr_token].str, substr_start, substr_len);
-				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+				//Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
 				nr_token++;
 				break;
 			default: TODO();
@@ -160,7 +160,7 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  printf("nr_token:%d\n", nr_token);
+  //printf("nr_token:%d\n", nr_token);
 
   return eval(0, nr_token-1);
 }
@@ -203,7 +203,7 @@ uint32_t eval(int p, int q) {
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		if (tokens[i].type == TK_NUMBER) {
-			printf("number detected:%s\n", tokens[i].str);
+			//printf("number detected:%s\n", tokens[i].str);
 			continue;
 		}
 		
