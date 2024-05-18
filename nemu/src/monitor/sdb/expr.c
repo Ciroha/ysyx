@@ -166,6 +166,7 @@ word_t expr(char *e, bool *success) {
 }
 
 bool check_parentheses(int p, int q) {
+	Log("check_parentheses");
 	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
 		int cnt = 0;
 		for (int i = p; i < q; i++) {
@@ -199,6 +200,7 @@ if (p > q) {
     return eval(p + 1, q - 1);
   }
   else {
+	  Log("in part 4");
 	  int op = -1;
 	  int op1 = -1;
 	  int op2 = -1;
