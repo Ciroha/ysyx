@@ -42,7 +42,7 @@ static void gen(char c) {
 
 static void gen_num() {
 	int num = choose(100);
-	sprintf(buf[index_buf++], "%s", num);
+	sprintf(&buf[index_buf++], "%d", num);
 }
 
 static void gen_rand_op() {
