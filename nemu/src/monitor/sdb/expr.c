@@ -159,3 +159,75 @@ word_t expr(char *e, bool *success) {
 
   return 0;
 }
+
+bool check_parentheses(int p, int q) {
+	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
+		int cnt = 0;
+		for (int i = p; i < q; i++) {
+			if (tokens[i].type == TK_LEFT) cnt++;
+			else if (tokens[i].type == TK_RIGHT) cnt--;
+		}
+		if (cnt == 0) return true;
+	}
+	return false;
+}
+
+uint32_t eval(int p, int q) {
+	if (p > q) {
+    /* Bad expression */
+	assert(0); //报错
+	return -1;
+  }
+  else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+	return atoi(tokens[p].str);
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+	  int op = -1;
+	  int op1 = -1;
+	  int op2 = -1;
+	  int flag = 0; //指示当前是否在括号内
+    for (int i = p; i <= q; i++) {
+		if (tokens[i].type == TK_NUMBER) {
+			continue;
+		}
+		
+		if (tokens[i].type == TK_LEFT) {
+			flag++;
+		}else if (tokens[i].type == TK_RIGHT) {
+			flag--; //在括号外
+		}
+
+		if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
+			op1 = (op1 > i) ? op1 : i;
+		}
+		
+		if (!flag && (tokens[i].type == '*' || tokens[i].type == '/')) { //在括号外且运算符为乘除
+			op2 = (op2 > i) ? op2 : i;
+		}
+
+		op = (op1 == -1) ? op2 : op1;
+
+	}
+    uint32_t val1 = eval(p, op - 1);
+    uint32_t val2 = eval(op + 1, q);
+	int op_type = tokens[op].type;
+
+    switch (op_type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
+    }
+  }
+}
