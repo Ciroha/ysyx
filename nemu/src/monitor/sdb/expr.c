@@ -162,7 +162,7 @@ word_t expr(char *e, bool *success) {
   //TODO();
   //printf("nr_token:%d\n", nr_token);
 	Log("nr_token = %d", nr_token);
-  return eval(0, nr_token-1);
+  return eval(0, 4);
 }
 
 bool check_parentheses(int p, int q) {
