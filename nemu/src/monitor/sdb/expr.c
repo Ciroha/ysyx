@@ -172,13 +172,15 @@ bool check_parentheses(int p, int q) {
 		for (int i = p; i <= q; i++) {
 			if (tokens[i].type == TK_LEFT) cnt++;
 			else if (tokens[i].type == TK_RIGHT) cnt--;
+
+			if (cnt < 0) return false;
 		}
 		if (cnt == 0) return true;
 	}
 	return false;
 }
 
-uint32_t eval(int p, int q) {
+uint32_t eval(int p, int q){
 if (p > q) {
     /* Bad expression */
 	Log("p=%d,q=%d", p, q);
