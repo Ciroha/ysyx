@@ -169,10 +169,10 @@ bool check_parentheses(int p, int q) {
 	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
 		Log("p=%d,q=%d", p, q);
 		int cnt = 0;
-		for (int i = p+1; i < q; i++) {
+		for (int i = p+1; i < q; i++) { //修改完成
 			if (tokens[i].type == TK_LEFT) cnt++;
-			else if (tokens[i].type == TK_RIGHT) cnt--;
-			Log("cnt = %d", cnt);
+			else if (tokens[i].type == TK_RIGHT) cnt--; //如果出现先有右括号，报错
+			//Log("cnt = %d", cnt);
 			if (cnt < 0) return false;
 		}
 		if (cnt == 0) return true;
