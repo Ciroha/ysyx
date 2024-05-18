@@ -130,9 +130,10 @@ static bool make_token(char *e) {
 				tokens[nr_token++].type = TK_NOTYPE;
 				break;
 			case TK_NUMBER:
-				tokens[nr_token++].type = TK_NUMBER;
+				tokens[nr_token].type = TK_NUMBER;
 				strncpy(tokens[nr_token].str, substr_start, substr_len);
 				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+				nr_token++;
 				break;
 			default: TODO();
         }
