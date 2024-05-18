@@ -178,9 +178,9 @@ bool check_parentheses(int p, int q) {
 }
 
 uint32_t eval(int p, int q) {
-	if (p > q) {
+if (p > q) {
     /* Bad expression */
-	assert(0); //报错
+	//assert(0); //报错
 	return -1;
   }
   else if (p == q) {
