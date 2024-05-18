@@ -20,6 +20,8 @@
  */
 #include <regex.h>
 
+uint32_t eval(int p, int q);
+
 enum { //枚举类型
   TK_NOTYPE = 256, 
   TK_EQ, 
@@ -157,7 +159,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
-  return 0;
+  return eval(0, nr_token-1);
 }
 
 bool check_parentheses(int p, int q) {
