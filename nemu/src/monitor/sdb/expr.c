@@ -24,10 +24,10 @@ uint32_t eval(int p, int q);
 
 enum { //枚举类型
   TK_NOTYPE = 256, 
-  TK_EQ, 
-  TK_NUMBER,
-  TK_LEFT, 
-  TK_RIGHT,
+  TK_EQ = 1, 
+  TK_NUMBER = 2,
+  TK_LEFT = 3, 
+  TK_RIGHT = 4,
 
   /* TODO: Add more token types */
 
