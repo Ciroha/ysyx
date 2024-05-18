@@ -201,7 +201,7 @@ uint32_t eval(int p, int q) {
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		if (tokens[i].type == TK_NUMBER) {
-			printf("number detected!\n");
+			printf("number detected:%d\n", atoi(tokens[i].str));
 			continue;
 		}
 		
