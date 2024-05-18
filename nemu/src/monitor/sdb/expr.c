@@ -162,12 +162,13 @@ word_t expr(char *e, bool *success) {
   //TODO();
   //printf("nr_token:%d\n", nr_token);
 	Log("nr_token = %d", nr_token);
-  return eval(0, 4);
+  return eval(0, nr_token-1);
 }
 
 bool check_parentheses(int p, int q) {
 	Log("check_parentheses");
 	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
+		Log("p=%d,q=%d", p, q);
 		int cnt = 0;
 		for (int i = p; i < q; i++) {
 			if (tokens[i].type == TK_LEFT) cnt++;
