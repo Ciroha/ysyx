@@ -20,12 +20,14 @@
  */
 #include <regex.h>
 
+uint32_t eval(int p, int q);
+
 enum { //枚举类型
   TK_NOTYPE = 256, 
-  TK_EQ, 
-  TK_NUMBER,
-  TK_LEFT, 
-  TK_RIGHT,
+  TK_EQ = 1, 
+  TK_NUMBER = 2,
+  TK_LEFT = 3, 
+  TK_RIGHT = 4,
 
   /* TODO: Add more token types */
 
@@ -125,11 +127,12 @@ static bool make_token(char *e) {
 				tokens[nr_token++].type = TK_RIGHT;
 				break;
 			case TK_NOTYPE:
-				tokens[nr_token++].type = TK_NOTYPE;
-				break;
+				break; //不对空格进行记录
 			case TK_NUMBER:
-				tokens[nr_token++].type = TK_NUMBER;
+				tokens[nr_token].type = TK_NUMBER;
 				strncpy(tokens[nr_token].str, substr_start, substr_len);
+				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+				nr_token++;
 				break;
 			default: TODO();
         }
@@ -156,20 +159,31 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-
-  return 0;
+  //printf("nr_token:%d\n", nr_token);
+	Log("nr_token = %d", nr_token);
+  return eval(0, nr_token-1);
 }
 
 bool check_parentheses(int p, int q) {
+	Log("check_parentheses");
 	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
-		
+		Log("p=%d,q=%d", p, q);
+		int cnt = 0;
+		for (int i = p+1; i < q; i++) { //修改完成
+			if (tokens[i].type == TK_LEFT) cnt++;
+			else if (tokens[i].type == TK_RIGHT) cnt--; //如果出现先有右括号，报错
+			//Log("cnt = %d", cnt);
+			if (cnt < 0) return false;
+		}
+		if (cnt == 0) return true;
 	}
 	return false;
 }
 
-uint32_t eval(int p, int q) {
-	if (p > q) {
+uint32_t eval(int p, int q){
+if (p > q) {
     /* Bad expression */
+	Log("p=%d,q=%d", p, q);
 	assert(0); //报错
 	return -1;
   }
@@ -178,18 +192,29 @@ uint32_t eval(int p, int q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
+	return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
+	Log("parentheses detected! p = %d, q = %d", p , q);
     return eval(p + 1, q - 1);
   }
   else {
-	  int op, op1, op2 = -1;
+	  Log("in part 4");
+	  int op = -1;
+	  int op1 = -1;
+	  int op2 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
+		Log("token type = %d", tokens[i].type);
 		if (tokens[i].type == TK_NUMBER) {
+			//printf("number detected:%s\n", tokens[i].str);
+			continue;
+		}
+
+		if (tokens[i].type == TK_NOTYPE) {
 			continue;
 		}
 		
