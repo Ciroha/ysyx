@@ -207,6 +207,7 @@ if (p > q) {
 	  int op2 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
+		Log("token type = %d", tokens[i].type);
 		if (tokens[i].type == TK_NUMBER) {
 			//printf("number detected:%s\n", tokens[i].str);
 			continue;
