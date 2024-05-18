@@ -30,9 +30,33 @@ static char *code_format =
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
+static int index_buf = 0;
+
+static uint32_t choose(int n) {
+	return rand() % n;
+}
+
+static void gen(char c) {
+	buf[index_buf++] = c; //生成字符
+}
+
+static void gen_num() {
+	int num = choose(100);
+	sprintf(buf[index_buf++], "%s", num);
+}
+
+static void gen_rand_op() {
+	char op[4] = {'+', '-', '*', '/'};
+	int op_position = choose(4);
+	buf[index_buf++] = op[op_position];
+}
 
 static void gen_rand_expr() {
-  buf[0] = '\0';
+    switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
