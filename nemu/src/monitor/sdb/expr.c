@@ -169,7 +169,7 @@ bool check_parentheses(int p, int q) {
 	if (tokens[p].type == TK_LEFT && tokens[q].type == TK_RIGHT) {
 		Log("p=%d,q=%d", p, q);
 		int cnt = 0;
-		for (int i = p; i <= q; i++) {
+		for (int i = p+1; i < q; i++) {
 			if (tokens[i].type == TK_LEFT) cnt++;
 			else if (tokens[i].type == TK_RIGHT) cnt--;
 			Log("cnt = %d", cnt);
