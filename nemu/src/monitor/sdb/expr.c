@@ -211,6 +211,10 @@ if (p > q) {
 			//printf("number detected:%s\n", tokens[i].str);
 			continue;
 		}
+
+		if (tokens[i].type == TK_NOTYPE) {
+			continue;
+		}
 		
 		if (tokens[i].type == TK_LEFT) {
 			flag++;
