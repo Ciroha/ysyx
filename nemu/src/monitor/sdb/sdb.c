@@ -192,24 +192,30 @@ void expr_test() {
   FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
   if (fp == NULL) perror("test error");
   
-  uint32_t correct_res;
-  char tmp[65536] = {};
+  word_t correct_res;
+  char *tmp = NULL;
   bool success = false;
+  size_t len = 0;
+  ssize_t read;
 
-  while (fscanf(fp, "%u %s", &correct_res, tmp) != EOF) {
-    Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+  while (1) {
+    if (fscanf(fp, "%u", &correct_res) == -1) break;
+    //Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+    read = getline(&tmp, &len, fp);
+    tmp[read-1] = '\0'; //将结束字符串设为空
+    
     word_t res = expr(tmp, &success);
 
-    //assert(success);
+    assert(success);
     if (res != correct_res) {
-      //puts(tmp);
+      puts(tmp);
       printf("expected: %u , got: %u\n", correct_res, res);
       assert(0);
     }
   }
 
   fclose(fp);
-  //if(tmp) free(tmp);
+  if(tmp) free(tmp);
 
   Log("expr test pass");
 }
