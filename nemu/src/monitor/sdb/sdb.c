@@ -202,7 +202,7 @@ void expr_test() {
     assert(success);
     if (res != correct_res) {
       //puts(tmp);
-      printf("expected: %u , got: %u\n", correct_res, res);
+      Log("expected: %u , got: %u", correct_res, res);
       assert(0);
     }
   }
