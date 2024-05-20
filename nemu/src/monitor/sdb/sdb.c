@@ -196,7 +196,7 @@ void expr_test() {
   char *tmp = NULL;
   bool success = false;
 
-  while (fscanf(fp, "%u %s", &correct_res, tmp) == 2) {
+  while (fscanf(fp, "%u %s", &correct_res, tmp) != EOF) {
     Log("testing!");
     word_t res = expr(tmp, &success);
 
