@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    word_t ret = system("gcc /tmp/.code.c -Werror -o /tmp/.expr");
+    uint32_t ret = system("gcc /tmp/.code.c -Werror -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
