@@ -192,7 +192,8 @@ if (p > q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-	return strtoul(tokens[p].str, NULL, 10);
+	//return strtoul(tokens[p].str, NULL, 10);
+    return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
