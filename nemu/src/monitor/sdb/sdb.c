@@ -205,7 +205,7 @@ void expr_test() {
     tmp[read-1] = '\0'; //将结束字符串设为空
     Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
     word_t res = expr(tmp, &success);
-
+    Log("res = %u", res);
     //assert(success);
     if (res != correct_res) {
       puts(tmp);
