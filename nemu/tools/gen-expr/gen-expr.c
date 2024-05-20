@@ -34,7 +34,7 @@ static int index_buf = 0;
 static int cnt = 0;
 static uint32_t choose_num = 0;
 
-static uint32_t choose(int n) {
+static uint32_t choose(uint32_t n) {
 	return rand() % n;
 }
 
@@ -43,8 +43,8 @@ static void gen(char c) {
 }
 
 static void gen_num() {
-	int num = choose(100);
-	sprintf(&buf[index_buf++], "%d", num);
+	uint32_t num = choose(100);
+	sprintf(&buf[index_buf++], "%u", num);
 }
 
 static void gen_rand_op() {
