@@ -130,7 +130,7 @@ static bool make_token(char *e) {
 				break; //不对空格进行记录
 			case TK_NUMBER:
 				tokens[nr_token].type = TK_NUMBER;
-				strncpy(tokens[nr_token].str, substr_start, 32);
+				strncpy(tokens[nr_token].str, substr_start, 128);
 				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
 				nr_token++;
 				break;
