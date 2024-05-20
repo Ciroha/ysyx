@@ -187,6 +187,31 @@ void sdb_mainloop() {
   }
 }
 
+void expr_test() {
+  FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+  if (fp == NULL) perror("test error");
+  
+  uint32_t correct_res;
+  char *tmp = NULL;
+  bool success = false;
+
+  while (fscanf(fp, "%u %s", &correct_res, tmp) == 2) {
+    word_t res = expr(tmp, &success);
+
+    assert(success);
+    if (res != correct_res) {
+      //puts(tmp);
+      printf("expected: %u , got: %u\n", correct_res, res);
+      assert(0);
+    }
+  }
+
+  fclose(fp);
+  if(tmp) free(tmp);
+
+  Log("expr test pass");
+}
+
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();

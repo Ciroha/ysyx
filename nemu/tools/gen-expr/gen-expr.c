@@ -105,19 +105,19 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
 
     uint32_t result = 0;
-    ret = fscanf(fp, "%d", &result);
+    ret = fscanf(fp, "%u", &result);
     pclose(fp);
     
-    if (result >> 31) { //转换
-      result = result - (1 << 31);
-      result = (1 << 31) - result;
-      printf("-%u %s\n", result, buf);
-    }
-    else {
-      printf("%u %s\n", result, buf);
-    }
+   // if (result >> 31) { //转换
+   //   result = result - (1 << 31);
+   //   result = (1 << 31) - result;
+   //   printf("-%u %s\n", result, buf);
+   // }
+   // else {
+   //   printf("%u %s\n", result, buf);
+   // }
 
-    //printf("%u %s\n", result, buf);
+    printf("%u %s\n", result, buf);
 
   }
   return 0;
