@@ -193,11 +193,11 @@ void expr_test() {
   if (fp == NULL) perror("test error");
   
   uint32_t correct_res;
-  char *tmp = NULL;
+  char tmp[65536] = {};
   bool success = false;
 
   while (fscanf(fp, "%u %s", &correct_res, tmp) != EOF) {
-    Log("testing!");
+    Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
     word_t res = expr(tmp, &success);
 
     assert(success);
@@ -209,7 +209,7 @@ void expr_test() {
   }
 
   fclose(fp);
-  if(tmp) free(tmp);
+  //if(tmp) free(tmp);
 
   Log("expr test pass");
 }
