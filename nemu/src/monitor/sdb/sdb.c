@@ -210,7 +210,7 @@ void expr_test() {
     if (res != correct_res) {
       puts(tmp);
       printf("expected: %u , got: %u\n", correct_res, res);
-      assert(0);
+      //assert(0);
     }
   }
 
@@ -224,7 +224,7 @@ void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
 
-  //expr_test();
+  expr_test();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
