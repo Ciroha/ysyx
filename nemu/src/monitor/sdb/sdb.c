@@ -203,7 +203,7 @@ void expr_test() {
     //Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
     read = getline(&tmp, &len, fp);
     tmp[read-1] = '\0'; //将结束字符串设为空
-    
+    Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
     word_t res = expr(tmp, &success);
 
     //assert(success);
@@ -224,7 +224,7 @@ void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
 
-  //expr_test();
+  expr_test();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
