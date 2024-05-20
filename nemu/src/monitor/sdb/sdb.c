@@ -188,6 +188,7 @@ void sdb_mainloop() {
 }
 
 void expr_test() {
+  Log("expr_test!");
   FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
   if (fp == NULL) perror("test error");
   
