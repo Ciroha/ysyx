@@ -212,6 +212,10 @@ void expr_test() {
       printf("expected: %u , got: %u\n", correct_res, res);
       //assert(0);
     }
+    else {
+      Log("Test pass with %u", res);
+    }
+
   }
 
   fclose(fp);
