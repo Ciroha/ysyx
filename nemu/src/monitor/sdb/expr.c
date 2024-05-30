@@ -28,6 +28,10 @@ enum { //枚举类型
   TK_NUMBER = 2,
   TK_LEFT = 3, 
   TK_RIGHT = 4,
+  TK_REG = 5,
+  TK_NEQ = 6,
+  TK_AND = 7,
+  TK_DREF = 8,
 
   /* TODO: Add more token types */
 
@@ -51,7 +55,10 @@ static struct rule {
 	{"/", '/'},			//除法操作
 	{"\\(", TK_LEFT},	//左括号
 	{"\\)", TK_RIGHT},	//右括号
-	
+  {"\\$\\w+", TK_REG}, //寄存器
+  {"!=", TK_NEQ}, //不等于
+  {"&&", TK_AND}, //与
+  //{""}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -108,33 +115,43 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-			case '+':
-				tokens[nr_token++].type = '+';
-				break;
-			case '-':
-				tokens[nr_token++].type = '-';
-				break;
-			case '*':
-				tokens[nr_token++].type = '*';
-				break;
-			case '/':
-				tokens[nr_token++].type = '/';
-				break;
-			case TK_LEFT:
-				tokens[nr_token++].type = TK_LEFT;
-				break;
-			case TK_RIGHT:
-				tokens[nr_token++].type = TK_RIGHT;
-				break;
-			case TK_NOTYPE:
-				break; //不对空格进行记录
-			case TK_NUMBER:
-				tokens[nr_token].type = TK_NUMBER;
-				strncpy(tokens[nr_token].str, substr_start, 128);
-				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
-				nr_token++;
-				break;
-			default: TODO();
+			    case '+':
+				    tokens[nr_token++].type = '+';
+				    break;
+			    case '-':
+				    tokens[nr_token++].type = '-';
+				    break;
+			    case '*':
+				    tokens[nr_token++].type = '*';
+				    break;
+			    case '/':
+				    tokens[nr_token++].type = '/';
+				    break;
+			    case TK_LEFT:
+				    tokens[nr_token++].type = TK_LEFT;
+				    break;
+			    case TK_RIGHT:
+				    tokens[nr_token++].type = TK_RIGHT;
+				    break;
+			    case TK_NOTYPE:
+				    break; //不对空格进行记录
+			    case TK_NUMBER:
+				    tokens[nr_token].type = TK_NUMBER;
+				    strncpy(tokens[nr_token].str, substr_start, 128);
+				    Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+				    nr_token++;
+				    break;
+          case TK_REG:
+            tokens[nr_token].type = TK_REG;
+            strncpy(tokens[nr_token].str, substr_start, 128);
+            nr_token++;
+          case TK_EQ:
+            tokens[nr_token++].type = TK_EQ;
+          case TK_NEQ:
+            tokens[nr_token++].type = TK_NEQ;
+          case TK_AND:
+            tokens[nr_token++].type = TK_AND;
+			    default: TODO();
         }
 
         break;
@@ -238,13 +255,16 @@ if (p > q) {
 	}
     uint32_t val1 = eval(p, op - 1);
     uint32_t val2 = eval(op + 1, q);
-	int op_type = tokens[op].type;
+	  int op_type = tokens[op].type;
 
     switch (op_type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_NEQ: return val1 != val2;
+      case TK_AND: return val1 && val2;
       default: assert(0);
     }
   }
