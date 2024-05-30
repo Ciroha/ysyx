@@ -228,6 +228,8 @@ if (p > q) {
 	  int op = -1;
 	  int op1 = -1;
 	  int op2 = -1;
+    int op3 = -1;
+    int op4 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		Log("token type = %d", tokens[i].type);
@@ -254,7 +256,17 @@ if (p > q) {
 			op2 = (op2 > i) ? op2 : i;
 		}
 
-		op = (op1 == -1) ? op2 : op1;
+    if (!flag && (tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ)) { //在括号外且运算符为==和！=
+      op3 = (op3 > i) ? op3 : i;
+    }
+
+    if (!flag && (tokens[i].type == TK_AND)) {
+      op4 = (op4 > i) ? op4 : i;
+    }
+
+		op = (op4 != -1) ? op4 :
+         (op3 != -1) ? op3 :
+         (op1 != -1) ? op1 : op2;
 
 	}
     uint32_t val1 = eval(p, op - 1);
