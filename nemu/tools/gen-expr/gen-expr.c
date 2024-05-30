@@ -31,8 +31,10 @@ static char *code_format =
 "  return 0; "
 "}";
 static int index_buf = 0;
+static int cnt = 0;
+static uint32_t choose_num = 0;
 
-static uint32_t choose(int n) {
+static uint32_t choose(uint32_t n) {
 	return rand() % n;
 }
 
@@ -41,8 +43,8 @@ static void gen(char c) {
 }
 
 static void gen_num() {
-	int num = choose(100);
-	sprintf(&buf[index_buf++], "%d", num);
+	uint32_t num = choose(100);
+	sprintf(&buf[index_buf++], "%u", num);
 }
 
 static void gen_rand_op() {
@@ -52,10 +54,19 @@ static void gen_rand_op() {
 }
 
 static void gen_rand_expr() {
-    switch (choose(3)) {
-    case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
-    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  cnt ++;
+  if (cnt > 20)
+    choose_num = 0;
+  else 
+    choose_num = choose(4);
+  //printf("choose_num = %d\n", choose_num);
+  switch (choose_num) {
+    case 0: gen_num(); 
+            break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); 
+            break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); 
+            break;
   }
 }
 
@@ -66,10 +77,20 @@ int main(int argc, char *argv[]) {
   if (argc > 1) {
     sscanf(argv[1], "%d", &loop);
   }
+  //printf("loop = %d\n", loop);
   int i;
   for (i = 0; i < loop; i ++) {
+    index_buf = 0;
+    cnt = 0;
+    for (int j = 0; j < 65536; j++)
+      buf[j] = '\0';
+    for (int k = 0; k < 65536+128; k++)
+      code_buf[k] = '\0';
+    //printf("[%d]Test: buf = %s\nindex_buf = %d\n", i, buf, index_buf);
     gen_rand_expr();
-
+    if (index_buf > 65530)
+      printf("oversize\n");
+    //printf("[%d]Test2: buf = %s\n index_buf = %d\n", i, buf, index_buf);
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
@@ -77,17 +98,27 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    uint32_t ret = system("gcc /tmp/.code.c -Werror -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
-    int result;
-    ret = fscanf(fp, "%d", &result);
+    uint32_t result = 0;
+    ret = fscanf(fp, "%u", &result);
     pclose(fp);
+    
+   // if (result >> 31) { //转换
+   //   result = result - (1 << 31);
+   //   result = (1 << 31) - result;
+   //   printf("-%u %s\n", result, buf);
+   // }
+   // else {
+   //   printf("%u %s\n", result, buf);
+   // }
 
     printf("%u %s\n", result, buf);
+
   }
   return 0;
 }

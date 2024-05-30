@@ -77,10 +77,10 @@ void init_regex() {
 
 typedef struct token {
   int type;
-  char str[32];
+  char str[128];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -130,7 +130,7 @@ static bool make_token(char *e) {
 				break; //不对空格进行记录
 			case TK_NUMBER:
 				tokens[nr_token].type = TK_NUMBER;
-				strncpy(tokens[nr_token].str, substr_start, substr_len);
+				strncpy(tokens[nr_token].str, substr_start, 128);
 				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
 				nr_token++;
 				break;
@@ -192,7 +192,8 @@ if (p > q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-	return atoi(tokens[p].str);
+	//return strtoul(tokens[p].str, NULL, 10);
+    return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.

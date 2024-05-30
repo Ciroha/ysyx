@@ -187,10 +187,48 @@ void sdb_mainloop() {
   }
 }
 
+void expr_test() {
+  Log("expr_test!");
+  FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+  if (fp == NULL) perror("test error");
+  
+  word_t correct_res;
+  char *tmp = NULL;
+  bool success = false;
+  size_t len = 0;
+  ssize_t read;
+
+  while (1) {
+    if (fscanf(fp, "%u", &correct_res) == -1) break;
+    //Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+    read = getline(&tmp, &len, fp);
+    tmp[read-1] = '\0'; //将结束字符串设为空
+    Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+    word_t res = expr(tmp, &success);
+    Log("res = %u", res);
+    //assert(success);
+    if (res != correct_res) {
+      puts(tmp);
+      printf("expected: %u , got: %u\n", correct_res, res);
+      assert(0);
+    }
+    else {
+      Log("Test pass with %u", res);
+    }
+
+  }
+
+  fclose(fp);
+  if(tmp) free(tmp);
+
+  Log("expr test pass");
+}
+
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
 
+  expr_test();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
