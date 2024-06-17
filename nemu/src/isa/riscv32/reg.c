@@ -31,6 +31,7 @@ void isa_reg_display() {
 word_t isa_reg_str2val(const char *s, bool *success) {
   Log("reg is %s", s);
   for (int i = 0; i < 32; i++) {
+    Log("%s", regs[i]);
     if (s == regs[i]) {
       Log("Success! result = %d", cpu.gpr[i]);
       *success = true;
