@@ -188,10 +188,11 @@ word_t expr(char *e, bool *success) {
   //TODO();
   //printf("nr_token:%d\n", nr_token);
   for (int i = 0; i < nr_token; i++) {
+    Log("tokens[i - 1].type = %d", tokens[i - 1].type);
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUMBER || tokens[i - 1].type != TK_RIGHT)) {
       tokens[i].type = TK_DREF;
     }
-  } //对乘号进行替换:warn("%s");
+  } //对乘号进行替换
 	Log("nr_token = %d", nr_token);
   return eval(0, nr_token-1);
 }
@@ -244,48 +245,49 @@ if (p > q) {
     int op5 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
-		Log("token type = %d", tokens[i].type);
-		if (tokens[i].type == TK_NUMBER) {
-			//printf("number detected:%s\n", tokens[i].str);
-			continue;
-		}
+		  Log("token type = %d", tokens[i].type);
+		  if (tokens[i].type == TK_NUMBER) {
+			  //printf("number detected:%s\n", tokens[i].str);
+			  continue;
+		  }
 
-		if (tokens[i].type == TK_NOTYPE) {
-			continue;
-		}
-		
-		if (tokens[i].type == TK_LEFT) {
-			flag++;
-		}else if (tokens[i].type == TK_RIGHT) {
-			flag--; //在括号外
-		}
-
-		if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
-			op1 = (op1 > i) ? op1 : i;
-		}
-		
-		if (!flag && (tokens[i].type == '*' || tokens[i].type == '/')) { //在括号外且运算符为乘除
-			op2 = (op2 > i) ? op2 : i;
-		}
-
-    if (!flag && (tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ)) { //在括号外且运算符为==和！=
-      op3 = (op3 > i) ? op3 : i;
-    }
-
-    if (!flag && (tokens[i].type == TK_AND)) {
-      op4 = (op4 > i) ? op4 : i;
-    }
-
-    if (!flag && (tokens[i].type == TK_BEQ)) {
-      op5 = (op5 > i) ? op5 : i;
-    }
-
-		op = (op4 != -1) ? op4 :
+		  if (tokens[i].type == TK_NOTYPE) {
+			  continue;
+		  }
+		  
+		  if (tokens[i].type == TK_LEFT) {
+			  flag++;
+		  }else if (tokens[i].type == TK_RIGHT) {
+			  flag--; //在括号外
+		  }
+      
+		  if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
+			  op1 = (op1 > i) ? op1 : i;
+		  }
+		  
+		  if (!flag && (tokens[i].type == '*' || tokens[i].type == '/')) { //在括号外且运算符为乘除
+			  op2 = (op2 > i) ? op2 : i;
+		  }
+        
+      if (!flag && (tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ)) { //在括号外且运算符为==和！=
+        op3 = (op3 > i) ? op3 : i;
+      }
+      
+      if (!flag && (tokens[i].type == TK_AND)) {
+        op4 = (op4 > i) ? op4 : i;
+      }
+      
+      if (!flag && (tokens[i].type == TK_BEQ)) {
+       op5 = (op5 > i) ? op5 : i;
+      }
+      
+		  op = (op4 != -1) ? op4 :
          (op3 != -1) ? op3 :
          (op5 != -1) ? op5 :
          (op1 != -1) ? op1 : op2;
 
-	}
+	  }
+    
     uint32_t val1 = eval(p, op - 1);
     uint32_t val2 = eval(op + 1, q);
 	  int op_type = tokens[op].type;
