@@ -32,6 +32,7 @@ enum { //枚举类型
   TK_NEQ = 6,
   TK_AND = 7,
   TK_DREF = 8,
+  TK_BEQ = 9,
 
   /* TODO: Add more token types */
 
@@ -58,6 +59,8 @@ static struct rule {
   {"\\$\\w+", TK_REG}, //寄存器
   {"!=", TK_NEQ}, //不等于
   {"&&", TK_AND}, //与
+  {"<=", TK_BEQ}, //小于等于
+  //{">=", TK_}, //大于等于
   //{""}
 };
 
@@ -154,6 +157,9 @@ static bool make_token(char *e) {
             break;
           case TK_AND:
             tokens[nr_token++].type = TK_AND;
+            break;
+          case TK_BEQ:
+            tokens[nr_token++].type = TK_BEQ;
             break;
 			    default: TODO();
         }
@@ -281,6 +287,7 @@ if (p > q) {
       case TK_EQ: return val1 == val2;
       case TK_NEQ: return val1 != val2;
       case TK_AND: return val1 && val2;
+      case TK_BEQ: return val1 <= val2;
       default: assert(0);
     }
   }
