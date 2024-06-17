@@ -187,6 +187,11 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //printf("nr_token:%d\n", nr_token);
+  for (int i = 0; i < nr_token; i++) {
+    if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUMBER || tokens[i - 1].type != TK_RIGHT)) {
+      tokens[i].type = TK_DREF;
+    }
+  } //对乘号进行替换:warn("%s");
 	Log("nr_token = %d", nr_token);
   return eval(0, nr_token-1);
 }
