@@ -236,6 +236,7 @@ if (p > q) {
 	  int op2 = -1;
     int op3 = -1;
     int op4 = -1;
+    int op5 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		Log("token type = %d", tokens[i].type);
@@ -270,8 +271,13 @@ if (p > q) {
       op4 = (op4 > i) ? op4 : i;
     }
 
+    if (!flag && (tokens[i].type == TK_BEQ)) {
+      op5 = (op5 > i) ? op5 : i;
+    }
+
 		op = (op4 != -1) ? op4 :
          (op3 != -1) ? op3 :
+         (op5 != -1) ? op5 :
          (op1 != -1) ? op1 : op2;
 
 	}
