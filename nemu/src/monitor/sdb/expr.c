@@ -145,7 +145,6 @@ static bool make_token(char *e) {
 				    nr_token++;
 				    break;
           case TK_REG:
-            Log("case");
             tokens[nr_token].type = TK_REG;
             strncpy(tokens[nr_token].str, substr_start, 128);
             Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
