@@ -191,6 +191,7 @@ word_t expr(char *e, bool *success) {
     Log("tokens[i - 1].type = %d", tokens[i - 1].type);
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUMBER || tokens[i - 1].type != TK_RIGHT)) {
       tokens[i].type = TK_DREF;
+      Log("change to dref!");
     }
   } //对乘号进行替换
 	Log("nr_token = %d", nr_token);
