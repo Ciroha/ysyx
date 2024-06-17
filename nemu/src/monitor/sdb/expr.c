@@ -195,6 +195,18 @@ word_t expr(char *e, bool *success) {
       Log("change to dref!");
     }
   } //对乘号进行替换
+  /*for (int i = 0; i < nr_token; i++) {
+    if (tokens[i].type == TK_REG) {
+      bool flag1 = true;
+      int tmp = isa_reg_str2val(tokens[i].str, &flag1);
+      if (flag1){
+        itoa(tmp, tokens[i].str);
+      }else {
+        Log("Transform error!");
+        assert(0);
+      }
+    }
+  }*/
 	Log("nr_token = %d", nr_token);
   return eval(0, nr_token-1);
 }
@@ -227,8 +239,12 @@ if (p > q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-	//return strtoul(tokens[p].str, NULL, 10);
-    return atoi(tokens[p].str);
+	  //return strtoul(tokens[p].str, NULL, 10);
+    bool ok = true;
+    if (tokens[p].type == TK_REG)
+      return isa_reg_str2val(tokens[p].str, &ok);
+    else 
+      return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
