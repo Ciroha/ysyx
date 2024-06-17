@@ -188,7 +188,7 @@ word_t expr(char *e, bool *success) {
   //TODO();
   //printf("nr_token:%d\n", nr_token);
   for (int i = 0; i < nr_token; i++) {
-    Log("tokens[i - 1].type = %d", tokens[i - 1].type);
+    //Log("tokens[i - 1].type = %d", tokens[i - 1].type);
     if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_NUMBER && tokens[i - 1].type != TK_RIGHT))) {
       tokens[i].type = TK_DREF;
       Log("change to dref!");
