@@ -243,6 +243,7 @@ if (p > q) {
     bool ok = true;
     if (tokens[p].type == TK_REG) {
       Log("tokens[p].str = %s", tokens[p].str);
+      Log("result is %d", isa_reg_str2val(tokens[p].str, &ok));
       return isa_reg_str2val(tokens[p].str, &ok);
     }
     else 
