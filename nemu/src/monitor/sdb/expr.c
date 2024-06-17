@@ -241,8 +241,10 @@ if (p > q) {
      */
 	  //return strtoul(tokens[p].str, NULL, 10);
     bool ok = true;
-    if (tokens[p].type == TK_REG)
+    if (tokens[p].type == TK_REG) {
+      Log("tokens[p].str = %s", tokens[p].str);
       return isa_reg_str2val(tokens[p].str, &ok);
+    }
     else 
       return atoi(tokens[p].str);
   }
