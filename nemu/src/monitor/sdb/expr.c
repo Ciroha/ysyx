@@ -299,7 +299,7 @@ if (p > q) {
         sscanf(tokens[i].str, "%x", &baseaddr);
         return paddr_read(baseaddr, 4);
 		  }
-      Log ("testtttttttttttttttttttttt");
+      //Log ("testtttttttttttttttttttttt");
       if (tokens[i].type == TK_NUMBER) {
 			  //printf("number detected:%s\n", tokens[i].str);
 			  continue;
