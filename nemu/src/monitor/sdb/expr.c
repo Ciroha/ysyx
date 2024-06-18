@@ -208,6 +208,7 @@ word_t expr(char *e, bool *success) {
       tokens[i].type = TK_DREF;
       tokens[i + 1].type = TK_NOTYPE;
       strcpy(tokens[i].str, tokens[i+1].str);
+      Log("string is %s",tokens[i].str);
       Log("change to dref!");
     }
   } //对乘号进行替换
