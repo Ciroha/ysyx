@@ -69,9 +69,9 @@ void sda_watchpoint_display() {
     printf("No watchpoints!\n");
     return;
   }
-  printf("%-8s%-8s%-8s%-8s\n", "Num", "Expr", "oldvalue", "newvalue");
+  printf("%-12s%-12s%-12s%-12s\n", "Num", "Expr", "oldvalue", "newvalue");
   while (h) {
-    printf("%-8d%-8s%-8d%-8d\n", h->NO, h->expr, h->old, h->new);
+    printf("%-12d%-12s%-12d%-12d\n", h->NO, h->expr, h->old, h->new);
     h = h->next;
   }
 }
