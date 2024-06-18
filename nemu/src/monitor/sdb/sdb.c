@@ -23,6 +23,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+void sda_watchpoint_display();
 word_t paddr_read(paddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -71,8 +72,8 @@ static int cmd_info(char *args) {
 		printf("No args.\n");
 	else if (strcmp(args, "r") == 0)
 		isa_reg_display();
-//	else if (strcmp(args, "w") == 0)
-//		sda_watchpoint_display();
+	else if (strcmp(args, "w") == 0)
+		sda_watchpoint_display();
 	else
 		printf("Usage:info r or info w!\n");
 	return 0;
