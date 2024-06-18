@@ -98,3 +98,19 @@ void delete_watchpoint(int no) {
     }
   }
 }
+
+void wp_difftest() {
+  WP* h = head;
+  while (h) {
+    bool tmp2;
+    word_t new = expr(h->expr, &tmp2);
+    if (h->old != new) {
+      printf("Watchpoint %d: %s\n"
+             "Old value = %u\n"
+             "New value = %u\n"
+             , h->NO, h->expr, h->old, new);
+      h->old = new;
+    }
+    h = h->next;
+  }
+}
