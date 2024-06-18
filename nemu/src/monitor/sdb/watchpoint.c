@@ -79,7 +79,7 @@ void sda_watchpoint_display() {
 void create_watchpoint(char* args) {
   WP* p = new_wp(); //空间分配
   strcpy(p->expr, args);
-  bool success = false;
+  bool success = true;
   int tmp = expr(p->expr, &success);
   if (success) {
     p->old = tmp;
