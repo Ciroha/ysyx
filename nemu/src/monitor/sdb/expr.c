@@ -140,7 +140,7 @@ static bool make_token(char *e) {
 				    tokens[nr_token++].type = TK_RIGHT;
 				    break;
 			    case TK_NOTYPE:
-            tokens[nr_token++].type = TK_NOTYPE;
+            //tokens[nr_token++].type = TK_NOTYPE;
 				    break; //不对空格进行记录
 			    case TK_NUMBER:
 				    tokens[nr_token].type = TK_NUMBER;
@@ -297,8 +297,9 @@ if (p > q) {
 		  if (tokens[i].type == TK_DREF) {
         paddr_t baseaddr = 0;
         sscanf(tokens[i].str, "%x", &baseaddr);
-        return paddr_read(baseaddr, 8);
+        return paddr_read(baseaddr, 4);
 		  }
+      Log ("testtttttttttttttttttttttt");
       if (tokens[i].type == TK_NUMBER) {
 			  //printf("number detected:%s\n", tokens[i].str);
 			  continue;
