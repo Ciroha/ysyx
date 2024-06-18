@@ -28,6 +28,12 @@ enum { //枚举类型
   TK_NUMBER = 2,
   TK_LEFT = 3, 
   TK_RIGHT = 4,
+  TK_REG = 5,
+  TK_NEQ = 6,
+  TK_AND = 7,
+  TK_DREF = 8,
+  TK_BEQ = 9,
+  TK_HEX = 10,
 
   /* TODO: Add more token types */
 
@@ -51,7 +57,13 @@ static struct rule {
 	{"/", '/'},			//除法操作
 	{"\\(", TK_LEFT},	//左括号
 	{"\\)", TK_RIGHT},	//右括号
-	
+  {"\\$\\w+", TK_REG}, //寄存器
+  {"!=", TK_NEQ}, //不等于
+  {"&&", TK_AND}, //与
+  {"<=", TK_BEQ}, //小于等于
+  {"0[xX][0-9a-fA-F]+", TK_HEX}, //16进制数
+  //{">=", TK_}, //大于等于
+  //{""}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -108,33 +120,56 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-			case '+':
-				tokens[nr_token++].type = '+';
-				break;
-			case '-':
-				tokens[nr_token++].type = '-';
-				break;
-			case '*':
-				tokens[nr_token++].type = '*';
-				break;
-			case '/':
-				tokens[nr_token++].type = '/';
-				break;
-			case TK_LEFT:
-				tokens[nr_token++].type = TK_LEFT;
-				break;
-			case TK_RIGHT:
-				tokens[nr_token++].type = TK_RIGHT;
-				break;
-			case TK_NOTYPE:
-				break; //不对空格进行记录
-			case TK_NUMBER:
-				tokens[nr_token].type = TK_NUMBER;
-				strncpy(tokens[nr_token].str, substr_start, 128);
-				Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
-				nr_token++;
-				break;
-			default: TODO();
+			    case '+':
+				    tokens[nr_token++].type = '+';
+				    break;
+			    case '-':
+				    tokens[nr_token++].type = '-';
+				    break;
+			    case '*':
+				    tokens[nr_token++].type = '*';
+				    break;
+			    case '/':
+				    tokens[nr_token++].type = '/';
+				    break;
+			    case TK_LEFT:
+				    tokens[nr_token++].type = TK_LEFT;
+				    break;
+			    case TK_RIGHT:
+				    tokens[nr_token++].type = TK_RIGHT;
+				    break;
+			    case TK_NOTYPE:
+				    break; //不对空格进行记录
+			    case TK_NUMBER:
+				    tokens[nr_token].type = TK_NUMBER;
+				    strncpy(tokens[nr_token].str, substr_start, 128);
+				    Log("number in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+				    nr_token++;
+				    break;
+          case TK_REG:
+            tokens[nr_token].type = TK_REG;
+            strncpy(tokens[nr_token].str, substr_start + 1, 128);
+            Log("str in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          case TK_EQ:
+            tokens[nr_token++].type = TK_EQ;
+            break;
+          case TK_NEQ:
+            tokens[nr_token++].type = TK_NEQ;
+            break;
+          case TK_AND:
+            tokens[nr_token++].type = TK_AND;
+            break;
+          case TK_BEQ:
+            tokens[nr_token++].type = TK_BEQ;
+            break;
+          case TK_HEX:
+            tokens[nr_token].type = TK_HEX;
+            strncpy(tokens[nr_token].str, substr_start, 128);
+            nr_token++;
+            break;
+			    default: TODO();
         }
 
         break;
@@ -160,6 +195,32 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //printf("nr_token:%d\n", nr_token);
+  for (int i = 0; i < nr_token; i++) {
+    //Log("tokens[i - 1].type = %d", tokens[i - 1].type);
+    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_HEX &&tokens[i - 1].type != TK_NUMBER && tokens[i - 1].type != TK_RIGHT))) {
+      tokens[i].type = TK_DREF;
+      Log("change to dref!");
+    }
+  } //对乘号进行替换
+  for (int i = 0;i < nr_token; i++) {
+    if (tokens[i].type == TK_HEX) {
+      //char *endptr;
+      long tmp2 = strtol(tokens[i].str, NULL, 16); 
+      sprintf(tokens[i].str, "%ld", tmp2);
+    }
+  }
+  /*for (int i = 0; i < nr_token; i++) {
+    if (tokens[i].type == TK_REG) {
+      bool flag1 = true;
+      int tmp = isa_reg_str2val(tokens[i].str, &flag1);
+      if (flag1){
+        itoa(tmp, tokens[i].str);
+      }else {
+        Log("Transform error!");
+        assert(0);
+      }
+    }
+  }*/
 	Log("nr_token = %d", nr_token);
   return eval(0, nr_token-1);
 }
@@ -192,8 +253,15 @@ if (p > q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-	//return strtoul(tokens[p].str, NULL, 10);
-    return atoi(tokens[p].str);
+	  //return strtoul(tokens[p].str, NULL, 10);
+    bool ok = true;
+    if (tokens[p].type == TK_REG) {
+      Log("tokens[p].str = %s", tokens[p].str);
+      //Log("result is %d", isa_reg_str2val(tokens[p].str, &ok));
+      return isa_reg_str2val(tokens[p].str, &ok);
+    }
+    else 
+      return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -207,44 +275,67 @@ if (p > q) {
 	  int op = -1;
 	  int op1 = -1;
 	  int op2 = -1;
+    int op3 = -1;
+    int op4 = -1;
+    int op5 = -1;
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
-		Log("token type = %d", tokens[i].type);
-		if (tokens[i].type == TK_NUMBER) {
-			//printf("number detected:%s\n", tokens[i].str);
-			continue;
-		}
+		  Log("token type = %d", tokens[i].type);
+		  if (tokens[i].type == TK_NUMBER) {
+			  //printf("number detected:%s\n", tokens[i].str);
+			  continue;
+		  }
 
-		if (tokens[i].type == TK_NOTYPE) {
-			continue;
-		}
-		
-		if (tokens[i].type == TK_LEFT) {
-			flag++;
-		}else if (tokens[i].type == TK_RIGHT) {
-			flag--; //在括号外
-		}
+		  if (tokens[i].type == TK_NOTYPE) {
+			  continue;
+		  }
+		  
+		  if (tokens[i].type == TK_LEFT) {
+			  flag++;
+		  }else if (tokens[i].type == TK_RIGHT) {
+			  flag--; //在括号外
+		  }
+      
+		  if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
+			  op1 = (op1 > i) ? op1 : i;
+		  }
+		  
+		  if (!flag && (tokens[i].type == '*' || tokens[i].type == '/')) { //在括号外且运算符为乘除
+			  op2 = (op2 > i) ? op2 : i;
+		  }
+        
+      if (!flag && (tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ)) { //在括号外且运算符为==和！=
+        op3 = (op3 > i) ? op3 : i;
+      }
+      
+      if (!flag && (tokens[i].type == TK_AND)) {
+        op4 = (op4 > i) ? op4 : i;
+      }
+      
+      if (!flag && (tokens[i].type == TK_BEQ)) {
+       op5 = (op5 > i) ? op5 : i;
+      }
+      
+		  op = (op4 != -1) ? op4 :
+         (op3 != -1) ? op3 :
+         (op5 != -1) ? op5 :
+         (op1 != -1) ? op1 : op2;
 
-		if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
-			op1 = (op1 > i) ? op1 : i;
-		}
-		
-		if (!flag && (tokens[i].type == '*' || tokens[i].type == '/')) { //在括号外且运算符为乘除
-			op2 = (op2 > i) ? op2 : i;
-		}
-
-		op = (op1 == -1) ? op2 : op1;
-
-	}
+	  }
+    
     uint32_t val1 = eval(p, op - 1);
     uint32_t val2 = eval(op + 1, q);
-	int op_type = tokens[op].type;
+	  int op_type = tokens[op].type;
 
     switch (op_type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_NEQ: return val1 != val2;
+      case TK_AND: return val1 && val2;
+      case TK_BEQ: return val1 <= val2;
       default: assert(0);
     }
   }
