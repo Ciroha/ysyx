@@ -140,6 +140,7 @@ static bool make_token(char *e) {
 				    tokens[nr_token++].type = TK_RIGHT;
 				    break;
 			    case TK_NOTYPE:
+            tokens[nr_token++].type = TK_NOTYPE;
 				    break; //不对空格进行记录
 			    case TK_NUMBER:
 				    tokens[nr_token].type = TK_NUMBER;
