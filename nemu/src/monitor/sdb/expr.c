@@ -21,6 +21,7 @@
 #include <regex.h>
 
 uint32_t eval(int p, int q);
+word_t paddr_read(paddr_t addr, int len);
 
 enum { //枚举类型
   TK_NOTYPE = 256, 
@@ -139,6 +140,7 @@ static bool make_token(char *e) {
 				    tokens[nr_token++].type = TK_RIGHT;
 				    break;
 			    case TK_NOTYPE:
+            //tokens[nr_token++].type = TK_NOTYPE;
 				    break; //不对空格进行记录
 			    case TK_NUMBER:
 				    tokens[nr_token].type = TK_NUMBER;
@@ -195,10 +197,20 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //printf("nr_token:%d\n", nr_token);
+  /*for (int i = 0; i < nr_token; i++) {
+    if (tokens[i].type == TK_HEX) {
+      long tmp2 = strtol(tokens[i].str, NULL, 16);
+      sprintf(tokens[i].str, "%ld", tmp2);
+    }
+  }*/
+
   for (int i = 0; i < nr_token; i++) {
     //Log("tokens[i - 1].type = %d", tokens[i - 1].type);
     if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_HEX &&tokens[i - 1].type != TK_NUMBER && tokens[i - 1].type != TK_RIGHT))) {
       tokens[i].type = TK_DREF;
+      tokens[i + 1].type = TK_NOTYPE;
+      strcpy(tokens[i].str, tokens[i+1].str);
+      Log("string is %s",tokens[i].str);
       Log("change to dref!");
     }
   } //对乘号进行替换
@@ -209,6 +221,7 @@ word_t expr(char *e, bool *success) {
       sprintf(tokens[i].str, "%ld", tmp2);
     }
   }
+
   /*for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_REG) {
       bool flag1 = true;
@@ -281,7 +294,13 @@ if (p > q) {
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		  Log("token type = %d", tokens[i].type);
-		  if (tokens[i].type == TK_NUMBER) {
+		  if (tokens[i].type == TK_DREF) {
+        paddr_t baseaddr = 0;
+        sscanf(tokens[i].str, "%x", &baseaddr);
+        return paddr_read(baseaddr, 4);
+		  }
+      //Log ("testtttttttttttttttttttttt");
+      if (tokens[i].type == TK_NUMBER) {
 			  //printf("number detected:%s\n", tokens[i].str);
 			  continue;
 		  }

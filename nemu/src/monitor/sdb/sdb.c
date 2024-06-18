@@ -23,6 +23,9 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+void sda_watchpoint_display();
+void delete_watchpoint(int no);
+void create_watchpoint(char* args);
 word_t paddr_read(paddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -71,8 +74,8 @@ static int cmd_info(char *args) {
 		printf("No args.\n");
 	else if (strcmp(args, "r") == 0)
 		isa_reg_display();
-//	else if (strcmp(args, "w") == 0)
-//		sda_watchpoint_display();
+	else if (strcmp(args, "w") == 0)
+		sda_watchpoint_display();
 	else
 		printf("Usage:info r or info w!\n");
 	return 0;
@@ -88,12 +91,13 @@ static int cmd_x(char *args) {
 		paddr_t baseaddr = 0;
 		sscanf(n, "%d", &len);
 		sscanf(addr, "%x", &baseaddr);
+    Log("%s", addr);
 		for (int i = 0; i < len ;i++)
 		{
 			printf("%x\n", paddr_read(baseaddr,4));
 			baseaddr = baseaddr + 4;
 		}
-		}
+	}
 	return 0;
 }
 
@@ -102,6 +106,24 @@ static int cmd_p(char *args) {
 	word_t res = expr(args, &success);
 	printf("The result is: %u\n", res);
 	return 0;
+}
+
+static int cmd_w(char *args) {
+  if (args == NULL) {
+    printf("No args!\n");
+  }else {
+    create_watchpoint(args);
+  }
+  return 0;
+}
+
+static int cmd_d(char* args) {
+  if (args == NULL) {
+    printf("No args!\n");
+  }else {
+    delete_watchpoint(atoi(args));
+  }
+  return 0;
 }
 
 static struct {
@@ -116,6 +138,8 @@ static struct {
   { "info", "program information", cmd_info},
   { "x", "scan memory", cmd_x},
   { "p", "Expression evaluation", cmd_p},
+  { "w", "set watchpoint", cmd_w},
+  { "d", "delete watchpoint", cmd_d},
   /* TODO: Add more commands */
 
 };
