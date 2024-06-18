@@ -71,7 +71,7 @@ void sda_watchpoint_display() {
   }
   printf("%-12s%-12s%-12s%-12s\n", "Num", "Expr", "oldvalue", "newvalue");
   while (h) {
-    printf("%-12d%-12s%-12d%-12d\n", h->NO, h->expr, h->old, h->new);
+    printf("%-12d%-12s%-12u%-12u\n", h->NO, h->expr, h->old, h->new);
     h = h->next;
   }
 }
