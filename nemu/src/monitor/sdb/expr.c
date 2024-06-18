@@ -33,6 +33,7 @@ enum { //枚举类型
   TK_AND = 7,
   TK_DREF = 8,
   TK_BEQ = 9,
+  TK_HEX = 10,
 
   /* TODO: Add more token types */
 
@@ -60,6 +61,7 @@ static struct rule {
   {"!=", TK_NEQ}, //不等于
   {"&&", TK_AND}, //与
   {"<=", TK_BEQ}, //小于等于
+  {"0[xX][0-9a-fA-F]+", TK_HEX}, //16进制数
   //{">=", TK_}, //大于等于
   //{""}
 };
@@ -162,6 +164,11 @@ static bool make_token(char *e) {
           case TK_BEQ:
             tokens[nr_token++].type = TK_BEQ;
             break;
+          case TK_HEX:
+            tokens[nr_token].type = TK_HEX;
+            strncpy(tokens[nr_token].str, substr_start, 128);
+            nr_token++;
+            break;
 			    default: TODO();
         }
 
@@ -195,6 +202,12 @@ word_t expr(char *e, bool *success) {
       Log("change to dref!");
     }
   } //对乘号进行替换
+  for (int i = 0;i < nr_token; i++) {
+    if (tokens[i].type == TK_HEX) {
+      long tmp2 = strtol(tokens[i].str, NULL, 16);
+      sprintf(tokens[i].str, "%ld", tmp2);
+    }
+  }
   /*for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_REG) {
       bool flag1 = true;
