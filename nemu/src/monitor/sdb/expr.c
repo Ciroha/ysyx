@@ -204,14 +204,9 @@ word_t expr(char *e, bool *success) {
   } //对乘号进行替换
   for (int i = 0;i < nr_token; i++) {
     if (tokens[i].type == TK_HEX) {
-      char *endptr;
-      long tmp2 = strtol(tokens[i].str, &endptr, 16); 
-      if (*endptr == '\0') {
-        sprintf(tokens[i].str, "%ld", tmp2);
-      }else {
-        Log("Hex Transform Error!");
-        assert(0);
-      }
+      //char *endptr;
+      long tmp2 = strtol(tokens[i].str, NULL, 16); 
+      sprintf(tokens[i].str, "%ld", tmp2);
     }
   }
   /*for (int i = 0; i < nr_token; i++) {
