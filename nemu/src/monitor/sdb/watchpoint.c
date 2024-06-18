@@ -23,6 +23,8 @@ typedef struct watchpoint {
 
   /* TODO: Add more members if necessary */
   char expr[100];
+  int new;  //新值
+  int old;  //旧值
 } WP;
 
 static WP wp_pool[NR_WP] = {};
@@ -40,7 +42,7 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
-/*static WP* new_wp() {  //ret为当前值，head指向链表的头部，free指向自由链表的头部
+static WP* new_wp() {  //ret为当前值，head指向链表的头部，free指向自由链表的头部
   assert(free_);  //确保剩余的不为空
   WP* ret = free_;
   free_ = free_->next;  //使链表指向下一个对象
@@ -59,7 +61,7 @@ static void free_wp(WP *wp) {
   }
   wp->next = free_;
   free_ = wp; //加入空闲链表
-}*/
+}
 
 void sda_watchpoint_display() {
   WP* h = head;
@@ -67,9 +69,32 @@ void sda_watchpoint_display() {
     printf("No watchpoints!\n");
     return;
   }
-  printf("%-8s%-8s\n", "Num", "Expr");
+  printf("%-8s%-8s%-8s%-8s\n", "Num", "Expr", "oldvalue", "newvalue");
   while (h) {
-    printf("%-8d%-8s\n", h->NO, h->expr);
+    printf("%-8d%-8s%-8d%-8d\n", h->NO, h->expr, h->old, h->new);
     h = h->next;
+  }
+}
+
+void create_watchpoint(char* args) {
+  WP* p = new_wp(); //空间分配
+  strcpy(p->expr, args);
+  bool success = false;
+  int tmp = expr(p->expr, &success);
+  if (success) {
+    p->old = tmp;
+  }else {
+    printf("create watchpoint error!\n");
+  }
+  printf("Create watchpoint No.%d success.\n", p->NO);
+}
+
+void delete_watchpoint(int no) {
+  for (int i = 0; i < NR_WP; i++) {
+    if (wp_pool[i].NO == no) {
+      free_wp(&wp_pool[i]);
+      printf("Delete watchpoint!\n");
+      return;
+    }
   }
 }
