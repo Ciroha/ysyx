@@ -110,6 +110,8 @@ void wp_difftest() {
              "New value = %u\n"
              , h->NO, h->expr, h->old, new);
       h->old = new;
+      nemu_state.state = NEMU_STOP;
+      return;
     }
     h = h->next;
   }
