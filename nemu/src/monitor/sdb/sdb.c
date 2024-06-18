@@ -91,6 +91,7 @@ static int cmd_x(char *args) {
 		paddr_t baseaddr = 0;
 		sscanf(n, "%d", &len);
 		sscanf(addr, "%x", &baseaddr);
+    Log("%s", addr);
 		for (int i = 0; i < len ;i++)
 		{
 			printf("%x\n", paddr_read(baseaddr,4));
