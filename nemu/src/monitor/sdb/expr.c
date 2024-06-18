@@ -21,6 +21,7 @@
 #include <regex.h>
 
 uint32_t eval(int p, int q);
+word_t paddr_read(paddr_t addr, int len);
 
 enum { //枚举类型
   TK_NOTYPE = 256, 
@@ -292,7 +293,12 @@ if (p > q) {
 	  int flag = 0; //指示当前是否在括号内
     for (int i = p; i <= q; i++) {
 		  Log("token type = %d", tokens[i].type);
-		  if (tokens[i].type == TK_NUMBER) {
+		  if (tokens[i].type == TK_DREF) {
+        paddr_t baseaddr = 0;
+        sscanf(tokens[i].str, "%x", &baseaddr);
+        return paddr_read(baseaddr, 8);
+		  }
+      if (tokens[i].type == TK_NUMBER) {
 			  //printf("number detected:%s\n", tokens[i].str);
 			  continue;
 		  }
