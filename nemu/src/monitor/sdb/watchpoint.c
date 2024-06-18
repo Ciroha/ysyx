@@ -111,6 +111,7 @@ void wp_difftest() {
              , h->NO, h->expr, h->old, new);
       h->old = new;
       nemu_state.state = NEMU_STOP;
+      printf("Not equal! Stop!\n");
       return;
     }
     h = h->next;
