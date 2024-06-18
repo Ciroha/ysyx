@@ -195,12 +195,12 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //printf("nr_token:%d\n", nr_token);
-  for (int i = 0; i < nr_token; i++) {
+  /*for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_HEX) {
       long tmp2 = strtol(tokens[i].str, NULL, 16);
       sprintf(tokens[i].str, "%ld", tmp2);
     }
-  }
+  }*/
 
   for (int i = 0; i < nr_token; i++) {
     //Log("tokens[i - 1].type = %d", tokens[i - 1].type);
@@ -212,13 +212,13 @@ word_t expr(char *e, bool *success) {
       Log("change to dref!");
     }
   } //对乘号进行替换
-  /*for (int i = 0;i < nr_token; i++) {
+  for (int i = 0;i < nr_token; i++) {
     if (tokens[i].type == TK_HEX) {
       //char *endptr;
       long tmp2 = strtol(tokens[i].str, NULL, 16); 
       sprintf(tokens[i].str, "%ld", tmp2);
     }
-  }*/
+  }
 
   /*for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_REG) {
