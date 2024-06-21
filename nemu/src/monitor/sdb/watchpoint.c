@@ -55,7 +55,7 @@ static void free_wp(WP *wp) {
   WP* h = head;
   if (h == wp) head = NULL;
   else {
-    while (h && h->next != wp) h = h->next;
+    while (h && h->next != wp) h = h->next; //遍历搜索链表
     assert(h);
     h->next = wp->next;
   }

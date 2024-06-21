@@ -169,6 +169,7 @@ static bool make_token(char *e) {
           case TK_HEX:
             tokens[nr_token].type = TK_HEX;
             strncpy(tokens[nr_token].str, substr_start, 128);
+            Log("hex in token[%d]:%s, type = %d", nr_token, tokens[nr_token].str, tokens[nr_token].type);
             nr_token++;
             break;
 			    default: TODO();
@@ -217,23 +218,27 @@ word_t expr(char *e, bool *success) {
   for (int i = 0;i < nr_token; i++) {
     if (tokens[i].type == TK_HEX) {
       //char *endptr;
+      Log("before %s", tokens[i].str);
       long tmp2 = strtol(tokens[i].str, NULL, 16); 
       sprintf(tokens[i].str, "%ld", tmp2);
     }
   }
 
-  /*for (int i = 0; i < nr_token; i++) {
+  for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_REG) {
       bool flag1 = true;
+      char *tmp_str = strtok(tokens[i].str, " ");
+      strcpy(tokens[i].str, tmp_str);
+      Log("Now %s", tokens[i].str);
       int tmp = isa_reg_str2val(tokens[i].str, &flag1);
       if (flag1){
-        itoa(tmp, tokens[i].str);
+        sprintf(tokens[i].str, "%d", tmp);
       }else {
         Log("Transform error!");
         assert(0);
       }
     }
-  }*/
+  }
 	Log("nr_token = %d", nr_token);
   return eval(0, nr_token-1);
 }
@@ -267,13 +272,13 @@ if (p > q) {
      * Return the value of the number.
      */
 	  //return strtoul(tokens[p].str, NULL, 10);
-    bool ok = true;
+    /*bool ok = true;
     if (tokens[p].type == TK_REG) {
       Log("tokens[p].str = %s", tokens[p].str);
       //Log("result is %d", isa_reg_str2val(tokens[p].str, &ok));
       return isa_reg_str2val(tokens[p].str, &ok);
     }
-    else 
+    else */
       return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
@@ -304,6 +309,10 @@ if (p > q) {
 			  //printf("number detected:%s\n", tokens[i].str);
 			  continue;
 		  }
+
+      /*if (tokens[i].type == TK_REG) {
+        continue;
+      }*/
 
 		  if (tokens[i].type == TK_NOTYPE) {
 			  continue;
