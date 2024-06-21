@@ -218,6 +218,7 @@ word_t expr(char *e, bool *success) {
   for (int i = 0;i < nr_token; i++) {
     if (tokens[i].type == TK_HEX) {
       //char *endptr;
+      Log("before %s", tokens[i].str);
       long tmp2 = strtol(tokens[i].str, NULL, 16); 
       sprintf(tokens[i].str, "%ld", tmp2);
     }
