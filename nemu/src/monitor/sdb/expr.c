@@ -305,9 +305,9 @@ if (p > q) {
 			  continue;
 		  }
 
-      if (tokens[i].type == TK_REG) {
+      /*if (tokens[i].type == TK_REG) {
         continue;
-      }
+      }*/
 
 		  if (tokens[i].type == TK_NOTYPE) {
 			  continue;
