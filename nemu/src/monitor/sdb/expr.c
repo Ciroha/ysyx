@@ -227,6 +227,9 @@ word_t expr(char *e, bool *success) {
   for (int i = 0; i < nr_token; i++) {
     if (tokens[i].type == TK_REG) {
       bool flag1 = true;
+      char *tmp_str = strtok(tokens[i].str, " ");
+      strcpy(tokens[i].str, tmp_str);
+      Log("Now %s", tokens[i].str);
       int tmp = isa_reg_str2val(tokens[i].str, &flag1);
       if (flag1){
         sprintf(tokens[i].str, "%d", tmp);
