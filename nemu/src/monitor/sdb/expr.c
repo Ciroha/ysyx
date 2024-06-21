@@ -74,7 +74,7 @@ static regex_t re[NR_REGEX] = {};
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
  */
-void init_regex() {
+void init_regex() { //表达式编译
   int i;
   char error_msg[128];
   int ret;
@@ -96,7 +96,7 @@ typedef struct token {
 static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-static bool make_token(char *e) {
+static bool make_token(char *e) { //token的分割
   int position = 0;
   int i;
   regmatch_t pmatch;
@@ -106,9 +106,10 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-        char *substr_start = e + position;
-        int substr_len = pmatch.rm_eo;
+      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) { 
+        //regexec用于正则表达式的匹配，rm_so存放文本在目标串的开始位置
+        char *substr_start = e + position;  //开始位置
+        int substr_len = pmatch.rm_eo;  //结束位置，也就是长度
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
@@ -190,7 +191,7 @@ static bool make_token(char *e) {
 
 
 word_t expr(char *e, bool *success) {
-  if (!make_token(e)) {
+  if (!make_token(e)) { //首先处理字符串
     *success = false;
     return 0;
   }
@@ -207,7 +208,9 @@ word_t expr(char *e, bool *success) {
 
   for (int i = 0; i < nr_token; i++) {
     //Log("tokens[i - 1].type = %d", tokens[i - 1].type);
-    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_HEX &&tokens[i - 1].type != TK_NUMBER && tokens[i - 1].type != TK_RIGHT))) {
+    if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_HEX &&
+      tokens[i - 1].type != TK_NUMBER && tokens[i - 1].type != TK_RIGHT))) {  //指针的判断
+      
       tokens[i].type = TK_DREF;
       tokens[i + 1].type = TK_NOTYPE;
       strcpy(tokens[i].str, tokens[i+1].str);
@@ -215,7 +218,8 @@ word_t expr(char *e, bool *success) {
       Log("change to dref!");
     }
   } //对乘号进行替换
-  for (int i = 0;i < nr_token; i++) {
+
+  for (int i = 0;i < nr_token; i++) { //把16进制的字符串转成数字
     if (tokens[i].type == TK_HEX) {
       //char *endptr;
       Log("before %s", tokens[i].str);
@@ -224,7 +228,7 @@ word_t expr(char *e, bool *success) {
     }
   }
 
-  for (int i = 0; i < nr_token; i++) {
+  for (int i = 0; i < nr_token; i++) {  //对寄存器的处理
     if (tokens[i].type == TK_REG) {
       bool flag1 = true;
       char *tmp_str = strtok(tokens[i].str, " ");
@@ -252,6 +256,7 @@ bool check_parentheses(int p, int q) {
 			if (tokens[i].type == TK_LEFT) cnt++;
 			else if (tokens[i].type == TK_RIGHT) cnt--; //如果出现先有右括号，报错
 			//Log("cnt = %d", cnt);
+      //让括号的数量匹配
 			if (cnt < 0) return false;
 		}
 		if (cnt == 0) return true;
@@ -323,7 +328,7 @@ if (p > q) {
 		  }else if (tokens[i].type == TK_RIGHT) {
 			  flag--; //在括号外
 		  }
-      
+      //分别记录处于最后面的符号
 		  if (!flag && (tokens[i].type == '+' || tokens[i].type == '-')) { //在括号外且运算符为加减
 			  op1 = (op1 > i) ? op1 : i;
 		  }
@@ -343,7 +348,7 @@ if (p > q) {
       if (!flag && (tokens[i].type == TK_BEQ)) {
        op5 = (op5 > i) ? op5 : i;
       }
-      
+      //为符号的优先级排序
 		  op = (op4 != -1) ? op4 :
          (op3 != -1) ? op3 :
          (op5 != -1) ? op5 :

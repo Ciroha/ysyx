@@ -29,7 +29,7 @@ void create_watchpoint(char* args);
 word_t paddr_read(paddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
-static char* rl_gets() {
+static char* rl_gets() {  //命令行读取函数
   static char *line_read = NULL;
 
   if (line_read) {
@@ -47,19 +47,19 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
-  cpu_exec(-1);
+  cpu_exec(-1); //一直执行
   return 0;
 }
 
 
-static int cmd_q(char *args) {
+static int cmd_q(char *args) {  //切换状态到退出
   nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
 static int cmd_help(char *args);
 
-static int cmd_si(char *args) {
+static int cmd_si(char *args) { //单步执行
   int steps = 0; //变量定义
   if (args == NULL)
     steps = 1; //如果没有接参数，就将步数设置为1
@@ -179,17 +179,17 @@ void sdb_mainloop() {
     return;
   }
 
-  for (char *str; (str = rl_gets()) != NULL; ) {
+  for (char *str; (str = rl_gets()) != NULL; ) {  //调用字符读取函数
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
-    char *cmd = strtok(str, " ");
+    char *cmd = strtok(str, " "); //读取第一个字符作为命令
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
-    char *args = cmd + strlen(cmd) + 1;
+    char *args = cmd + strlen(cmd) + 1; //参数从cmd后面加1开始
     if (args >= str_end) {
       args = NULL;
     }
@@ -202,7 +202,7 @@ void sdb_mainloop() {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { return; }
+        if (cmd_table[i].handler(args) < 0) { return; } //根据参数进行调用
         break;
       }
     }
@@ -211,7 +211,7 @@ void sdb_mainloop() {
   }
 }
 
-void expr_test() {
+void expr_test() {  //表达式测试
   Log("expr_test!");
   FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
   if (fp == NULL) perror("test error");

@@ -103,10 +103,10 @@ void init_monitor(int argc, char *argv[]) {
   parse_args(argc, argv);
 
   /* Set random seed. */
-  init_rand();
+  init_rand();  //与计时器有关的初始化
 
   /* Open the log file. */
-  init_log(log_file);
+  init_log(log_file); //可以手动使用-l对log_file进行选择
 
   /* Initialize memory. */
   init_mem();
@@ -115,16 +115,16 @@ void init_monitor(int argc, char *argv[]) {
   IFDEF(CONFIG_DEVICE, init_device());
 
   /* Perform ISA dependent initialization. */
-  init_isa();
+  init_isa(); //isa初始化
 
   /* Load the image to memory. This will overwrite the built-in image. */
-  long img_size = load_img();
+  long img_size = load_img(); //客户程序读入内存
 
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
 
   /* Initialize the simple debugger. */
-  init_sdb();
+  init_sdb(); //调试器初始化
 
 #ifndef CONFIG_ISA_loongarch32r
   IFDEF(CONFIG_ITRACE, init_disasm(
