@@ -78,7 +78,7 @@ static void execute(uint64_t n) {
   Decode s; //Decode是译码信息结构体
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
-    g_nr_guest_inst ++;
+    g_nr_guest_inst ++; //客户指令记录
     trace_and_difftest(&s, cpu.pc); //追踪与pc检测
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
