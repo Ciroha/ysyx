@@ -1,12 +1,44 @@
-all:
-	@echo "Write this Makefile by your self."
+#top name
+TOPNAME = ysyx_23060332_cpu
 
-sim:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	gtkwave wave.vcd	
+#some build's dir variable
+BUILD_DIR = ./builds
+OBJ_DIR = $(BUILD_DIR)/obj_dir
+BIN = $(BUILD_DIR)/$(TOPNAME)
 
-switch_to_vcd:
-	verilator -Wall top.v test.cpp --cc --trace --exe --build
-	
 
+#verilator variable
+ifeq ($(VERILATOR_ROOT),)
+VERILATOR = verilator
+else
+export VERILATOR_ROOT
+VERILATOR = $(VERILATOR_ROOT)/bin/verilator
+endif
+
+#verilator flag
+VERILATOR_FLAGS += -MMD -cc -O3  --build --x-assign fast --x-initial fast --noassert
+VERILATOR_FLAGS += --trace
+
+#source code
+VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" -or -name "*.sv")
+CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+
+# #sta 
+# include $(NPC_HOME)/script/yosys-sta.mk
+
+#sim
+include $(NPC_HOME)/script/sim.mk
+
+# #nvb
+# include $(NPC_HOME)/script/sim_nvb.mk 
+
+#main makefile in all project
 include ../Makefile
+
+.PHONY:clean run
+
+run:
+	$(NPC_HOME)/builds/$(TOPNAME)
+
+clean:
+	-rm -rf builds/* result top.dot top.png vsrc/*.png
