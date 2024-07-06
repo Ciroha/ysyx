@@ -3,6 +3,8 @@
 #include "Vysyx_23060332_top.h"
 #include "stdlib.h"
 #include "stdint.h"
+#include "Vysyx_23060332_top__Dpi.h"
+#include "svdpi.h"
 
 static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
@@ -41,6 +43,14 @@ static void reset(int n) {
 	dut.rst = 1;
  	while (n -- > 0) single_cycle();
 	dut.rst = 0;
+}
+
+extern "C" void npc_trap(){
+	tfp->dump(contextp -> time());
+	contextp -> timeInc(1);
+	tfp -> close();
+	printf("trap in %#x",dut.pc);
+	exit(0);
 }
 
 int main(){
