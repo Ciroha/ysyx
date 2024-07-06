@@ -1,5 +1,5 @@
 #top name
-TOPNAME = ysyx_23060332_cpu
+TOPNAME = ysyx_23060332_top
 
 #some build's dir variable
 BUILD_DIR = ./builds
