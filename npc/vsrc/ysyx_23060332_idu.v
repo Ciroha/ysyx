@@ -23,6 +23,9 @@ always @(*) begin
         // wen = 1'b1;
     end
     else if ((opcode_r == 7'b1110011) && (imm_r == 12'b000000000001)) begin
+        rd = 0;
+        rs1 = 0;
+        imm = 0;
         npc_trap();
     end
     else begin

@@ -3,6 +3,7 @@
 // See Vysyx_23060332_top.h for the primary calling header
 
 #include "verilated.h"
+#include "verilated_dpi.h"
 
 #include "Vysyx_23060332_top___024root.h"
 
@@ -144,6 +145,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
     vlSelf->inst = 0;
     vlSelf->pc = 0;
     vlSelf->ysyx_23060332_top__DOT__rs1 = 0;
+    vlSelf->ysyx_23060332_top__DOT__rd = 0;
     vlSelf->ysyx_23060332_top__DOT__imm = 0;
     vlSelf->ysyx_23060332_top__DOT__wdata = 0;
     vlSelf->ysyx_23060332_top__DOT__wen = 0;
