@@ -8,14 +8,21 @@ size_t strlen(const char *s) {
   panic("Not implemented");
 }
 
-char *strcpy(char *dst, const char *src) {  //const用于保护源字符串不被修改
-  if (dst == NULL || src == NULL)
-    return NULL;
-  if (dst == src)
-    return dst;
-  char *tmp = dst;
-  while ((*dst++ = *src++) != '\0');  //结合方向为从右到左，所以先计算++
-  return tmp;  
+// char *strcpy(char *dst, const char *src) {  //const用于保护源字符串不被修改
+//   if (dst == NULL || src == NULL)
+//     return NULL;
+//   if (dst == src)
+//     return dst;
+//   char *tmp = dst;
+//   while ((*dst++ = *src++) != '\0');  //结合方向为从右到左，所以先计算++
+//   return tmp;  
+// }
+char *strcpy(char *dst, const char *src) { 
+  size_t i;
+	for (i = 0; src[i] != '\0'; i++)
+  	dst[i] = src[i];
+  dst[i] = '\0';
+  return dst;
 }
 
 char *strncpy(char *dst, const char *src, size_t n) { //该函数不会加终止符
@@ -34,14 +41,23 @@ char *strncpy(char *dst, const char *src, size_t n) { //该函数不会加终止
   return tmp;  
 }
 
+// char *strcat(char *dst, const char *src) {
+//   char *tmp = dst;
+//   while (*dst != '\0') {
+//     dst++;
+//   } //寻找dst的终止符
+//   while ((*dst++ = *src++) != '\0');
+//   return tmp;
+// }
 char *strcat(char *dst, const char *src) {
-  char *tmp = dst;
-  while (*dst != '\0') {
-    dst++;
-  } //寻找dst的终止符
-  while ((*dst++ = *src++) != '\0');
-  return tmp;
+  size_t dst_len = strlen(dst);
+  size_t i;
+  for (i = 0 ; src[i] != '\0' ; i++)
+  	dst[dst_len + i] = src[i];
+  dst[dst_len + i] = '\0';
+	return dst;
 }
+
 
 int strcmp(const char *s1, const char *s2) {
   const unsigned char *temp1 = (const unsigned char *)s1;  //转换成无符号数，防止最后结果负值字符比正值大
