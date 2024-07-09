@@ -59,7 +59,10 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
-  panic("Not implemented");
+  unsigned char* p = s;
+  while (n--)
+    *p++ = (unsigned char)c;
+  return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) {
@@ -67,7 +70,11 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-  panic("Not implemented");
+  char *tmp = out;
+  const char *tmp2 = in;
+  while (n--)
+    *tmp++ = *tmp2++;
+  return out; 
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
