@@ -84,11 +84,11 @@ int memcmp(const void *s1, const void *s2, size_t n) {
     return 0;
   while (n--) {
     if (*tmp1++ != *tmp2++){
-      tmp1--;
-      tmp2--;
       break;
     }
   }
+        tmp1--;
+      tmp2--;
   return *tmp1-*tmp2;
 }
 
