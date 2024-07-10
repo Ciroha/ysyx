@@ -78,13 +78,15 @@ void *memcpy(void *out, const void *in, size_t n) {
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
-	unsigned char *p1 = (unsigned char *)s1;
-	unsigned char *p2 = (unsigned char *)s2;
-	int i;
-	for(i = 0; i < n ; i++)
-		if(p1[i] != p2[i])
-			return (p1[i] < p2[i]) ? -1 : 1;
-	return 0;
+  const unsigned char *tmp1 = s1;
+  const unsigned char *tmp2 = s2;
+  if(!n)
+    return 0;
+  while (*tmp1 && (*tmp1 == *tmp2)) {
+    tmp1++;
+    tmp2++;
+  }
+  return *tmp1-*tmp2;
 }
 
 #endif
