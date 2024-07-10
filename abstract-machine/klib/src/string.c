@@ -82,14 +82,14 @@ int memcmp(const void *s1, const void *s2, size_t n) {
   const unsigned char *tmp2 = s2;
   if(!n)
     return 0;
-  while (n--) {
-    if (*tmp1++ != *tmp2++){
-      break;
-    }
+  while (--n) { //这里如果使用n--会导致数组的越界访问，即访问到了s1[n]和s2[n]
+    if (*tmp1 == *tmp2)
+    {
+      tmp1++;
+      tmp2++;
+    }else break;
   }
-        tmp1--;
-      tmp2--;
-  return *tmp1-*tmp2;
+  return *tmp1-*tmp2; //这里使用--n会导致最后一个tmp不进行比较，直接相减，不过从逻辑上来说是正确的
 }
 
 #endif
