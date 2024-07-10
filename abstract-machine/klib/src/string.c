@@ -82,12 +82,9 @@ int memcmp(const void *s1, const void *s2, size_t n) {
   const unsigned char *tmp2 = s2;
   if(!n)
     return 0;
-  while (--n) {
-    if (*tmp1 == *tmp2)
-    {
-      tmp1++;
-      tmp2++;
-    }else break;
+  while (n--) {
+    if (*tmp1++ != *tmp2++)
+      break;
   }
   return *tmp1-*tmp2;
 }
