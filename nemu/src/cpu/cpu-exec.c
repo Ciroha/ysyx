@@ -67,7 +67,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftes
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
   // if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); } //如果小于10条则打印指令
-  display_ringbuf();
+  
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   
   IFDEF(CONFIG_WATCHPOINT, wp_difftest();)  //这里可以在menuconfig中修改
@@ -119,6 +119,7 @@ static void execute(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
+  display_ringbuf();
 }
 
 static void statistic() {
