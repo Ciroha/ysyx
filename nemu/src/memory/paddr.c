@@ -54,7 +54,7 @@ word_t paddr_read(paddr_t addr, int len) {
   if (likely(in_pmem(addr))) {
     word_t mem_tmp;
     mem_tmp = pmem_read(addr, len);
-    printf("Address is: %x, mem is %x\n", addr, mem_tmp);
+    IFDEF(CONFIG_MTRACE, printf("Address is: %x, read mem is %x\n", addr, mem_tmp));
     return mem_tmp;
   }
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
