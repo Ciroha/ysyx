@@ -230,3 +230,6 @@ config WATCHPOINT
   bool "Enable watchpoint"
   default y
 
+config BATCHMODE
+  bool "Enable batchmode"
+  default y

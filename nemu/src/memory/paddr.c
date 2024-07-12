@@ -64,7 +64,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   if (likely(in_pmem(addr))) { 
-    IFDEF(CONFIG_MTRACE_WRITE, printf("pc is %x, Address is: %x, write mem data is %x\n", cpu.pc, addr, data));
+    IFDEF(CONFIG_MTRACE_WRITE, printf("PC is %x, Address is: %x, write mem data is %x\n", cpu.pc, addr, data));
     pmem_write(addr, len, data); 
     return; 
   }
