@@ -40,6 +40,7 @@ enum {
 (BITS(i, 31, 31) << 11) | (BITS(i, 7, 7) << 10) | (BITS(i, 30, 25) << 4) | (BITS(i, 11, 8))) << 1 , 13); } while(0)
 
 void ftrace(int type, Decode *s, word_t imm, int rd){
+  IFNDEF(CONFIG_FTRACE, return);
   uint32_t i = s->isa.inst.val;
   int rs1 = BITS(i, 19, 15);
   char *prev_fname = find_func(s->pc);
