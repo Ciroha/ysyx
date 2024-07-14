@@ -119,7 +119,7 @@ static void execute(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
-  display_ringbuf();
+  IFDEF(CONFIG_IRINGBUF, display_ringbuf();)
 }
 
 static void statistic() {
