@@ -17,6 +17,7 @@
 #include <cpu/cpu.h>
 #include <cpu/ifetch.h>
 #include <cpu/decode.h>
+#include <ftrace.h>
 
 #define R(i) gpr(i)
 #define Mr vaddr_read
@@ -37,6 +38,21 @@ enum {
 (BITS(i, 31, 31) << 19) | (BITS(i, 19, 12) << 11) | (BITS(i, 20, 20) << 10) | (BITS(i, 30, 21))) << 1 , 21); } while(0)
 #define immB() do { *imm = SEXT(( \
 (BITS(i, 31, 31) << 11) | (BITS(i, 7, 7) << 10) | (BITS(i, 30, 25) << 4) | (BITS(i, 11, 8))) << 1 , 13); } while(0)
+
+void ftrace(int type, Decode *s, word_t imm, int rd){
+  uint32_t i = s->isa.inst.val;
+  int rs1 = BITS(i, 19, 15);
+  char *prev_fname = find_func(s->pc);
+  char *now_fname = find_func(s->dnpc); 
+  if(type == JAL) ftrace_write(CALL, now_fname, s->dnpc, s->pc);
+  else if(type == JALR){
+    if(rs1 == 1 && imm == 0 && rd == 0)
+      ftrace_write(RET, prev_fname, s->dnpc, s->pc);
+    else
+      ftrace_write(CALL, now_fname, s->dnpc, s->pc);
+  }
+}
+
 
 static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
   uint32_t i = s->isa.inst.val;
@@ -67,8 +83,8 @@ static int decode_exec(Decode *s) {
   INSTPAT_START();
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(rd) = imm);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
-  INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, s->dnpc = s->pc + imm; R(rd) = s->snpc);
-  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, s->dnpc = (src1 + imm) & ~1ull; R(rd) = s->snpc);
+  INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, s->dnpc = s->pc + imm; R(rd) = s->snpc; ftrace(JAL, s, imm, rd));
+  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, s->dnpc = (src1 + imm) & ~1ull; R(rd) = s->snpc; ftrace(JALR, s, imm, rd)); 
   INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, s->dnpc = (src1 == src2) ? s->pc + imm : s->dnpc);
   INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, s->dnpc = (src1 != src2) ? s->pc + imm : s->dnpc);
   INSTPAT("??????? ????? ????? 100 ????? 11000 11", blt    , B, s->dnpc = ((int32_t)src1 < (int32_t)src2) ? s->pc + imm : s->dnpc);
