@@ -24,6 +24,16 @@
  * You can modify this value as you want.
  */
 #define MAX_INST_TO_PRINT 10
+#define MAX_IRINGBUF 16
+
+typedef struct{
+  word_t pc;
+  uint32_t inst;
+}Iring;
+
+Iring iringbuf[MAX_IRINGBUF];
+int ringcount = 0;
+bool full = false;
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -33,11 +43,31 @@ static bool g_print_step = false;
 void device_update();
 void wp_difftest();
 
+void display_ringbuf() {
+  if (!full && !ringcount) return;
+  int end = ringcount;
+  int i = full ? ringcount : 0;
+
+  void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+  char buf[128];
+  char *p;
+  do {
+    p = buf;
+    p += sprintf(buf, "%s" FMT_WORD ": %08x ", (i+1)%MAX_IRINGBUF==end?" --> ":"     ", iringbuf[i].pc, iringbuf[i].inst);
+    disassemble(p, buf+sizeof(buf)-p, iringbuf[i].pc, (uint8_t *)&iringbuf[i].inst, 4);
+
+    if ((i+1)%MAX_IRINGBUF==end) printf(ANSI_FG_RED);
+    puts(buf);
+  } while ((i = (i+1)%MAX_IRINGBUF) != end);
+  puts(ANSI_NONE);
+}
+
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftest相关函数定义
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); } //TODO 有改动！原先没有CONFIG_，其实一样？
 #endif
-  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+  // if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); } //如果小于10条则打印指令
+  
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   
   IFDEF(CONFIG_WATCHPOINT, wp_difftest();)  //这里可以在menuconfig中修改
@@ -72,6 +102,12 @@ static void exec_once(Decode *s, vaddr_t pc) {
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
 #endif
+
+//iringbuf
+iringbuf[ringcount].pc = s->pc;
+iringbuf[ringcount].inst = s->isa.inst.val;
+ringcount = (ringcount + 1) % MAX_IRINGBUF;
+full = full || ringcount == 0;
 }
 
 static void execute(uint64_t n) { 
@@ -83,6 +119,7 @@ static void execute(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
+  IFDEF(CONFIG_IRINGBUF, display_ringbuf();)
 }
 
 static void statistic() {

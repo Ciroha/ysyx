@@ -3,6 +3,7 @@
 #include "Vysyx_23060332_top.cpp"
 #include "Vysyx_23060332_top___024root__DepSet_hb2af9eaa__0.cpp"
 #include "Vysyx_23060332_top___024root__DepSet_hb099763b__0.cpp"
+#include "Vysyx_23060332_top__Dpi.cpp"
 #include "Vysyx_23060332_top__Trace__0.cpp"
 #include "Vysyx_23060332_top___024root__Slow.cpp"
 #include "Vysyx_23060332_top___024root__DepSet_hb2af9eaa__0__Slow.cpp"

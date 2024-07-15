@@ -174,11 +174,12 @@ void sdb_set_batch_mode() {
 }
 
 void sdb_mainloop() {
+#ifdef CONFIG_BATCHMODE
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
   }
-
+#endif
   for (char *str; (str = rl_gets()) != NULL; ) {  //调用字符读取函数
     char *str_end = str + strlen(str);
 
