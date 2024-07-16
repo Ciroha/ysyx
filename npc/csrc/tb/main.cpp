@@ -6,17 +6,66 @@
 #include "Vysyx_23060332_top__Dpi.h"
 #include "svdpi.h"
 
+#include <getopt.h>
+
 static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
 VerilatedVcdC* tfp = NULL;
+static char *img_file = NULL;
 
-static const uint32_t img[] = {
+static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
 	0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
 	0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
 	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
 	0b00000000000100000000000001110011,
 };
+
+
+static int parse_args(int argc, char *argv[]) {
+	const struct option table[] = {
+		{"help"     , no_argument      , NULL, 'h'},
+		{0          , 0                , NULL,  0 },
+	};
+	int o;
+	while ( (o = getopt_long(argc, argv, "-h", table, NULL)) != -1) {
+		switch (o) {
+			case 1: img_file = optarg; return 0;
+			default:
+				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
+                printf("\t-b,--batch              run with batch mode\n");
+                printf("\t-l,--log=FILE           output log to FILE\n");
+                printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
+                printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
+                printf("\t-f,--ftrace=FILE        parse the elf file\n");
+                printf("\n");
+                exit(0);
+		}
+	}
+	return 0;
+}
+
+static size_t load_img(){
+	if (img_file == NULL) {
+		printf("No image is given. Use the default build-in image.");
+    	return 4096; // built-in image size
+	}
+
+	FILE *fp = fopen(img_file, "rb");
+	assert(fp);
+
+	fseek(fp, 0, SEEK_END);
+	size_t size = ftell(fp);
+
+	printf("The image is %s, size = %ld", img_file, size);
+
+	fseek(fp, 0 , SEEK_SET);
+	int ret = fread(img, size, 1, fp);
+	assert(ret == 1);
+
+	fclose(fp);
+	return size;
+}
 
 uint32_t *init_mem(size_t size) {
 	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
@@ -54,9 +103,11 @@ extern "C" void npc_trap(){
 	exit(0);
 }
 
-int main(){
+int main(int argc, char *argv[]){
+	parse_args(argc, argv);
 	uint32_t *memory;
-	memory = init_mem(10);
+	size_t size = load_img();
+	memory = init_mem(size);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
