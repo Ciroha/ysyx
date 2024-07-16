@@ -30,7 +30,7 @@ static int parse_args(int argc, char *argv[]) {
 	int o;
 	while ( (o = getopt_long(argc, argv, "-h", table, NULL)) != -1) {
 		switch (o) {
-			case 1: img_file = optarg; return 0;
+			case 1: printf("case 1"); img_file = optarg; return 0;
 			default:
 				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
                 printf("\t-b,--batch              run with batch mode\n");
@@ -49,7 +49,7 @@ static size_t load_img(){
 	printf("image file is %s", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.");
-    	return 4096; // built-in image size
+    	return 10; // built-in image size
 	}
 
 	FILE *fp = fopen(img_file, "rb");
@@ -69,7 +69,7 @@ static size_t load_img(){
 }
 
 uint32_t *init_mem(size_t size) {
-	uint32_t* memory = (uint32_t*)malloc(4 * size * sizeof(uint32_t));
+	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
 	memcpy(memory,img,sizeof(img));
 	if(memory == NULL) {exit(0);}
 	return memory;
