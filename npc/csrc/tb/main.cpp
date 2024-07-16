@@ -69,7 +69,7 @@ static size_t load_img(){
 }
 
 uint32_t *init_mem(size_t size) {
-	uint32_t* memory = (uint32_t*)malloc(size * sizeof(void));
+	uint32_t* memory = (uint32_t*)malloc(size);
 	memcpy(memory,img,sizeof(img));
 	if(memory == NULL) {exit(0);}
 	return memory;
