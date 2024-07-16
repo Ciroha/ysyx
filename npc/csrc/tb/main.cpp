@@ -13,12 +13,12 @@ VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 static char *img_file = NULL;
 
-static uint32_t *img = {
-	// 0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
-	// 0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
-	// 0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
-	// 0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
-	// 0b00000000000100000000000001110011,
+static uint32_t img[] = {
+	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
+	0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
+	0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
+	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
+	0b00000000000100000000000001110011,
 };
 
 
@@ -68,8 +68,8 @@ static size_t load_img(){
 	return size;
 }
 
-uint32_t *init_mem() {
-	uint32_t* memory = (uint32_t*)malloc(sizeof(img));
+uint32_t *init_mem(size_t size) {
+	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
 	memcpy(memory,img,sizeof(img));
 	if(memory == NULL) {exit(0);}
 	return memory;
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]){
 	printf("image file is %s", img_file);
 	uint32_t *memory;
 	size_t size = load_img();
-	memory = init_mem();
+	memory = init_mem(size);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
