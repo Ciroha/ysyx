@@ -13,7 +13,7 @@ VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 static char *img_file = NULL;
 
-static uint32_t *img = {
+static void *img = {
 	// 0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
 	// 0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
 	// 0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
@@ -69,7 +69,7 @@ static size_t load_img(){
 }
 
 uint32_t *init_mem(size_t size) {
-	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
+	uint32_t* memory = (uint32_t*)malloc(size * sizeof(void));
 	memcpy(memory,img,sizeof(img));
 	if(memory == NULL) {exit(0);}
 	return memory;
