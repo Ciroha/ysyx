@@ -56,7 +56,7 @@ extern "C" void npc_trap(){
 
 int main(){
 	uint32_t *memory;
-	memory = init_mem(3);
+	memory = init_mem(10);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
