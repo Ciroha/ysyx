@@ -1,48 +1,90 @@
+`include "ysyx_23060332_define.v"
 module ysyx_23060332_top (
     input clk,
     input rst,
-    input [31:0] inst,
+    input [`InstBus]        inst,
+    // input [`InstAddrBus]    pc_i,
 
-    output [31:0] pc
+    output [`InstAddrBus]   pc
 );
 
-wire [4:0] rs1;
-wire [4:0] rd;
-wire [11:0] imm;
-wire [31:0] rdata;
-wire [31:0] wdata;
-wire wen;
+//pc
+wire [`InstAddrBus] jump_addr;
+wire                jump_en;
+
+//id
+wire [`InstAddrBus] inst_addr;
+wire [`RegDataBus]  rdata1;
+wire [`RegDataBus]  rdata2;
+
+//ex
+wire [`RegDataBus]  op1;
+wire [`RegDataBus]  op2;
+wire [`RegDataBus]  op1_jump;
+wire [`RegDataBus]  op2_jump;
+wire                id_ex_reg_wen;
+wire [`RegAddrBus]  id_ex_waddr;
+wire [`InstBus]     id_ex_inst;
+
+//reg
+wire [`RegAddrBus]  raddr1;
+wire [`RegAddrBus]  raddr2;
+wire [`RegAddrBus]  ex_reg_waddr;
+wire [`RegDataBus]  ex_reg_wdata;
+wire                ex_reg_reg_wen;
+
 
 ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .clk(clk),
     .rst(rst),
-    .pc(pc)
-);
+    .jump_addr(jump_addr),
+    .jump_en(jump_en),
+    .pc(pc),
+    .inst_addr(inst_addr)
+  );
 
-ysyx_23060332_idu  ysyx_23060332_idu_inst (
-    .inst(inst),
-    .rd(rd),
-    .rs1(rs1),
-    .imm(imm)
-);
+  ysyx_23060332_idu  ysyx_23060332_idu_inst (
+    .inst_i(inst),
+    .inst_addr(inst_addr),
+    .rdata1(rdata1),
+    .rdata2(rdata2),
+    .op1(op1),
+    .op2(op2),
+    .op1_jump(op1_jump),
+    .op2_jump(op2_jump),
+    .reg_wen(id_ex_reg_wen),
+    .waddr(id_ex_waddr),
+    .inst_o(id_ex_inst),
+    .raddr1(raddr1),
+    .raddr2(raddr2)
+  );
 
-ysyx_23060332_alu  ysyx_23060332_alu_inst (
-    .rdata(rdata),
-    .imm(imm),
-    .inst(inst),
-    .wdata(wdata),
-    .wen(wen)
-);
+  ysyx_23060332_exu  ysyx_23060332_exu_inst (
+    .op1(op1),
+    .op2(op2),
+    .op1_jump(op1_jump),
+    .op2_jump(op2_jump),
+    .reg_wen_i(id_ex_reg_wen),
+    .waddr_i(id_ex_waddr),
+    .inst_i(id_ex_inst),
+    .jump_addr(jump_addr),
+    .jump_en(jump_en),
+    .waddr_o(ex_reg_waddr),
+    .wdata(ex_reg_wdata),
+    .reg_wen_o(ex_reg_reg_wen)
+  );
 
-ysyx_23060332_reg  ysyx_23060332_reg_inst (
+  ysyx_23060332_reg  ysyx_23060332_reg_inst (
     .clk(clk),
     .rst(rst),
-    .rs1(rs1),
-    .rd(rd),
-    .wen(wen),
-    .wdata(wdata),
-    .rdata(rdata)
-);
+    .raddr1(raddr1),
+    .raddr2(raddr2),
+    .waddr(ex_reg_waddr),
+    .wdata(ex_reg_wdata),
+    .reg_wen(ex_reg_reg_wen),
+    .rdata1(rdata1),
+    .rdata2(rdata2)
+  );
 
     
 endmodule
