@@ -1,5 +1,5 @@
 //Reg Module which can support two read and one write
-// `include "ysyx_23060332_define.v"
+`include "ysyx_23060332_define.v"
 module ysyx_23060332_reg (
     input wire clk,
     input wire rst,

@@ -1,4 +1,4 @@
-// `include "ysyx_23060332_define.v"
+`include "ysyx_23060332_define.v"
 module ysyx_23060332_pc (
     input wire clk,
     input wire rst,
