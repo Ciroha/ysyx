@@ -17,7 +17,7 @@ endif
 
 #verilator flag
 VERILATOR_FLAGS += -MMD -cc -O3  --build --x-assign fast --x-initial fast --noassert
-VERILATOR_FLAGS += --trace -I/home/ciroha/ysyx-workbench/npc/vsrc/
+VERILATOR_FLAGS += --trace 
 
 #source code
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" -or -name "*.sv")
