@@ -19,8 +19,8 @@ static uint32_t img[] = {
 	0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
 	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
 	0b00000000000000000001000110010111,	//auipc x3, 1  0x80000010
-	0b10000000000000000000001000110111,	//lui x4, 1
-
+	0b10000000000000000000001000110111,	//lui x4, 0x80000
+	0b00000000010000100000001001100111, //jalr x4, 4(x4)
 	0b00000000000100000000000001110011,	//ebreak
 };
 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[]){
 	tfp->open("builds/waveform.vcd");
 	
 	reset(10);
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 15; i++){
 		dut.clk=0;dut.eval();		
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
