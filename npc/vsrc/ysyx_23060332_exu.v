@@ -58,11 +58,18 @@ always @(*) begin
             wdata = op1 + op2;
         end
 
-        `INST_JAL, `INST_JALR: begin
+        `INST_JAL: begin
             reg_wen_o = `WriteEnable;
             wdata = op1 + op2;
             jump_en = `JumpEnable;
             jump_addr = op1_jump + op2_jump;
+        end
+
+        `INST_JALR: begin
+            reg_wen_o = `WriteEnable;
+            wdata = op1 + op2;
+            jump_en = `JumpEnable;
+            jump_addr = (op1_jump + op2_jump) & ~(32'b1);
         end
 
         default: ;
