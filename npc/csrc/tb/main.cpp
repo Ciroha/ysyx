@@ -110,7 +110,7 @@ int main(int argc, char *argv[]){
 	printf("image file is %s", img_file);
 	uint32_t *memory;
 	size_t size = load_img();
-	memory = init_mem(size);
+	memory = init_mem(10);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
