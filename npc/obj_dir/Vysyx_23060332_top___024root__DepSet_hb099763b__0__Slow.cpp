@@ -51,7 +51,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_settle(Vysyx_23060332_top_
 #ifdef VL_DEBUG
                 Vysyx_23060332_top___024root___dump_triggers__stl(vlSelf);
 #endif
-                VL_FATAL_MT("/home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_top.v", 1, "", "Settle region did not converge.");
+                VL_FATAL_MT("/home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_top.v", 2, "", "Settle region did not converge.");
             }
             vlSelf->__VstlIterCount = ((IData)(1U) 
                                        + vlSelf->__VstlIterCount);
@@ -144,12 +144,20 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
     vlSelf->rst = 0;
     vlSelf->inst = 0;
     vlSelf->pc = 0;
-    vlSelf->ysyx_23060332_top__DOT__rs1 = 0;
-    vlSelf->ysyx_23060332_top__DOT__rd = 0;
-    vlSelf->ysyx_23060332_top__DOT__imm = 0;
-    vlSelf->ysyx_23060332_top__DOT__wdata = 0;
-    vlSelf->ysyx_23060332_top__DOT__wen = 0;
-    vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT____VdfgExtracted_hc926e799__0 = 0;
+    vlSelf->ysyx_23060332_top__DOT__jump_addr = 0;
+    vlSelf->ysyx_23060332_top__DOT__jump_en = 0;
+    vlSelf->ysyx_23060332_top__DOT__inst_addr = 0;
+    vlSelf->ysyx_23060332_top__DOT__rdata1 = 0;
+    vlSelf->ysyx_23060332_top__DOT__op1 = 0;
+    vlSelf->ysyx_23060332_top__DOT__op2 = 0;
+    vlSelf->ysyx_23060332_top__DOT__op1_jump = 0;
+    vlSelf->ysyx_23060332_top__DOT__op2_jump = 0;
+    vlSelf->ysyx_23060332_top__DOT__id_ex_reg_wen = 0;
+    vlSelf->ysyx_23060332_top__DOT__id_ex_waddr = 0;
+    vlSelf->ysyx_23060332_top__DOT__raddr1 = 0;
+    vlSelf->ysyx_23060332_top__DOT__raddr2 = 0;
+    vlSelf->ysyx_23060332_top__DOT__ex_reg_wdata = 0;
+    vlSelf->ysyx_23060332_top__DOT__ex_reg_reg_wen = 0;
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[__Vi0] = 0;
     }
