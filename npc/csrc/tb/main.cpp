@@ -122,7 +122,7 @@ int main(int argc, char *argv[]){
 	tfp->open("builds/waveform.vcd");
 	
 	reset(10);
-	for (int i = 0; i < 15; i++){
+	for (int i = 0; i < 20; i++){
 		dut.clk=0;dut.eval();		
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
