@@ -80,6 +80,7 @@ static size_t load_img(uint32_t *memory){
 	printf("The image is %s, size = %ld\n", img_file, size);
 
 	fseek(fp, 0 , SEEK_SET);
+	printf("Reading.....\n");
 	int ret = fread(guest_to_host(memory, 0x80000000), size, 1, fp);
 	printf("Read successfully!!\n");
 	assert(ret == 1);
