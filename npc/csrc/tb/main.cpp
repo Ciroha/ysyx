@@ -9,12 +9,10 @@
 #include <getopt.h>
 #include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/monitor.h>
 
-static int parse_args(int argc, char *argv[]);
-static size_t load_img(uint32_t *memory);
-uint32_t *init_mem(size_t size);
-uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
-uint32_t *init_mem(size_t size);
-uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
+// static int parse_args(int argc, char *argv[]);
+// static size_t load_img(uint32_t *memory);
+// uint32_t *init_mem(size_t size);
+// uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
 
 
 static Vysyx_23060332_top dut;
