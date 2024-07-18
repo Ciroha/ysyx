@@ -7,11 +7,16 @@
 
 #include "Vysyx_23060332_top___024root.h"
 
+void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
+
 VL_INLINE_OPT void Vysyx_23060332_top___024root___ico_sequent__TOP__0(Vysyx_23060332_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vysyx_23060332_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root___ico_sequent__TOP__0\n"); );
     // Body
+    if ((0x100073U == vlSelf->inst)) {
+        Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
+    }
     vlSelf->ysyx_23060332_top__DOT__id_ex_reg_wen = 0U;
     vlSelf->ysyx_23060332_top__DOT__id_ex_waddr = 0U;
     vlSelf->ysyx_23060332_top__DOT__raddr2 = 0U;
