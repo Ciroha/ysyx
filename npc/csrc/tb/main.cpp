@@ -49,7 +49,7 @@ static int parse_args(int argc, char *argv[]) {
 	int o;
 	while ( (o = getopt_long(argc, argv, "-h", table, NULL)) != -1) {
 		switch (o) {
-			case 1: printf("case 1"); img_file = optarg; return 0;
+			case 1: img_file = optarg; return 0;
 			default:
 				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
                 printf("\t-b,--batch              run with batch mode\n");
@@ -81,6 +81,7 @@ static size_t load_img(){
 
 	fseek(fp, 0 , SEEK_SET);
 	int ret = fread(guest_to_host(NULL, 0x80000000), size, 1, fp);
+	printf("Read successfully!!\n");
 	assert(ret == 1);
 
 	fclose(fp);
