@@ -1,5 +1,5 @@
 #include <getopt.h>
-#include <memory.h>
+#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
