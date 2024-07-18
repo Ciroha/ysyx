@@ -32,6 +32,12 @@ wire    [11:0]  imm     =   inst_i[31:20];
 import "DPI-C" function void npc_trap();
 
 always @(*) begin
+    if (inst_i == `INST_EBREAK) begin
+        npc_trap();
+    end
+end
+
+always @(*) begin
     //初始化
     inst_o = inst_i;
     reg_wen = `WriteDisable;
@@ -43,11 +49,6 @@ always @(*) begin
     op1_jump = `ZeroWord;
     op2_jump = `ZeroWord;
 
-
-    // if (inst_i == `INST_EBREAK) begin
-    //     npc_trap();
-    // end
-    // else begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
@@ -113,7 +114,6 @@ always @(*) begin
 
         default: ;
     endcase
-    end
-// end
+end
     
 endmodule
