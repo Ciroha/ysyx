@@ -17,7 +17,7 @@ endif
 
 #verilator flag
 VERILATOR_FLAGS += -MMD -cc -O3  --build --x-assign fast --x-initial fast --noassert
-VERILATOR_FLAGS += --trace
+VERILATOR_FLAGS += --trace -I/home/ciroha/ysyx-workbench/npc/vsrc/
 
 #source code
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" -or -name "*.sv")
@@ -37,8 +37,8 @@ include ../Makefile
 
 .PHONY:clean run
 
-run:
-	$(NPC_HOME)/builds/$(TOPNAME)
+run: sim
+	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
 
 clean:
 	-rm -rf builds/* result top.dot top.png vsrc/*.png

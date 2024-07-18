@@ -1,14 +1,21 @@
+//Reg Module which can support two read and one write
+`include "ysyx_23060332_define.v"
 module ysyx_23060332_reg (
     input wire clk,
     input wire rst,
 
-    input wire [4:0] rs1,
-    input wire [4:0] rd,
+    //from idu
+    input wire [`RegAddrBus]    raddr1,
+    input wire [`RegAddrBus]    raddr2,
 
-    input wire wen,
-    input wire [31:0] wdata,
+    //from exu
+    input wire [`RegAddrBus]    waddr,
+    input wire [`RegDataBus]    wdata,
+    input wire                  reg_wen,
 
-    output reg [31:0] rdata
+    //to idu
+    output reg [`RegDataBus]    rdata1,
+    output reg [`RegDataBus]    rdata2
 
 );
 
@@ -22,18 +29,29 @@ always @(posedge clk) begin
         end
     end
     else begin
-        if (wen) begin
-            regs[rd] <= wdata;
+        if (reg_wen) begin
+            regs[waddr] <= wdata;
         end
     end
 end
 
+//reg1
 always @(*) begin
-    if (rs1 == 5'd0) begin
-        rdata = 32'b0;
+    if (raddr1 == 5'd0) begin
+        rdata1 = 32'b0;
     end
     else begin
-        rdata = regs[rs1];
+        rdata1 = regs[raddr1];
+    end
+end
+
+//reg2
+always @(*) begin
+    if (raddr2 == 5'd0) begin
+        rdata2 = 32'b0;
+    end
+    else begin
+        rdata2 = regs[raddr2];
     end
 end
     
