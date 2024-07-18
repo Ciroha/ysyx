@@ -1,5 +1,6 @@
 #testbench
-CTB = $(shell find $(abspath $(NPC_HOME)/csrc/tb)  -name "*.cc" -or -name "*.cpp")
+CTB = $(shell find $(abspath $(NPC_HOME)/csrc/tb) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+VERILATOR_FLAGS += -CFLAGS "-I$(NPC_HOME)/csrc/tb/include"
 
 #sim
 sim: $(VSRCS) $(CTB)
