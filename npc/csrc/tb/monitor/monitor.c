@@ -2,7 +2,7 @@
 
 
 static int parse_args(int argc, char *argv[]);
-static uint32_t* load_img(uint32_t *memory);
+static size_t load_img();
 
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
@@ -27,11 +27,11 @@ static int parse_args(int argc, char *argv[]) {
 	return 0;
 }
 
-static uint32_t* load_img(uint32_t *memory){
+static size_t load_img(){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.\n");
-    	return memory; // built-in image size
+    	return 10; // built-in image size
 	}
 
 	FILE *fp = fopen(img_file, "rb");
@@ -49,13 +49,11 @@ static uint32_t* load_img(uint32_t *memory){
 	assert(ret == 1);
 
 	fclose(fp);
-	return memory;
+	return size;
 }
 
 uint32_t* init_monitor(int argc, char *argv[]){
-    uint32_t* memory = NULL;
     parse_args(argc, argv);
-    memory = init_mem(20);
-    uint32_t* ret = load_img(memory);
-    return ret;
+    init_mem(10);
+    load_img();
 }
