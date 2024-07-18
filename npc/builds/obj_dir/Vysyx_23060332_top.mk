@@ -42,12 +42,10 @@ VM_USER_LDLIBS = \
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	main \
-	monitor \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb \
-	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor \
 
 
 ### Default rules...
@@ -60,8 +58,6 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 VPATH += $(VM_USER_DIR)
 
 main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
