@@ -6,12 +6,6 @@
 #include "Vysyx_23060332_top__Dpi.h"
 #include "svdpi.h"
 
-// #include <memory.h>
-
-uint32_t *guest_to_host(uint32_t addr);
-uint32_t *init_mem(size_t size);
-uint32_t pmem_read(uint32_t vaddr);
-void init_monitor(int argc, char*argv[]);
 #include <getopt.h>
 
 uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
@@ -23,11 +17,26 @@ static char *img_file = NULL;
 static uint32_t *pmem = NULL;
 
 static uint32_t img[] = {
-	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
-	0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
-	0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
-	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
-	0b00000000000100000000000001110011,	//ebreak
+	// 0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
+	// 0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
+	// 0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
+	// 0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
+	// 0b00000000000000000001000110010111,	//auipc x3, 1  0x80000010
+	// 0b10000000000000000000001000110111,	//lui x4, 0x80000
+	// 0b00000000000000100000001001100111, //jalr x4, 0(x4)
+	// 0b00000000000100000000000001110011,	//ebreak
+	0x00000413,
+	0x00009117,
+	0xffc10113,
+	0x00c000ef,
+	0x00000513,
+	0x00008067,
+	0xff410113,
+	0x00000517,
+	0x01450513,
+	0x00112423,
+	0xfe9ff0ef,
+	0x0000006f,
 };
 
 
@@ -123,7 +132,6 @@ int main(int argc, char *argv[]){
 	uint32_t *memory = NULL;
 	memory = init_mem(50);
 	size_t size = load_img(memory);
-	// init_monitor(argc, argv);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
@@ -136,7 +144,7 @@ int main(int argc, char *argv[]){
 		dut.clk=0;dut.eval();		
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
-		dut.inst = pmem_read(dut.pc);
+		dut.inst = pmem_read(memory, dut.pc);
 		dut.clk=1;dut.eval();		
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
