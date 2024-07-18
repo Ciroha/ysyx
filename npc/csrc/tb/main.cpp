@@ -7,7 +7,7 @@
 #include "svdpi.h"
 
 #include <getopt.h>
-#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/monitor.h>
+#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h>
 
 // static int parse_args(int argc, char *argv[]);
 // static size_t load_img(uint32_t *memory);
@@ -18,6 +18,8 @@
 static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
 VerilatedVcdC* tfp = NULL;
+
+uint32_t* init_monitor(int argc, char *argv[]);
 
 void single_cycle(){
 	dut.clk=0;dut.eval();		
@@ -43,12 +45,14 @@ extern "C" void npc_trap(){
 }
 
 int main(int argc, char *argv[]){
-	printf("Parsing arguments!\n");
-	parse_args(argc, argv);
-	// printf("image file is %s\n", img_file);
+	// printf("Parsing arguments!\n");
+	// parse_args(argc, argv);
+	// // printf("image file is %s\n", img_file);
 	uint32_t *memory = NULL;
-	memory = init_mem(50);
-	size_t size = load_img(memory);
+	memory = init_monitor(argc, argv);
+	// memory = init_mem(50);
+	// size_t size = load_img(memory);
+
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	

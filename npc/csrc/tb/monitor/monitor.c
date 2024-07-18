@@ -49,12 +49,13 @@ static size_t load_img(uint32_t *memory){
 	assert(ret == 1);
 
 	fclose(fp);
-	return size;
+	return memory;
 }
 
-void init_monitor(int argc, char *argv[]){
+uint32_t* init_monitor(int argc, char *argv[]){
     uint32_t* memory = NULL;
     parse_args(argc, argv);
     memory = init_mem(10);
-    load_img(memory);
+    uint32_t* ret = load_img(memory);
+    return ret;
 }
