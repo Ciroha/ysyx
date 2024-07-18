@@ -56,4 +56,5 @@ void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(20);
     long img_size = load_img();
+    return;
 }
