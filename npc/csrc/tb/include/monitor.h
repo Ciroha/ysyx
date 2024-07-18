@@ -11,7 +11,8 @@
 static char *img_file = NULL;
 
 uint32_t *guest_to_host(uint32_t *memory, uint32_t addr);
-static int parse_args(int argc, char *argv[]) {
+
+int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
 		{"help"     , no_argument      , NULL, 'h'},
 		{0          , 0                , NULL,  0 },
@@ -34,7 +35,7 @@ static int parse_args(int argc, char *argv[]) {
 	return 0;
 }
 
-static size_t load_img(uint32_t *memory){
+size_t load_img(uint32_t *memory){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.\n");
