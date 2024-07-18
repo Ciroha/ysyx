@@ -1,5 +1,9 @@
 #include <getopt.h>
 #include <memory.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <unistd.h>
 
 static char *img_file = NULL;
 static uint32_t *pmem = NULL;
