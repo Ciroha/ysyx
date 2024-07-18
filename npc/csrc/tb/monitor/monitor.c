@@ -2,6 +2,13 @@
 
 static char *img_file = NULL;
 
+
+uint32_t *guest_to_host(uint32_t *memory, uint32_t addr);
+static int parse_args(int argc, char *argv[]);
+static size_t load_img(uint32_t *memory);
+uint32_t *init_mem(size_t size);
+uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
+
 uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
 
 static uint32_t img[] = {
