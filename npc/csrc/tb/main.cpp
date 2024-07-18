@@ -8,6 +8,8 @@
 
 #include <getopt.h>
 
+uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
+
 static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
 VerilatedVcdC* tfp = NULL;
@@ -92,7 +94,7 @@ uint32_t *init_mem(size_t size) {
 	return memory;
 }
 
-uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
+// uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
 uint32_t pmem_read(uint32_t *memory, uint32_t vaddr){
 	uint32_t *paddr = guest_to_host(memory, vaddr);
 	return *paddr;
