@@ -55,7 +55,7 @@ static uint32_t* load_img(uint32_t *memory){
 uint32_t* init_monitor(int argc, char *argv[]){
     uint32_t* memory = NULL;
     parse_args(argc, argv);
-    memory = init_mem(10);
+    memory = init_mem(20);
     uint32_t* ret = load_img(memory);
     return ret;
 }
