@@ -1,6 +1,6 @@
 #include "/home/ciroha/ysyx-workbench/npc/csrc/tb/include/monitor.h"
 
-static char *img_file = NULL;
+
 
 
 uint32_t *guest_to_host(uint32_t *memory, uint32_t addr);
