@@ -44,10 +44,10 @@ always @(*) begin
     op2_jump = `ZeroWord;
 
 
-    if (inst_i == `INST_EBREAK) begin
-        npc_trap();
-    end
-    else begin
+    // if (inst_i == `INST_EBREAK) begin
+    //     npc_trap();
+    // end
+    // else begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
@@ -114,6 +114,6 @@ always @(*) begin
         default: ;
     endcase
     end
-end
+// end
     
 endmodule
