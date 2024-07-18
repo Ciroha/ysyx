@@ -7,6 +7,7 @@
 #include "svdpi.h"
 
 #include <getopt.h>
+#include <monitor.h>
 
 // uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
 
