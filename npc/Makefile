@@ -37,8 +37,8 @@ include ../Makefile
 
 .PHONY:clean run
 
-# run: sim
-# 	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
+run: sim
+	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
 
 clean:
 	-rm -rf builds/* result top.dot top.png vsrc/*.png
