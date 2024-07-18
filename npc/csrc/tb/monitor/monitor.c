@@ -52,7 +52,7 @@ static size_t load_img(){
 	return size;
 }
 
-uint32_t* init_monitor(int argc, char *argv[]){
+void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(10);
     load_img();

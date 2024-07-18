@@ -48,11 +48,10 @@ int main(int argc, char *argv[]){
 	// printf("Parsing arguments!\n");
 	// parse_args(argc, argv);
 	// // printf("image file is %s\n", img_file);
-	uint32_t *memory = NULL;
-	memory = init_monitor(argc, argv);
 	// memory = init_mem(50);
 	// size_t size = load_img(memory);
 
+	init_monitor(argc, argv);
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;	
