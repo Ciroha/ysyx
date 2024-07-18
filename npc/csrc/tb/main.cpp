@@ -6,7 +6,7 @@
 #include "Vysyx_23060332_top__Dpi.h"
 #include "svdpi.h"
 
-#include <memory.h>
+#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h>
 
 uint32_t *guest_to_host(uint32_t addr);
 uint32_t *init_mem(size_t size);
