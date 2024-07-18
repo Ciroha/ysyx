@@ -55,5 +55,5 @@ static size_t load_img(){
 void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(20);
-    load_img();
+    long img_size = load_img();
 }
