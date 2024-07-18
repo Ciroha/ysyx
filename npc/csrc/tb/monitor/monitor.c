@@ -54,7 +54,7 @@ static size_t load_img(){
 
 void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
-    init_mem(50);
+    init_mem(50);   //需要分配足够大的内存
     long img_size = load_img();
     return;
 }

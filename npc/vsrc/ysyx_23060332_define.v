@@ -39,3 +39,4 @@
 `define INST_AUIPC  7'b0010111
 `define INST_JAL    7'b1101111
 `define INST_JALR   7'b1100111
+`define INST_EBREAK 32'h00100073
