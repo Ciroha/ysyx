@@ -64,7 +64,7 @@ static int parse_args(int argc, char *argv[]) {
 	return 0;
 }
 
-static size_t load_img(){
+static size_t load_img(uint32_t *memory){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.\n");
@@ -80,7 +80,7 @@ static size_t load_img(){
 	printf("The image is %s, size = %ld\n", img_file, size);
 
 	fseek(fp, 0 , SEEK_SET);
-	int ret = fread(guest_to_host(NULL, 0x80000000), size, 1, fp);
+	int ret = fread(guest_to_host(memory, 0x80000000), size, 1, fp);
 	printf("Read successfully!!\n");
 	assert(ret == 1);
 
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]){
 	parse_args(argc, argv);
 	printf("image file is %s\n", img_file);
 	uint32_t *memory = NULL;
-	size_t size = load_img();
+	size_t size = load_img(memory);
 	memory = init_mem(size);
 
 	Verilated::traceEverOn(true);
