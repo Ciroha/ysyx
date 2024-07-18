@@ -65,9 +65,9 @@ static int parse_args(int argc, char *argv[]) {
 }
 
 static size_t load_img(){
-	printf("image file is %s", img_file);
+	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
-		printf("No image is given. Use the default build-in image.");
+		printf("No image is given. Use the default build-in image.\n");
     	return 4096; // built-in image size
 	}
 
@@ -77,7 +77,7 @@ static size_t load_img(){
 	fseek(fp, 0, SEEK_END);
 	size_t size = ftell(fp);
 
-	printf("The image is %s, size = %ld", img_file, size);
+	printf("The image is %s, size = %ld\n", img_file, size);
 
 	fseek(fp, 0 , SEEK_SET);
 	int ret = fread(guest_to_host(NULL, 0x80000000), size, 1, fp);
@@ -124,9 +124,9 @@ extern "C" void npc_trap(){
 }
 
 int main(int argc, char *argv[]){
-	printf("Parsing arguments!");
+	printf("Parsing arguments!\n");
 	parse_args(argc, argv);
-	printf("image file is %s", img_file);
+	printf("image file is %s\n", img_file);
 	uint32_t *memory = NULL;
 	size_t size = load_img();
 	memory = init_mem(size);
