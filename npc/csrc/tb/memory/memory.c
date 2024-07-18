@@ -1,4 +1,6 @@
 #include <memory.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
