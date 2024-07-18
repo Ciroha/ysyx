@@ -31,7 +31,7 @@ static size_t load_img(){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.\n");
-    	return 10; // built-in image size
+    	return 50; // built-in image size
 	}
 
 	FILE *fp = fopen(img_file, "rb");
