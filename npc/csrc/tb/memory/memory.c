@@ -1,4 +1,4 @@
-#include <common.h>
+#include <../include/common.h>
 #include <memory.h>
 
 static uint32_t img[] = {
