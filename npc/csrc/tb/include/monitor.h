@@ -8,6 +8,8 @@
 #include "string.h"
 #include "assert.h"
 
+static char *img_file = NULL;
+
 uint32_t *guest_to_host(uint32_t *memory, uint32_t addr);
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
