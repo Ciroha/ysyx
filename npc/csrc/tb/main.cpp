@@ -14,7 +14,7 @@ static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
 VerilatedVcdC* tfp = NULL;
 static char *img_file = NULL;
-static uint32_t *pmem = NULL;
+// static uint32_t *pmem = NULL;
 
 static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
