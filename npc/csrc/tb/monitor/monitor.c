@@ -2,7 +2,7 @@
 
 
 static int parse_args(int argc, char *argv[]);
-static size_t load_img(uint32_t *memory);
+static uint32_t* load_img(uint32_t *memory);
 
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
@@ -27,7 +27,7 @@ static int parse_args(int argc, char *argv[]) {
 	return 0;
 }
 
-static size_t load_img(uint32_t *memory){
+static uint32_t* load_img(uint32_t *memory){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
 		printf("No image is given. Use the default build-in image.\n");
