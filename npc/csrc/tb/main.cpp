@@ -130,7 +130,7 @@ int main(int argc, char *argv[]){
 	parse_args(argc, argv);
 	printf("image file is %s\n", img_file);
 	uint32_t *memory = NULL;
-	memory = init_mem(50);
+	memory = init_mem(10);
 	size_t size = load_img(memory);
 
 	Verilated::traceEverOn(true);
