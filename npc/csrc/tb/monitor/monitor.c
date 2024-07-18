@@ -44,7 +44,7 @@ static uint32_t* load_img(uint32_t *memory){
 
 	fseek(fp, 0 , SEEK_SET);
 	printf("Reading.....\n");
-	int ret = fread(guest_to_host(memory, 0x80000000), size, 1, fp);
+	int ret = fread(guest_to_host(0x80000000), size, 1, fp);
 	printf("Read successfully!!\n");
 	assert(ret == 1);
 

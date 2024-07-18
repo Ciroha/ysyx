@@ -1,10 +1,6 @@
 #include "/home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h"
 
-uint32_t *guest_to_host(uint32_t *memory, uint32_t addr);
-uint32_t *init_mem(size_t size);
-uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
-
-uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
+static uint32_t *memory = NULL;
 
 static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
@@ -14,15 +10,16 @@ static uint32_t img[] = {
 	0b00000000000100000000000001110011,	//ebreak
 };
 
+uint32_t *guest_to_host(uint32_t addr){return memory + (addr-0x80000000)/4;}
+
 uint32_t *init_mem(size_t size) {
-	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
+	memory = (uint32_t*)malloc(size * sizeof(uint32_t));
 	memcpy(memory,img,sizeof(img));
 	if(memory == NULL) {exit(0);}
 	return memory;
 }
 
-
-uint32_t pmem_read(uint32_t *memory, uint32_t vaddr){
-	uint32_t *paddr = guest_to_host(memory, vaddr);
+uint32_t pmem_read(uint32_t vaddr){
+	uint32_t *paddr = guest_to_host(vaddr);
 	return *paddr;
 }
