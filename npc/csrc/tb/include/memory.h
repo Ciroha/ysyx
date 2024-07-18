@@ -1,7 +1,6 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
-#include <stdint.h>
-#include <stdlib.h>
+#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/common.h>
 
 uint32_t *guest_to_host(uint32_t addr);
 uint32_t *init_mem(size_t size);
