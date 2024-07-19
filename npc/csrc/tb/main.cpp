@@ -13,7 +13,7 @@
 // static size_t load_img(uint32_t *memory);
 // uint32_t *init_mem(size_t size);
 // uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
-
+uint32_t isa_reg_str2val(const char *s, bool *success);
 
 static Vysyx_23060332_top dut;
 VerilatedContext* contextp = NULL;                                                                                        
@@ -37,20 +37,21 @@ static void reset(int n) {
 }
 
 extern "C" void npc_trap(){
+	bool reg_success = false;
 	tfp->dump(contextp -> time());
 	contextp -> timeInc(1);
 	tfp -> close();
-	printf("trap in %#x",dut.pc);
+	// printf("trap in %#x",dut.pc);
+	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
+	if (reg_success && (reg_val == 0)) {
+		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
+	}else{
+		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
+	}
 	exit(0);
 }
 
 int main(int argc, char *argv[]){
-	// printf("Parsing arguments!\n");
-	// parse_args(argc, argv);
-	// // printf("image file is %s\n", img_file);
-	// memory = init_mem(50);
-	// size_t size = load_img(memory);
-
 	init_monitor(argc, argv);
 
 	Verilated::traceEverOn(true);
