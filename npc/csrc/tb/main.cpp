@@ -51,7 +51,7 @@ extern "C" void npc_trap(){
 
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
-	sdb_mainloop();
+	// sdb_mainloop();
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;
