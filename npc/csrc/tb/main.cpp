@@ -60,7 +60,13 @@ int main(int argc, char *argv[]){
 	reset(10);
 
 	for (int i = 0; i < 40; i++){
-		single_cycle();
+		dut.clk=0;dut.eval();
+		tfp->dump(contextp -> time());
+		contextp -> timeInc(1);
+		dut.inst = pmem_read(dut.pc);
+		dut.clk=1;dut.eval();
+		tfp->dump(contextp -> time());
+		contextp -> timeInc(1);
 	}
 	tfp -> close();
 }
