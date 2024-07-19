@@ -46,7 +46,7 @@ extern "C" void npc_trap(){
 	if (reg_success && (reg_val == 0)) {
 		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
 	}else{
-		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
+		printf("HIT BAD TRAP at pc = %#x\n", dut.pc);
 	}
 	exit(0);
 }
