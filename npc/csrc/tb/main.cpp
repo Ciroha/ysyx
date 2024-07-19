@@ -63,8 +63,8 @@ int main(int argc, char *argv[]){
 		dut.clk=0;dut.eval();
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
-		dut.inst = pmem_read(dut.pc);
 		dut.clk=1;dut.eval();
+		dut.inst = pmem_read(dut.pc);
 		tfp->dump(contextp -> time());
 		contextp -> timeInc(1);
 	}
