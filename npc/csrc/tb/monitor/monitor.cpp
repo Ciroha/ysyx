@@ -1,4 +1,4 @@
-#include "/home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h"
+#include "memory.h"
 
 
 static int parse_args(int argc, char *argv[]);
