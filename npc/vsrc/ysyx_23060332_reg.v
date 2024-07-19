@@ -22,7 +22,7 @@ module ysyx_23060332_reg (
 reg [31:0] regs [0:31];
 integer i;
 
-import "DPI-C" function void reg_read(input int regs_i);
+import "DPI-C" function void reg_read(input int i, input int regs_i[32]);
 
 always @(posedge clk) begin
     if (rst) begin
@@ -35,7 +35,9 @@ always @(posedge clk) begin
             regs[waddr] <= wdata;
         end
     end
-    reg_read(regs[0]);
+    for (i = 0; i < 32; i++) begin
+        reg_read(i, regs[i]);
+    end
 end
 
 //reg1
