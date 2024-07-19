@@ -35,6 +35,7 @@ class Vysyx_23060332_top___024root final : public VerilatedModule {
     IData/*31:0*/ ysyx_23060332_top__DOT__op2;
     IData/*31:0*/ ysyx_23060332_top__DOT__op1_jump;
     IData/*31:0*/ ysyx_23060332_top__DOT__op2_jump;
+    IData/*31:0*/ ysyx_23060332_top__DOT__id_ex_inst;
     IData/*31:0*/ ysyx_23060332_top__DOT__ex_reg_wdata;
     IData/*31:0*/ ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__i;
     IData/*31:0*/ __VstlIterCount;

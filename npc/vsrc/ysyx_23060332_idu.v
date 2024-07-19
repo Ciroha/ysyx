@@ -122,7 +122,6 @@ always @(*) begin
             op2 = `ZeroWord;
             op1_jump = `ZeroWord;
             op2_jump = `ZeroWord;
-            npc_trap();
         end
     endcase
 end
