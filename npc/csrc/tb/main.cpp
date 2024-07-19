@@ -7,7 +7,7 @@
 #include "svdpi.h"
 
 #include <getopt.h>
-#include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h>
+#include <memory.h>
 
 uint32_t isa_reg_str2val(const char *s, bool *success);
 
