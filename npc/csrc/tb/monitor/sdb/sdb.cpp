@@ -1,11 +1,4 @@
-#include <stdint.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <string.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <macro.h>
+#include <common.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -29,6 +22,11 @@ static char* rl_gets() {
 }
 
 static int cmd_help(char *args);
+
+// static int cmd_c(char *args) {
+//     cpu_exec(-1);
+//     return 0;
+// }
 
 static struct {
   const char *name;
