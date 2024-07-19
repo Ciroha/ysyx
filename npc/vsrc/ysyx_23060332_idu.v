@@ -60,7 +60,7 @@ always @(*) begin
                     op1 = rdata1;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
-                default: ;
+                default: npc_trap();
             endcase
         end
 
