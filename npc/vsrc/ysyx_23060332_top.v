@@ -14,9 +14,7 @@ wire                jump_en;
 
 //id
 wire [`InstAddrBus] inst_addr;
-/* verilator lint_on UNOPTFLAT */
 wire [`RegDataBus]  rdata1;
-/* verilator lint_on UNOPTFLAT */
 wire [`RegDataBus]  rdata2;
 
 //ex
@@ -29,9 +27,7 @@ wire [`RegAddrBus]  id_ex_waddr;
 wire [`InstBus]     id_ex_inst;
 
 //reg
-/* verilator lint_on UNOPTFLAT */
 wire [`RegAddrBus]  raddr1;
-/* verilator lint_on UNOPTFLAT */
 wire [`RegAddrBus]  raddr2;
 wire [`RegAddrBus]  ex_reg_waddr;
 wire [`RegDataBus]  ex_reg_wdata;

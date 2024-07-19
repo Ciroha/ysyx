@@ -112,11 +112,7 @@ always @(*) begin
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
-        default: begin
-            /* verilator lint_off UNOPTFLAT */
-            npc_trap();
-            /* verilator lint_on UNOPTFLAT */ 
-        end
+        default: ;
     endcase
 end
     
