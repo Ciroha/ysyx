@@ -60,7 +60,7 @@ always @(*) begin
                     op1 = rdata1;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
-                default: ;
+                default: npc_trap();
             endcase
         end
 
@@ -112,17 +112,7 @@ always @(*) begin
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
-        default: begin
-            inst_o = inst_i;
-            reg_wen = `WriteDisable;
-            waddr = `ZeroReg;
-            raddr1 = `ZeroReg;
-            raddr2 = `ZeroReg;
-            op1 = `ZeroWord;
-            op2 = `ZeroWord;
-            op1_jump = `ZeroWord;
-            op2_jump = `ZeroWord;
-        end
+        default: ;
     endcase
 end
     
