@@ -20,7 +20,6 @@ void putch(char ch) {
 
 void halt(int code) {
   npc_trap(code);
-
   while (1);
 }
 
