@@ -9,10 +9,6 @@
 #include <getopt.h>
 #include </home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h>
 
-// static int parse_args(int argc, char *argv[]);
-// static size_t load_img(uint32_t *memory);
-// uint32_t *init_mem(size_t size);
-// uint32_t pmem_read(uint32_t *memory, uint32_t vaddr);
 uint32_t isa_reg_str2val(const char *s, bool *success);
 
 static Vysyx_23060332_top dut;
@@ -25,6 +21,7 @@ void single_cycle(){
 	dut.clk=0;dut.eval();		
 	tfp->dump(contextp -> time());
 	contextp -> timeInc(1);
+	dut.inst = pmem_read(dut.pc);
 	dut.clk=1;dut.eval();		
 	tfp->dump(contextp -> time());
 	contextp -> timeInc(1);
@@ -55,20 +52,15 @@ int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
 
 	Verilated::traceEverOn(true);
-	contextp = new VerilatedContext;	
+	contextp = new VerilatedContext;
 	tfp = new VerilatedVcdC;
 	dut.trace(tfp, 5);
 	tfp->open("builds/waveform.vcd");
 	
 	reset(10);
+
 	for (int i = 0; i < 40; i++){
-		dut.clk=0;dut.eval();		
-		tfp->dump(contextp -> time());
-		contextp -> timeInc(1);
-		dut.inst = pmem_read(dut.pc);
-		dut.clk=1;dut.eval();		
-		tfp->dump(contextp -> time());
-		contextp -> timeInc(1);
+		single_cycle();
 	}
 	tfp -> close();
 }
