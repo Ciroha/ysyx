@@ -1,8 +1,10 @@
-#include "memory.h"
-
+#include <memory.h>
+#include <common.h>
+#include <getopt.h>
 
 static int parse_args(int argc, char *argv[]);
 static size_t load_img();
+static char *img_file = NULL;
 
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
