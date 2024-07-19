@@ -19,7 +19,7 @@ extern "C" {
     // DPI import at /home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_idu.v:32:30
     extern void npc_trap();
     // DPI import at /home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_reg.v:25:30
-    extern void reg_read(svLogic regs_i);
+    extern void reg_read(int regs_i);
 
 #ifdef __cplusplus
 }

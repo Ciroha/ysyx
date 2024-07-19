@@ -16,12 +16,12 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top_
     npc_trap();
 }
 
-extern "C" void reg_read(svLogic regs_i);
+extern "C" void reg_read(int regs_i);
 
-VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_read_TOP(CData/*0:0*/ regs_i) {
+VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_read_TOP(IData/*31:0*/ regs_i) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_read_TOP\n"); );
     // Body
-    svLogic regs_i__Vcvt;
+    int regs_i__Vcvt;
     for (size_t regs_i__Vidx = 0; regs_i__Vidx < 1; ++regs_i__Vidx) regs_i__Vcvt = regs_i;
     reg_read(regs_i__Vcvt);
 }
