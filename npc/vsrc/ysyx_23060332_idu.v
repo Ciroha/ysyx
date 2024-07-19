@@ -74,7 +74,7 @@ always @(*) begin
                     op1 = rdata1;
                     op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
                 end
-                default: ;
+                default: npc_trap();
             endcase
         end
 
@@ -112,7 +112,7 @@ always @(*) begin
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
-        default: ;
+        default: npc_trap();
     endcase
 end
     
