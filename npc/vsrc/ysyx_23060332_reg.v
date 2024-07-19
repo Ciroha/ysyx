@@ -22,7 +22,7 @@ module ysyx_23060332_reg (
 reg [31:0] regs [0:31];
 integer i;
 
-import "DPI-C" function void reg_read(int regs_i);
+import "DPI-C" function void reg_read(uint32_t regs_i);
 
 always @(posedge clk) begin
     if (rst) begin
