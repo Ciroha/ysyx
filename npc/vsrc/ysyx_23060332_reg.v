@@ -35,7 +35,7 @@ always @(posedge clk) begin
             regs[waddr] <= wdata;
         end
     end
-    reg_read(regs);
+    reg_read(regs[0:31]);
 end
 
 //reg1
