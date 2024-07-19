@@ -66,9 +66,9 @@ VPATH += $(VM_USER_DIR)
 
 main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-memory.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/memory/memory.c
+memory.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/memory/memory.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.c
+monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

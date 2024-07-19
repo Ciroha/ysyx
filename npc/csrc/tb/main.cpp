@@ -16,6 +16,7 @@ VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 
 uint32_t* init_monitor(int argc, char *argv[]);
+void sdb_mainloop();
 
 void single_cycle(){
 	dut.clk=0;dut.eval();		
@@ -50,6 +51,7 @@ extern "C" void npc_trap(){
 
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
+	sdb_mainloop();
 
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;
