@@ -42,6 +42,7 @@ end
 
 //reg1
 always @(*) begin
+    rdata1 = 32'b0;
     if (raddr1 == 5'd0) begin
         rdata1 = 32'b0;
     end
@@ -52,6 +53,7 @@ end
 
 //reg2
 always @(*) begin
+    rdata2 = 32'b0;
     if (raddr2 == 5'd0) begin
         rdata2 = 32'b0;
     end
