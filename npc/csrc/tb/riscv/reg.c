@@ -33,6 +33,6 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
     return 0;
 }
 
-void reg_read(int i, uint32_t regs_i) {
+extern "C" void reg_read(int i, uint32_t regs_i) {
     gpr[i] = regs_i;
 }
