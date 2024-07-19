@@ -22,6 +22,7 @@ void single_cycle(){
 	tfp->dump(contextp -> time());
 	contextp -> timeInc(1);
 	dut.clk=1;dut.eval();
+	dut.inst = pmem_read(dut.pc);
 	tfp->dump(contextp -> time());
 	contextp -> timeInc(1);
 }
