@@ -40,3 +40,4 @@
 `define INST_JAL    7'b1101111
 `define INST_JALR   7'b1100111
 `define INST_EBREAK 32'h00100073
+`define INST_NOP    32'h0
