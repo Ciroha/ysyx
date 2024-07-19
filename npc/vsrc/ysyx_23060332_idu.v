@@ -112,7 +112,7 @@ always @(*) begin
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
-        default: npc_trap();
+        default: ;
     endcase
 end
     
