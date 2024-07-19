@@ -45,6 +45,7 @@ VM_USER_CLASSES = \
 	main \
 	memory \
 	monitor \
+	sdb \
 	reg \
 
 # User .cpp directories (from .cpp's on Verilator command line)
@@ -52,6 +53,7 @@ VM_USER_DIR = \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/memory \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/riscv \
 
 
@@ -69,6 +71,8 @@ main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
 memory.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/memory/memory.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sdb.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
