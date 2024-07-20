@@ -13,8 +13,8 @@
 uint32_t isa_reg_str2val(const char *s, bool *success);
 
 static Vysyx_23060332_top dut;
-// VerilatedContext* contextp = NULL;                                                                                        
-// VerilatedVcdC* tfp = NULL;
+VerilatedContext* contextp = NULL;                                                                                        
+VerilatedVcdC* tfp = NULL;
 
 uint32_t* init_monitor(int argc, char *argv[]);
 void sdb_mainloop();
@@ -37,20 +37,20 @@ void close_wave();
 // 	dut.rst = 0;
 // }
 
-extern "C" void npc_trap(){
-	bool reg_success = false;
-	tfp->dump(contextp -> time());
-	contextp -> timeInc(1);
-	tfp -> close();
-	// printf("trap in %#x",dut.pc);
-	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
-	if (reg_success && (reg_val == 0)) {
-		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
-	}else{
-		printf("HIT BAD TRAP at pc = %#x\n", dut.pc);
-	}
-	exit(0);
-}
+// extern "C" void npc_trap(){
+// 	bool reg_success = false;
+// 	tfp->dump(contextp -> time());
+// 	contextp -> timeInc(1);
+// 	tfp -> close();
+// 	// printf("trap in %#x",dut.pc);
+// 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
+// 	if (reg_success && (reg_val == 0)) {
+// 		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
+// 	}else{
+// 		printf("HIT BAD TRAP at pc = %#x\n", dut.pc);
+// 	}
+// 	exit(0);
+// }
 
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
