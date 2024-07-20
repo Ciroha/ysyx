@@ -59,6 +59,7 @@ static int cmd_help(char *args) {
     for (i = 0; i < NR_CMD; i ++) {
       printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
     }
+    return 0;
   }
   else {
     for (i = 0; i < NR_CMD; i ++) {
