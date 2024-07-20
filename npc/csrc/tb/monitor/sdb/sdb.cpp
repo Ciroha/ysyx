@@ -2,6 +2,7 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <cpu.h>
 
 
 static char* rl_gets() {
@@ -23,10 +24,10 @@ static char* rl_gets() {
 
 static int cmd_help(char *args);
 
-// static int cmd_c(char *args) {
-//     cpu_exec(-1);
-//     return 0;
-// }
+static int cmd_c(char *args) {
+    cpu_exec(-1);
+    return 0;
+}
 
 static struct {
   const char *name;
@@ -34,7 +35,7 @@ static struct {
   int (*handler) (char *);
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
-//   { "c", "Continue the execution of the program", cmd_c },
+  { "c", "Continue the execution of the program", cmd_c },
 //   { "q", "Exit NEMU", cmd_q },
 //   { "si", "single step", cmd_si },
 //   { "info", "program information", cmd_info},

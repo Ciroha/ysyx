@@ -43,6 +43,7 @@ VM_USER_LDLIBS = \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+	cpu_exec \
 	main \
 	memory \
 	monitor \
@@ -52,6 +53,7 @@ VM_USER_CLASSES = \
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/cpu \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/memory \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb \
@@ -67,6 +69,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+cpu_exec.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/cpu/cpu_exec.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 memory.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/memory/memory.cpp
