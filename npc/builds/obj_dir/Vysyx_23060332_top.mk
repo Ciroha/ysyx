@@ -44,6 +44,7 @@ VM_USER_LDLIBS = \
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	cpu_exec \
+	wave \
 	main \
 	memory \
 	monitor \
@@ -70,6 +71,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 VPATH += $(VM_USER_DIR)
 
 cpu_exec.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/cpu/cpu_exec.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+wave.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/cpu/wave.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

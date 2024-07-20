@@ -2,6 +2,8 @@
 #include <cpu.h>
 #include <memory.h>
 
+Vysyx_23060332_top cpu;
+
 void wave_dump();
 
 void single_cycle() {
