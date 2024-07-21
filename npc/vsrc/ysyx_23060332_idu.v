@@ -44,8 +44,8 @@ always @(*) begin
     waddr = `ZeroReg;
     raddr1 = `ZeroReg;
     raddr2 = `ZeroReg;
-    op1 = `ZeroWord;
-    op2 = `ZeroWord;
+    // op1 = `ZeroWord;
+    // op2 = `ZeroWord;
     op1_jump = `ZeroWord;
     op2_jump = `ZeroWord;
 
@@ -64,19 +64,19 @@ always @(*) begin
             endcase
         end
 
-        // `INST_TYPE_S: begin
-        //     case (func3)
-        //         `INST_SW: begin
-        //             reg_wen = `WriteDisable;
-        //             waddr = `ZeroReg;
-        //             raddr1 = rs1;
-        //             raddr2 = rs2;
-        //             op1 = rdata1;
-        //             op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
-        //         end
-        //         default: npc_trap();
-        //     endcase
-        // end
+        `INST_TYPE_S: begin
+            case (func3)
+                `INST_SW: begin
+                    reg_wen = `WriteDisable;
+                    waddr = `ZeroReg;
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = rdata1;
+                    op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
+                end
+                default: npc_trap();
+            endcase
+        end
 
         `INST_LUI: begin
             reg_wen = `WriteEnable;
