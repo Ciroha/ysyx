@@ -40,7 +40,7 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
+  { "q", "Exit NPC", cmd_q },
 //   { "si", "single step", cmd_si },
 //   { "info", "program information", cmd_info},
 //   { "x", "scan memory", cmd_x},
@@ -93,6 +93,7 @@ void sdb_mainloop() {
         for (i = 0; i < NR_CMD; i++) {
             if (strcmp(cmd, cmd_table[i].name) == 0) {
                 if (cmd_table[i].handler(args) < 0) {return;}
+                break;
             }
         }
 
