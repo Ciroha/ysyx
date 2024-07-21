@@ -35,7 +35,7 @@ include $(FILELIST_MK)
 
 # LDFLAGS += $(CFLAGS_BUILD)
 
-# LDFLAGS := -O2 $(LDFLAGS)
+LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
 # include $(NPC_HOME)/script/yosys-sta.mk
 
