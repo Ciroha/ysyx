@@ -29,6 +29,10 @@ static int cmd_c(char *args) {
     return 0;
 }
 
+static int cmd_q() {
+    return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -36,7 +40,7 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-//   { "q", "Exit NEMU", cmd_q },
+  { "q", "Exit NEMU", cmd_q },
 //   { "si", "single step", cmd_si },
 //   { "info", "program information", cmd_info},
 //   { "x", "scan memory", cmd_x},
