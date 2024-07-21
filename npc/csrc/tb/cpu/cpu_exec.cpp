@@ -29,7 +29,9 @@ static void execute(uint32_t n) {
 
 
 void cpu_exec(uint64_t n) {
+    open_wave();
     execute(n);
+    close_wave();
 }
 
 extern "C" void npc_trap(){
