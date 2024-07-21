@@ -4,6 +4,7 @@ VERILATOR_FLAGS += -CFLAGS "-I$(NPC_HOME)/csrc/tb/include"
 VERILATOR_FLAGS += -LDFLAGS "$(LDFLAGS) -lreadline"
 # LDFLAGS += $(shell llvm-config --ldflags)
 # LDFLAGS += $(shell llvm-config --libs)
+LIBS += $(shell llvm-config --libs)
 
 #sim
 sim: $(VSRCS) $(CTB)
