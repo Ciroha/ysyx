@@ -42,10 +42,10 @@ always @(*) begin
     inst_o = inst_i;
     reg_wen = `WriteDisable;
     waddr = `ZeroReg;
-    raddr1 = `ZeroReg;
-    raddr2 = `ZeroReg;
-    // op1 = `ZeroWord;
-    // op2 = `ZeroWord;
+    // raddr1 = `ZeroReg;
+    // raddr2 = `ZeroReg;
+    op1 = `ZeroWord;
+    op2 = `ZeroWord;
     op1_jump = `ZeroWord;
     op2_jump = `ZeroWord;
 
