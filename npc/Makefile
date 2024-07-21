@@ -24,8 +24,8 @@ VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" -or -name "*.sv")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
 # Include all filelist.mk to merge file lists
-FILELIST_MK = $(shell find -L  -name "filelist.mk")
-include $(FILELIST_MK)
+# FILELIST_MK = $(shell find -L  -name "filelist.mk")
+# include $(FILELIST_MK)
 # include $(NPC_HOME)/script/filelist.mk
 
 # CFLAGS_BUILD += $(call remove_quote,$(CONFIG_CC_OPT))
