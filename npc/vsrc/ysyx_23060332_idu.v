@@ -42,8 +42,8 @@ always @(*) begin
     inst_o = inst_i;
     reg_wen = `WriteDisable;
     waddr = `ZeroReg;
-    // raddr1 = `ZeroReg;
-    // raddr2 = `ZeroReg;
+    raddr1 = `ZeroReg;
+    raddr2 = `ZeroReg;
     op1 = `ZeroWord;
     op2 = `ZeroWord;
     op1_jump = `ZeroWord;
@@ -70,7 +70,7 @@ always @(*) begin
                     reg_wen = `WriteDisable;
                     waddr = `ZeroReg;
                     raddr1 = rs1;
-                    raddr2 = rs2;
+                    // raddr2 = rs2;
                     op1 = rdata1;
                     op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
                 end
