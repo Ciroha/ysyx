@@ -22,6 +22,8 @@ static char* rl_gets() {
     return line_read;
 }
 
+void isa_reg_display();
+
 static int cmd_help(char *args);
 
 static int cmd_c(char *args) {
@@ -45,6 +47,17 @@ static int cmd_si(char *args) {
     return 0;
 }
 
+static int cmd_info(char *args) {
+    if (args == NULL) {
+        printf("No rags.\n");
+    } else if (strcmp(args, "r") == 0) {
+        isa_reg_display();
+    } else {
+        printf("Usage: info r!\n");
+    }
+    return 0;
+}
+
 static struct {
     const char *name;
     const char *description;
@@ -54,7 +67,7 @@ static struct {
     { "c", "Continue the execution of the program", cmd_c },
     { "q", "Exit NPC", cmd_q },
     { "si", "single step", cmd_si },
-//   { "info", "program information", cmd_info},
+    { "info", "program information", cmd_info},
 //   { "x", "scan memory", cmd_x},
 //   { "p", "Expression evaluation", cmd_p},
 //   { "w", "set watchpoint", cmd_w},
