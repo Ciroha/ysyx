@@ -2,8 +2,11 @@
 #include <cpu.h>
 #include <memory.h>
 
+<<<<<<< HEAD
 #define MAX_INST_TO_PRINT 10
 
+=======
+>>>>>>> temp
 Vysyx_23060332_top cpu;
 
 void wave_dump();
@@ -11,7 +14,10 @@ void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
 void open_wave();
+<<<<<<< HEAD
 void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+=======
+>>>>>>> temp
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -27,7 +33,10 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
+<<<<<<< HEAD
 
+=======
+>>>>>>> temp
         // wave_dump();
     }
 }
