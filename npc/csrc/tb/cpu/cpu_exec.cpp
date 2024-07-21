@@ -7,6 +7,7 @@ Vysyx_23060332_top cpu;
 void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
+void isa_reg_display();
 void open_wave();
 
 void single_cycle() {
@@ -39,6 +40,7 @@ extern "C" void npc_trap(){
     wave_dump();
 	close_wave();
 	// printf("trap in %#x",dut.pc);
+    isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
 		printf("HIT GOOD TRAP at pc = %#x\n", cpu.pc);
