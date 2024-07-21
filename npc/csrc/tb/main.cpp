@@ -7,132 +7,74 @@
 #include "svdpi.h"
 
 #include <getopt.h>
+#include <memory.h>
+#include <cpu.h>
 
-uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
+uint32_t isa_reg_str2val(const char *s, bool *success);
 
 static Vysyx_23060332_top dut;
-VerilatedContext* contextp = NULL;                                                                                        
-VerilatedVcdC* tfp = NULL;
-static char *img_file = NULL;
-// static uint32_t *pmem = NULL;
+// VerilatedContext* contextp = NULL;                                                                                        
+// VerilatedVcdC* tfp = NULL;
 
-static uint32_t img[] = {
-	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
-	0b00000000000100000000000100010011, //addi x2 x0 1 0x80000004
-	0b00000000001000000000000100010011, //addi x2 x0 2 0x80000008
-	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
-	0b00000000000100000000000001110011,	//ebreak
-};
+uint32_t* init_monitor(int argc, char *argv[]);
+void sdb_mainloop();
+void init_wave();
+void close_wave();
 
+// void single_cycle(){
+// 	dut.clk=0;dut.eval();		
+// 	tfp->dump(contextp -> time());
+// 	contextp -> timeInc(1);
+// 	dut.clk=1;dut.eval();
+// 	dut.inst = pmem_read(dut.pc);
+// 	tfp->dump(contextp -> time());
+// 	contextp -> timeInc(1);
+// }
 
+// static void reset(int n) {
+// 	dut.rst = 1;
+//  	while (n -- > 0) single_cycle();
+// 	dut.rst = 0;
+// }
 
-static int parse_args(int argc, char *argv[]) {
-	const struct option table[] = {
-		{"help"     , no_argument      , NULL, 'h'},
-		{0          , 0                , NULL,  0 },
-	};
-	int o;
-	while ( (o = getopt_long(argc, argv, "-h", table, NULL)) != -1) {
-		switch (o) {
-			case 1: img_file = optarg; return 0;
-			default:
-				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
-                printf("\t-b,--batch              run with batch mode\n");
-                printf("\t-l,--log=FILE           output log to FILE\n");
-                printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
-                printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
-                printf("\t-f,--ftrace=FILE        parse the elf file\n");
-                printf("\n");
-                exit(0);
-		}
-	}
-	return 0;
-}
-
-static size_t load_img(uint32_t *memory){
-	printf("image file is %s\n", img_file);
-	if (img_file == NULL) {
-		printf("No image is given. Use the default build-in image.\n");
-    	return 4096; // built-in image size
-	}
-
-	FILE *fp = fopen(img_file, "rb");
-	assert(fp);
-
-	fseek(fp, 0, SEEK_END);
-	size_t size = ftell(fp);
-
-	printf("The image is %s, size = %ld\n", img_file, size);
-
-	fseek(fp, 0 , SEEK_SET);
-	printf("Reading.....\n");
-	int ret = fread(guest_to_host(memory, 0x80000000), size, 1, fp);
-	printf("Read successfully!!\n");
-	assert(ret == 1);
-
-	fclose(fp);
-	return size;
-}
-
-uint32_t *init_mem(size_t size) {
-	uint32_t* memory = (uint32_t*)malloc(size * sizeof(uint32_t));
-	memcpy(memory,img,sizeof(img));
-	if(memory == NULL) {exit(0);}
-	return memory;
-}
-
-// uint32_t *guest_to_host(uint32_t *memory, uint32_t addr){return memory + (addr-0x80000000)/4;}
-uint32_t pmem_read(uint32_t *memory, uint32_t vaddr){
-	uint32_t *paddr = guest_to_host(memory, vaddr);
-	return *paddr;
-}
-
-void single_cycle(){
-	dut.clk=0;dut.eval();		
-	tfp->dump(contextp -> time());
-	contextp -> timeInc(1);
-	dut.clk=1;dut.eval();		
-	tfp->dump(contextp -> time());
-	contextp -> timeInc(1);
-}
-
-static void reset(int n) {
-	dut.rst = 1;
- 	while (n -- > 0) single_cycle();
-	dut.rst = 0;
-}
-
-extern "C" void npc_trap(){
-	tfp->dump(contextp -> time());
-	contextp -> timeInc(1);
-	tfp -> close();
-	printf("trap in %#x",dut.pc);
-	exit(0);
-}
+// extern "C" void npc_trap(){
+// 	bool reg_success = false;
+// 	tfp->dump(contextp -> time());
+// 	contextp -> timeInc(1);
+// 	tfp -> close();
+// 	// printf("trap in %#x",dut.pc);
+// 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
+// 	if (reg_success && (reg_val == 0)) {
+// 		printf("HIT GOOD TRAP at pc = %#x\n", dut.pc);
+// 	}else{
+// 		printf("HIT BAD TRAP at pc = %#x\n", dut.pc);
+// 	}
+// 	exit(0);
+// }
 
 int main(int argc, char *argv[]){
-	printf("Parsing arguments!\n");
-	parse_args(argc, argv);
-	printf("image file is %s\n", img_file);
-	uint32_t *memory = NULL;
-	memory = init_mem(50);
-	size_t size = load_img(memory);
-
-	Verilated::traceEverOn(true);
-	contextp = new VerilatedContext;	
-	tfp = new VerilatedVcdC;
-	dut.trace(tfp, 5);
-	tfp->open("builds/waveform.vcd");
-	
+	init_monitor(argc, argv);
+	init_wave();
 	reset(10);
-	for (int i = 0; i < 40; i++){
-		dut.clk=0;dut.eval();		
-		tfp->dump(contextp -> time());
-		contextp -> timeInc(1);
-		dut.inst = pmem_read(memory, dut.pc);
-		dut.clk=1;dut.eval();		
-		tfp->dump(contextp -> time());
-		contextp -> timeInc(1);
-	}
-	tfp -> close();
+	sdb_mainloop();
+	close_wave();
+
+	// Verilated::traceEverOn(true);
+	// contextp = new VerilatedContext;
+	// tfp = new VerilatedVcdC;
+	// dut.trace(tfp, 5);
+	// tfp->open("builds/waveform.vcd");
+	
+	// reset(10);
+
+	// for (int i = 0; i < 40; i++){
+	// 	dut.clk=0;dut.eval();
+	// 	tfp->dump(contextp -> time());
+	// 	contextp -> timeInc(1);
+	// 	dut.clk=1;dut.eval();
+	// 	dut.inst = pmem_read(dut.pc);
+	// 	tfp->dump(contextp -> time());
+	// 	contextp -> timeInc(1);
+	// }
+	// tfp -> close();
 }

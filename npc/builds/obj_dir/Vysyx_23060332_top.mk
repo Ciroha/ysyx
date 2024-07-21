@@ -35,17 +35,30 @@ VM_PREFIX = Vysyx_23060332_top
 VM_MODPREFIX = Vysyx_23060332_top
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+	-I/home/ciroha/ysyx-workbench/npc/csrc/tb/include \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+	 -lreadline \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+	cpu_exec \
+	wave \
 	main \
+	memory \
+	monitor \
+	sdb \
+	reg \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/cpu \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/memory \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/riscv \
 
 
 ### Default rules...
@@ -57,7 +70,19 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+cpu_exec.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/cpu/cpu_exec.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+wave.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/cpu/wave.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 main.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/main.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+memory.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/memory/memory.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sdb.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb/sdb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
