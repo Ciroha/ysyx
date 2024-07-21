@@ -33,7 +33,7 @@ CFLAGS_BUILD += $(if $(CONFIG_CC_LTO),-flto,)
 CFLAGS_BUILD += $(if $(CONFIG_CC_DEBUG),-Og -ggdb3,)
 CFLAGS_BUILD += $(if $(CONFIG_CC_ASAN),-fsanitize=address,)
 
-LDFLAGS += $(CFLAGS_BUILD)
+# LDFLAGS += $(CFLAGS_BUILD)
 
 LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
