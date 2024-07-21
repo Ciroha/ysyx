@@ -7,6 +7,7 @@ Vysyx_23060332_top cpu;
 void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
+void open_wave();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -28,6 +29,7 @@ static void execute(uint32_t n) {
 
 
 void cpu_exec(uint64_t n) {
+    open_wave();
     execute(n);
     close_wave();
 }
