@@ -28,6 +28,13 @@ FILELIST_MK = $(shell find -L  -name "filelist.mk")
 include $(FILELIST_MK)
 # include $(NPC_HOME)/script/filelist.mk
 
+CFLAGS_BUILD += $(call remove_quote,$(CONFIG_CC_OPT))
+CFLAGS_BUILD += $(if $(CONFIG_CC_LTO),-flto,)
+CFLAGS_BUILD += $(if $(CONFIG_CC_DEBUG),-Og -ggdb3,)
+CFLAGS_BUILD += $(if $(CONFIG_CC_ASAN),-fsanitize=address,)
+
+LDFLAGS += $(CFLAGS_BUILD)
+
 LDFLAGS += -shared -fPIC
 LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
