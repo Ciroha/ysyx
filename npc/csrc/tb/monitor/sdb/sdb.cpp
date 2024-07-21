@@ -58,6 +58,24 @@ static int cmd_info(char *args) {
     return 0;
 }
 
+static int cmd_x(char *args) {
+    if (args == NULL)
+        printf("No args!\n");
+    else {
+        char *n = strtok(args, " ");
+        char *addr = strtok(NULL, " ");
+        int len = 0;
+        uint32_t baseaddr = 0;
+        sscanf(n, "%d", &len);
+        sscanf(addr, "%x", &baseaddr);
+        for (int i = 0; i < len; i++) {
+            printf("%x\n", pmem_read(baseaddr));
+            baseaddr += 4;
+        }
+    }
+    return 0;
+}
+
 static struct {
     const char *name;
     const char *description;
@@ -68,7 +86,7 @@ static struct {
     { "q", "Exit NPC", cmd_q },
     { "si", "single step", cmd_si },
     { "info", "program information", cmd_info},
-//   { "x", "scan memory", cmd_x},
+    { "x", "scan memory", cmd_x},
 //   { "p", "Expression evaluation", cmd_p},
 //   { "w", "set watchpoint", cmd_w},
 //   { "d", "delete watchpoint", cmd_d},
