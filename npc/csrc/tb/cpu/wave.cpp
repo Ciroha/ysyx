@@ -12,6 +12,10 @@ void init_wave() {
 	tfp->open("builds/waveform.vcd");
 }
 
+void open_wave() {
+	tfp->open("builds/waveform.vcd");
+}
+
 void wave_dump() {
     tfp->dump(contextp->time());
     contextp->timeInc(1);

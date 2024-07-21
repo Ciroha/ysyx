@@ -35,6 +35,12 @@ always @(posedge clk) begin
             regs[waddr] <= wdata;
         end
     end
+    // for (i = 0; i < 32; i++) begin
+    //     reg_read(i, regs[i]);
+    // end
+end
+
+always @(*) begin
     for (i = 0; i < 32; i++) begin
         reg_read(i, regs[i]);
     end
