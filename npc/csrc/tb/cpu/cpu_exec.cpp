@@ -16,7 +16,7 @@ void single_cycle() {
 void reset(int n) {
     cpu.rst = 1;
     while (n-- > 0) single_cycle();
-    cpu.rst = 0;
+    cpu.rst = 0;wave_dump();
 }
 
 static void execute(uint32_t n) {
