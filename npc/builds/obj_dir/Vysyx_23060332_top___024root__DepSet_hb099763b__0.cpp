@@ -191,6 +191,8 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___ico_sequent__TOP__0(Vysyx_2306
                     vlSelf->ysyx_23060332_top__DOT__id_ex_waddr = 0U;
                     vlSelf->ysyx_23060332_top__DOT__raddr1 
                         = (0x1fU & (vlSelf->inst >> 0xfU));
+                    vlSelf->ysyx_23060332_top__DOT__raddr2 
+                        = (0x1fU & (vlSelf->inst >> 0x14U));
                     vlSelf->ysyx_23060332_top__DOT__op1 
                         = vlSelf->ysyx_23060332_top__DOT__rdata1;
                     vlSelf->ysyx_23060332_top__DOT__op2 
@@ -469,6 +471,8 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___act_sequent__TOP__0(Vysyx_2306
                     vlSelf->ysyx_23060332_top__DOT__id_ex_waddr = 0U;
                     vlSelf->ysyx_23060332_top__DOT__raddr1 
                         = (0x1fU & (vlSelf->inst >> 0xfU));
+                    vlSelf->ysyx_23060332_top__DOT__raddr2 
+                        = (0x1fU & (vlSelf->inst >> 0x14U));
                     vlSelf->ysyx_23060332_top__DOT__op1 
                         = vlSelf->ysyx_23060332_top__DOT__rdata1;
                     vlSelf->ysyx_23060332_top__DOT__op2 
