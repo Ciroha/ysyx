@@ -35,7 +35,7 @@ CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*
 
 # LDFLAGS += $(CFLAGS_BUILD)
 
-LDFLAGS := -O2 $(LDFLAGS)
+# LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
 # include $(NPC_HOME)/script/yosys-sta.mk
 
