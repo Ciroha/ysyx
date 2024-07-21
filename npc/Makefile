@@ -1,10 +1,20 @@
 #top name
 TOPNAME = ysyx_23060332_top
 
+<<<<<<< HEAD
 #some build's dir variable
 BUILD_DIR = ./builds
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 BIN = $(BUILD_DIR)/$(TOPNAME)
+=======
+sim:
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	gtkwave wave.vcd	
+
+switch_to_vcd:
+	verilator -Wall top.v test.cpp --cc --trace --exe --build
+	
+>>>>>>> a089ab3 (NJU-ProjectN/nvboard master initialized without tracing)
 
 
 #verilator variable
