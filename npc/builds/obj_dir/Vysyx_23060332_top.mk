@@ -39,7 +39,7 @@ VM_USER_CFLAGS = \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
-	-L/usr/lib/llvm-14/lib  -lLLVM-14 -lreadline \
+	-L/usr/lib/llvm-14/lib  -lreadline \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
