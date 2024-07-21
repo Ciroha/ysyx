@@ -4,7 +4,6 @@
 #include <readline/history.h>
 #include <cpu.h>
 
-int si_steps = 0;
 
 static char* rl_gets() {
     static char *line_read = NULL;
@@ -42,8 +41,7 @@ static int cmd_si(char *args) {
     else {
         steps = atoi(args);
     }
-    si_steps += steps;
-    cpu_exec(si_steps);
+    cpu_exec(steps);
     return 0;
 }
 
