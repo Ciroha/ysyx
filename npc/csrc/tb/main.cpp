@@ -22,7 +22,7 @@ void close_wave();
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
 	init_wave();
-	reset(10);
+	reset(5);
 	sdb_mainloop();
 	close_wave();
 }
