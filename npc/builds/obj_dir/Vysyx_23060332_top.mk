@@ -50,6 +50,7 @@ VM_USER_CLASSES = \
 	monitor \
 	sdb \
 	reg \
+	disasm \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
@@ -59,6 +60,7 @@ VM_USER_DIR = \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb \
 	/home/ciroha/ysyx-workbench/npc/csrc/tb/riscv \
+	/home/ciroha/ysyx-workbench/npc/csrc/tb/utils \
 
 
 ### Default rules...
@@ -83,6 +85,8 @@ monitor.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/monitor.cpp
 sdb.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+disasm.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/disasm.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
