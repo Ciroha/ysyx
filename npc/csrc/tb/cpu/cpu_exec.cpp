@@ -10,7 +10,7 @@ uint32_t isa_reg_str2val(const char *s, bool *success);
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
-    cpu.clk = 1; cpu.inst = pmem_read(cpu.pc); cpu.eval(); wave_dump();
+    cpu.clk = 1; cpu.eval(); cpu.inst = pmem_read(cpu.pc); wave_dump();
 }
 
 void reset(int n) {
