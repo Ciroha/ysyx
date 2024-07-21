@@ -23,8 +23,13 @@ VERILATOR_FLAGS += --trace -I/home/ciroha/ysyx-workbench/npc/vsrc/
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" -or -name "*.sv")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
-include $(NPC_HOME)/script/filelist.mk
+# Include all filelist.mk to merge file lists
+FILELIST_MK = $(shell find -L  -name "filelist.mk")
+include $(FILELIST_MK)
+# include $(NPC_HOME)/script/filelist.mk
 
+LDFLAGS += -shared -fPIC
+LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
 # include $(NPC_HOME)/script/yosys-sta.mk
 
