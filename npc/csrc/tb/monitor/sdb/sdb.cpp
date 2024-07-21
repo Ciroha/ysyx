@@ -70,7 +70,7 @@ static int cmd_x(char *args) {
         sscanf(n, "%d", &len);
         sscanf(addr, "%x", &baseaddr);
         for (int i = 0; i < len; i++) {
-            printf("%#x\n", pmem_read(baseaddr));
+            printf("%#08x\n", pmem_read(baseaddr));
             baseaddr += 4;
         }
     }
