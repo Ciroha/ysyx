@@ -35,7 +35,6 @@ CFLAGS_BUILD += $(if $(CONFIG_CC_ASAN),-fsanitize=address,)
 
 LDFLAGS += $(CFLAGS_BUILD)
 
-LDFLAGS += -shared -fPIC
 LDFLAGS := -O2 $(LDFLAGS)
 # #sta 
 # include $(NPC_HOME)/script/yosys-sta.mk
