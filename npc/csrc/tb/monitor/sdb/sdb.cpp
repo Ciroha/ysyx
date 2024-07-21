@@ -33,48 +33,59 @@ static int cmd_q(char *args) {
     return -1;
 }
 
+static int cmd_si(char *args) {
+    int steps = 0;
+    if (args == NULL) {
+        steps = 1;
+    }
+    else {
+        steps = atoi(args);
+    }
+    cpu_exec(steps);
+    return 0;
+}
+
 static struct {
-  const char *name;
-  const char *description;
-  int (*handler) (char *);
+    const char *name;
+    const char *description;
+    int (*handler) (char *);
 } cmd_table [] = {
-  { "help", "Display information about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NPC", cmd_q },
-//   { "si", "single step", cmd_si },
+    { "help", "Display information about all supported commands", cmd_help },
+    { "c", "Continue the execution of the program", cmd_c },
+    { "q", "Exit NPC", cmd_q },
+    { "si", "single step", cmd_si },
 //   { "info", "program information", cmd_info},
 //   { "x", "scan memory", cmd_x},
 //   { "p", "Expression evaluation", cmd_p},
 //   { "w", "set watchpoint", cmd_w},
 //   { "d", "delete watchpoint", cmd_d},
   /* TODO: Add more commands */
-
 };
 
 #define NR_CMD ARRLEN(cmd_table)
 
 static int cmd_help(char *args) {
-  /* extract the first argument */
-  char *arg = strtok(NULL, " ");
-  int i;
+    /* extract the first argument */
+    char *arg = strtok(NULL, " ");
+    int i;
 
-  if (arg == NULL) {
-    /* no argument given */
-    for (i = 0; i < NR_CMD; i ++) {
-      printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
-    }
-    return 0;
-  }
-  else {
-    for (i = 0; i < NR_CMD; i ++) {
-      if (strcmp(arg, cmd_table[i].name) == 0) {
-        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+    if (arg == NULL) {
+        /* no argument given */
+        for (i = 0; i < NR_CMD; i ++) {
+            printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        }
         return 0;
-      }
     }
-  }
-  printf("Unknown command '%s'\n", arg);
-  return 0;
+    else {
+        for (i = 0; i < NR_CMD; i ++) {
+            if (strcmp(arg, cmd_table[i].name) == 0) {
+                printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+                return 0;
+            }
+        }
+    }
+    printf("Unknown command '%s'\n", arg);
+    return 0;
 }
 
 void sdb_mainloop() {
