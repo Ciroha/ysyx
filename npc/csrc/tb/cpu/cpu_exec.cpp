@@ -37,24 +37,24 @@ void reset(int n) {
     cpu.rst = 0;
 }
 
-void display_ringbuf() {
-  if (!full && !ringcount) return;
-  int end = ringcount;
-  int i = full ? ringcount : 0;
+// void display_ringbuf() {
+//   if (!full && !ringcount) return;
+//   int end = ringcount;
+//   int i = full ? ringcount : 0;
 
-  void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-  char buf[2048];
-  char *p;
-  do {
-    p = buf;
-    p += sprintf(buf, "%s" FMT_WORD ": %08x ", (i+1)%MAX_IRINGBUF==end?" --> ":"     ", iringbuf[i].pc, iringbuf[i].inst);
-    disassemble(p, buf+sizeof(buf)-p, iringbuf[i].pc, (uint8_t *)&iringbuf[i].inst, 4);
+//   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+//   char buf[2048];
+//   char *p;
+//   do {
+//     p = buf;
+//     p += sprintf(buf, "%s" FMT_WORD ": %08x ", (i+1)%MAX_IRINGBUF==end?" --> ":"     ", iringbuf[i].pc, iringbuf[i].inst);
+//     disassemble(p, buf+sizeof(buf)-p, iringbuf[i].pc, (uint8_t *)&iringbuf[i].inst, 4);
 
-    if ((i+1)%MAX_IRINGBUF==end) printf(ANSI_FG_RED);
-    puts(buf);
-  } while ((i = (i+1)%MAX_IRINGBUF) != end);
-  puts(ANSI_NONE);
-}
+//     if ((i+1)%MAX_IRINGBUF==end) printf(ANSI_FG_RED);
+//     puts(buf);
+//   } while ((i = (i+1)%MAX_IRINGBUF) != end);
+//   puts(ANSI_NONE);
+// }
 
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
@@ -77,12 +77,12 @@ static void execute(uint32_t n) {
         // if (g_print_step)
         //     puts(buf);
         // wave_dump();
-        iringbuf[ringcount].pc = cpu.pc;
-        iringbuf[ringcount].inst = cpu.inst;
-        ringcount = (ringcount + 1) % MAX_IRINGBUF;
-        full = full || ringcount == 0;
+        // iringbuf[ringcount].pc = cpu.pc;
+        // iringbuf[ringcount].inst = cpu.inst;
+        // ringcount = (ringcount + 1) % MAX_IRINGBUF;
+        // full = full || ringcount == 0;
     }
-    display_ringbuf();
+    // display_ringbuf();
 }
 
 
