@@ -114,7 +114,7 @@ void record_inst_trace(char *p, uint8_t *inst ,uint32_t pc){
 // }
 
 
-void cpu_exec(uint32_t n) {
+void cpu_exec(uint64_t n) {
     g_print_step = (n < MAX_INST_TO_PRINT);
     // execute(n);
     // // close_wave();
