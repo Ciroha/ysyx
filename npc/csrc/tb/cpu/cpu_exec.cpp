@@ -36,9 +36,13 @@ static void execute(uint32_t n) {
         for (int i = ilen - 1; i >= 0; i--) {
             p += snprintf(p, 4, "%02x", inst[i]);
         }
-        memset(p, ' ', 1);
-        p += 1;
-        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)cpu.inst, 4);
+        int ilen_max = 4;
+        int space_len = ilen_max - ilen;
+        if (space_len < 0) space_len = 0;
+        space_len = space_len * 3 + 1;
+        memset(p, ' ', space_len);
+        p += space_len;
+        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
         // if (g_print_step)
         //     puts(buf);
         // wave_dump();
