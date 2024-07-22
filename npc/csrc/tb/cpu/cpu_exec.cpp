@@ -124,12 +124,12 @@ void cpu_exec(uint32_t n) {
 		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
 		if(g_print_step)
 			puts(p2);
-		extern int check_w();
-  		int no = check_w();
-  		if(no != 0){
-    		printf("NO.%d watchpoint has been trigger\n",no);
-			return;
-  		}
+		// extern int check_w();
+  		// int no = check_w();
+  		// if(no != 0){
+    	// 	printf("NO.%d watchpoint has been trigger\n",no);
+		// 	return;
+  		// }
 		single_cycle();
 		wave_dump();
 		n--;
