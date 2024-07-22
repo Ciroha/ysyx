@@ -30,17 +30,17 @@ static void execute(uint32_t n) {
         single_cycle();
         char buf[128] = {0};
         char *p = buf;
-        p += snprintf(p, sizeof(buf), "0x%08" "x" ":", cpu.pc);
+        p += snprintf(p, 128, "%#x:", cpu.pc);
         int ilen = 4;
-        // uint8_t *inst = (uint8_t *)&cpu.inst;
-        // for (int i = ilen - 1; i >= 0; i--) {
-        //     p += snprintf(p, 4, "%02x", inst[i]);
-        // }
+        uint8_t *inst = (uint8_t *)&cpu.inst;
+        for (int i = ilen - 1; i >= 0; i--) {
+            p += snprintf(p, 4, "%02x", inst[i]);
+        }
         memset(p, ' ', 1);
         p += 1;
         disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
         if (g_print_step)
-            puts(buf);
+            puts(p);
         // wave_dump();
     }
 }
