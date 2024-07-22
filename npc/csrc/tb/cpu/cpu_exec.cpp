@@ -2,22 +2,17 @@
 #include <cpu.h>
 #include <memory.h>
 
-<<<<<<< HEAD
 #define MAX_INST_TO_PRINT 10
 
-=======
->>>>>>> temp
 Vysyx_23060332_top cpu;
+static bool g_print_step = false;
 
 void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
 void open_wave();
-<<<<<<< HEAD
 void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-=======
->>>>>>> temp
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -33,17 +28,26 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-<<<<<<< HEAD
-
-=======
->>>>>>> temp
+        char buf[128];
+        char *p = buf;
+        p += snprintf(p, sizeof(buf), "0x%08" "x" ":", cpu.pc);
+        int ilen = 4;
+        uint8_t *inst = (uint8_t *)&cpu.inst;
+        for (int i = ilen - 1; i >= 0; i--) {
+            p += snprintf(p, 4, "%02x", inst[i]);
+        }
+        memset(p, ' ', 1);
+        p ++;
+        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.pc, 4);
+        if (g_print_step)
+            puts(buf);
         // wave_dump();
     }
 }
 
 
 void cpu_exec(uint64_t n) {
-    // open_wave();
+    g_print_step = (n < MAX_INST_TO_PRINT);
     execute(n);
     // close_wave();
 }
