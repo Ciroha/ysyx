@@ -32,7 +32,7 @@ static void execute(uint32_t n) {
         char *p = buf;
         p += snprintf(p, 128, "%#x:", cpu.pc);
         int ilen = 4;
-        // uint8_t *inst = (uint8_t *)&cpu.inst;
+        uint8_t *inst = (uint8_t *)&cpu.inst;
         // for (int i = ilen - 1; i >= 0; i--) {
         //     p += snprintf(p, 4, "%02x", inst[i]);
         // }
