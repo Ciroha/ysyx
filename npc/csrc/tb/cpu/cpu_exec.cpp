@@ -77,7 +77,7 @@ void record_inst_trace(char *p, uint8_t *inst ,uint32_t pc){
   memset(p, ' ', space_len);
   p += space_len;
 
-//   disassemble(p, p+128-ps, (uint64_t)pc, inst, ilen);
+  disassemble(p, p+100-ps, (uint64_t)pc, inst, ilen);
 }
 
 // static void execute(uint32_t n) {
