@@ -77,7 +77,7 @@ void record_inst_trace(char *p, uint8_t *inst ,uint32_t pc){
   memset(p, ' ', space_len);
   p += space_len;
 
-  disassemble(p, ps+128-p, (uint64_t)pc, inst, ilen);
+  disassemble(p, p+128-ps, (uint64_t)pc, inst, ilen);
 }
 
 // static void execute(uint32_t n) {
@@ -119,7 +119,7 @@ void cpu_exec(uint64_t n) {
     // execute(n);
     // // close_wave();
     while(n > 0){
-		cpu.inst = 0b00000000010100000000000010010011;
+		cpu.inst = pmem_read(cpu.pc);
 		char p2[128] = {0};
 		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
 		if(g_print_step)
