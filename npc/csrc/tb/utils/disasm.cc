@@ -105,5 +105,6 @@ extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int
   int skip = s.find_first_not_of('\t');
   const char *p = s.c_str() + skip;
   assert((int)s.length() - skip < size);
-  strcpy(str, p);
+  strncpy(str, p, size - 1);
+  str[size - 1] = '\0';
 }
