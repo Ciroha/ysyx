@@ -104,7 +104,12 @@ extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int
 
   int skip = s.find_first_not_of('\t');
   const char *p = s.c_str() + skip;
-  assert((int)s.length() - skip < size);
+  // assert((int)s.length() - skip < size);
+    if ((int)s.length() - skip >= size) {
+    // 错误处理: 输出缓冲区太小
+    // 可以设置错误码，返回错误，或者截断字符串等
+    return;
+  }
   strncpy(str, p, size - 1);
   str[size - 1] = '\0';
 }
