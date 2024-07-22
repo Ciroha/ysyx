@@ -43,7 +43,7 @@ void display_ringbuf() {
   int i = full ? ringcount : 0;
 
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-  char buf[128];
+  char buf[2048];
   char *p;
   do {
     p = buf;
