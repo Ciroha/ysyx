@@ -18,7 +18,7 @@ void init_mem(size_t size) {
 	if(memory == NULL) {exit(0);}
 }
 
-extern "C" uint32_t pmem_read(uint32_t vaddr){
+uint32_t pmem_read(uint32_t vaddr){
 	uint32_t *paddr = guest_to_host(vaddr);
 	return *paddr;
 }
