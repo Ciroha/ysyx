@@ -73,7 +73,7 @@ static void execute(uint32_t n) {
         space_len = space_len * 3 + 1;
         memset(p, ' ', space_len);
         p += space_len;
-        disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 4);
+        disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 2);
         // if (g_print_step)
         //     puts(buf);
         // wave_dump();
