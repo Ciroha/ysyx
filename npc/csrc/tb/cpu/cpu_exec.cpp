@@ -42,11 +42,11 @@ static void execute(uint32_t n) {
         single_cycle();
         char buf[128];
         char *p = buf;
-        p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
+        p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
         int ilen = 4;
         uint8_t *inst = (uint8_t *)&cpu.inst;
         for (int i = ilen - 1; i >= 0; i--) {
-            p += snprintf(p, 4, "%02x", inst[i]);
+            p += snprintf(p, 4, " %02x", inst[i]);
         }
         int ilen_max = 4;
         int space_len = ilen_max - ilen;
