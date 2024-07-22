@@ -37,7 +37,7 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
   uint32_t i = inst;
   int rs1 = BITS(i, 19, 15);
   int rd = BITS(i, 11, 7);
-  int imm = SEXT(BITS(i, 31, 20), 12);
+  int imm = BITS(i, 31, 20), 12;
   char *prev_fname = find_func(pc);
   char *now_fname = find_func(dnpc); 
   if(type == JAL) ftrace_write(CALL, now_fname, dnpc, pc);
