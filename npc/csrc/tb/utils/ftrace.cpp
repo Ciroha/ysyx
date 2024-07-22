@@ -1,6 +1,7 @@
 #include <ftrace.h>
 #include <common.h>
 #include <elf.h>
+#include <stdio.h>
 
 struct func
 {
@@ -20,7 +21,7 @@ void init_ftrace(char *elf_file) {
     }
 
     FILE *fp = fopen(elf_file, "rb");
-    Assert(fp, "Can't Open ELF File %s!", elf_file);
+    // Assert(fp, "Can't Open ELF File %s!", elf_file);
     
     Elf32_Ehdr elf_header;
     int ret = fread(&elf_header, sizeof(elf_header), 1, fp);    //从fp中读取elf头文件
