@@ -36,8 +36,8 @@ static void execute(uint32_t n) {
         for (int i = ilen - 1; i >= 0; i--) {
             p += snprintf(p, 4, "%02x", inst[i]);
         }
-        memset(p, ' ', 1);
-        p ++;
+        // memset(p, ' ', 1);
+        // p ++;
         disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.pc, 4);
         if (g_print_step)
             puts(buf);
