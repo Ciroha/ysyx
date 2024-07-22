@@ -39,7 +39,7 @@ VM_USER_CFLAGS = \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
-	-lLLVM-14 -L/usr/lib/llvm-14/lib  -lreadline \
+	-lLLVM-14 -L/usr/lib/llvm-14/lib  -lreadline -ldl -pie \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
@@ -51,6 +51,7 @@ VM_USER_CLASSES = \
 	sdb \
 	reg \
 	disasm \
+	ftrace \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
@@ -87,6 +88,8 @@ sdb.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/monitor/sdb/sdb.cpp
 reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 disasm.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/disasm.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+ftrace.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/ftrace.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)

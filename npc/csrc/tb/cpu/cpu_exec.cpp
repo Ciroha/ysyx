@@ -1,17 +1,26 @@
 #include <common.h>
 #include <cpu.h>
 #include <memory.h>
+#include <ftrace.h>
 
 #define MAX_INST_TO_PRINT 10
+#define MAX_IRINGBUF 16
+#define FMT_WORD "0x%08" "x"
+#define ANSI_FG_RED "\33[1;31m"
+#define ANSI_NONE "\33[0m"
 
 Vysyx_23060332_top cpu;
+static bool g_print_step = false;
+static uint8_t opcode;
+uint32_t pc, snpc, dnpc;
+
 
 void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
 void open_wave();
-void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -24,17 +33,60 @@ void reset(int n) {
     cpu.rst = 0;
 }
 
+void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
+  uint32_t i = inst;
+  int rs1 = BITS(i, 19, 15);
+  int rd = BITS(i, 11, 7);
+  int imm = BITS(i, 31, 20);
+  char *prev_fname = find_func(pc);
+  char *now_fname = find_func(dnpc); 
+  if(type == JAL) ftrace_write(CALL, now_fname, dnpc, pc);
+  else if(type == JALR){
+    if(rs1 == 1 && imm == 0 && rd == 0)
+      ftrace_write(RET, prev_fname, dnpc, pc);
+    else
+      ftrace_write(CALL, now_fname, dnpc, pc);
+  }
+}
+
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
+        pc = cpu.pc;
+        snpc = cpu.pc + 4;
         single_cycle();
-
-        // wave_dump();
+        dnpc = cpu.pc;
+        char buf[128] = {0};
+        char *p = buf;
+        p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
+        int ilen = 4;
+        uint8_t *inst = (uint8_t *)&cpu.inst;
+        for (int i = ilen - 1; i >= 0; i--) {
+            p += snprintf(p, 4, " %02x", inst[i]);
+        }
+        int ilen_max = 4;
+        int space_len = ilen_max - ilen;
+        if (space_len < 0) space_len = 0;
+        space_len = space_len * 3 + 1;
+        memset(p, ' ', space_len);
+        p += space_len;
+        
+        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
+        if (g_print_step)
+            puts(buf);
+        
+        opcode = BITS(cpu.inst, 6, 0);
+        if (opcode == 0b1101111)
+            ftrace(JAL, pc, dnpc, cpu.inst);
+        else if (opcode == 0b1100111)
+            ftrace(JALR, pc, dnpc, cpu.inst);
+        
+        wave_dump();
     }
 }
 
 
 void cpu_exec(uint64_t n) {
-    // open_wave();
+    g_print_step = (n < MAX_INST_TO_PRINT);
     execute(n);
     // close_wave();
 }

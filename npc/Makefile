@@ -16,7 +16,7 @@ VERILATOR = $(VERILATOR_ROOT)/bin/verilator
 endif
 
 #verilator flag
-VERILATOR_FLAGS += -MMD -cc -O3  --build --x-assign fast --x-initial fast --noassert
+VERILATOR_FLAGS += -MMD -cc -O3  --build --x-assign fast --x-initial fast --noassert -j 5
 VERILATOR_FLAGS += --trace -I/home/ciroha/ysyx-workbench/npc/vsrc/
 
 #source code
@@ -51,7 +51,10 @@ include ../Makefile
 .PHONY:clean run
 
 run: sim
-	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
+	$(NPC_HOME)/builds/$(TOPNAME) $(ARGS) $(IMG)
+
+gdb: sim
+	gdb -s $(NPC_HOME)/builds/$(TOPNAME) --args $(NPC_HOME)/builds/$(TOPNAME) $(IMG)
 
 clean:
 	-rm -rf builds/* result top.dot top.png vsrc/*.png
