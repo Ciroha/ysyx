@@ -1,4 +1,4 @@
-CXXSRC = src/utils/disasm.cc
+CXXSRC = $(NPC_HOME)/csrc/tb/utils/disasm.cc
 CXXFLAGS += $(shell llvm-config --cxxflags) -fPIE
 LIBS += $(shell llvm-config --libs)
 
