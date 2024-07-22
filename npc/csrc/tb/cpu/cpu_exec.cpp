@@ -40,7 +40,7 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-        char buf[128];
+        char buf[128] = {0};
         char *p = buf;
         p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
         int ilen = 4;
