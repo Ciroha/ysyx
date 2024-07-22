@@ -28,14 +28,14 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-        char buf[128] = {0};
+        char buf[128];
         char *p = buf;
-        p += snprintf(p, 128, "%#x:", cpu.pc);
+        p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
         int ilen = 4;
-        uint8_t *inst = (uint8_t *)&cpu.inst;
-        for (int i = ilen - 1; i >= 0; i--) {
-            p += snprintf(p, 4, "%02x", inst[i]);
-        }
+        // uint8_t *inst = (uint8_t *)&cpu.inst;
+        // for (int i = ilen - 1; i >= 0; i--) {
+        //     p += snprintf(p, 4, "%02x", inst[i]);
+        // }
         int ilen_max = 4;
         int space_len = ilen_max - ilen;
         if (space_len < 0) space_len = 0;
