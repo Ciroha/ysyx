@@ -56,24 +56,42 @@ void reset(int n) {
 //   puts(ANSI_NONE);
 // }
 
+void record_inst_trace(char *p, uint8_t *inst ,uint32_t pc){
+  char *ps = p;
+  p += snprintf(p,128, "%#x:",pc);
+  int ilen = 4;
+  int i;
+  for (i = ilen - 1; i >= 0; i --) {
+    p += snprintf(p, 4, " %02x", inst[i]);
+  }
+  int ilen_max = 4;
+  int space_len = ilen_max - ilen;
+  if (space_len < 0) space_len = 0;
+  space_len = space_len * 3 + 1;
+  memset(p, ' ', space_len);
+  p += space_len;
+
+  disassemble(p, ps+128-p, (uint64_t)pc, inst, ilen);
+}
+
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-        char buf[128];
-        char *p = buf;
-        p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
-        int ilen = 4;
-        uint8_t *inst = (uint8_t *)&cpu.inst;
-        for (int i = ilen - 1; i >= 0; i--) {
-            p += snprintf(p, 4, "%02x", inst[i]);
-        }
-        int ilen_max = 4;
-        int space_len = ilen_max - ilen;
-        if (space_len < 0) space_len = 0;
-        space_len = space_len * 3 + 1;
-        memset(p, ' ', space_len);
-        p += space_len;
-        disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 1);
+        // char buf[128];
+        // char *p = buf;
+        // p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
+        // int ilen = 4;
+        // uint8_t *inst = (uint8_t *)&cpu.inst;
+        // for (int i = ilen - 1; i >= 0; i--) {
+        //     p += snprintf(p, 4, "%02x", inst[i]);
+        // }
+        // int ilen_max = 4;
+        // int space_len = ilen_max - ilen;
+        // if (space_len < 0) space_len = 0;
+        // space_len = space_len * 3 + 1;
+        // memset(p, ' ', space_len);
+        // p += space_len;
+        // disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 4);
         // if (g_print_step)
         //     puts(buf);
         // wave_dump();
@@ -81,6 +99,10 @@ static void execute(uint32_t n) {
         // iringbuf[ringcount].inst = cpu.inst;
         // ringcount = (ringcount + 1) % MAX_IRINGBUF;
         // full = full || ringcount == 0;
+        char p2[128] = {0};
+		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
+		if(g_print_step)
+			puts(p2);
     }
     // display_ringbuf();
 }
