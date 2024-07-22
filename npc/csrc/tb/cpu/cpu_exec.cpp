@@ -38,7 +38,7 @@ static void execute(uint32_t n) {
         }
         memset(p, ' ', 1);
         p += 1;
-        // disassemble(p, p + sizeof(buf) - buf, cpu.pc, (uint8_t *)&cpu.inst, 4);
+        disassemble(p, p + sizeof(buf) - buf, cpu.pc, (uint8_t *)&cpu.inst, 4);
         // if (g_print_step)
         //     puts(buf);
         // wave_dump();
