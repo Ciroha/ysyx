@@ -10,14 +10,6 @@
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
-typedef struct{
-  uint32_t pc;
-  uint32_t inst;
-}Iring;
-
-Iring iringbuf[MAX_IRINGBUF];
-int ringcount = 0;
-bool full = false;
 
 void wave_dump();
 void close_wave();
