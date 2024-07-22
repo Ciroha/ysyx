@@ -59,7 +59,7 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-        char buf[65536];
+        char buf[10];
         char *p = buf;
         p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
         int ilen = 4;
