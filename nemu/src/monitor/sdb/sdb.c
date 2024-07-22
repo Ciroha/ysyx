@@ -23,9 +23,13 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+void sda_watchpoint_display();
+void delete_watchpoint(int no);
+void create_watchpoint(char* args);
+word_t paddr_read(paddr_t addr, int len);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
-static char* rl_gets() {
+static char* rl_gets() {  //命令行读取函数
   static char *line_read = NULL;
 
   if (line_read) {
@@ -43,16 +47,84 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
-  cpu_exec(-1);
+  cpu_exec(-1); //一直执行
   return 0;
 }
 
 
-static int cmd_q(char *args) {
+static int cmd_q(char *args) {  //切换状态到退出
+  nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
 static int cmd_help(char *args);
+
+static int cmd_si(char *args) { //单步执行
+  int steps = 0; //变量定义
+  if (args == NULL)
+    steps = 1; //如果没有接参数，就将步数设置为1
+  else
+	steps = atoi(args); //将char型转换成int 
+  cpu_exec(steps);
+  return 0;
+}
+
+static int cmd_info(char *args) {
+	if (args == NULL)
+		printf("No args.\n");
+	else if (strcmp(args, "r") == 0)
+		isa_reg_display();
+	else if (strcmp(args, "w") == 0)
+		sda_watchpoint_display();
+	else
+		printf("Usage:info r or info w!\n");
+	return 0;
+}
+
+static int cmd_x(char *args) {
+	if (args == NULL)
+		printf("No args.\n");
+	else {
+		char *n = strtok(args, " ");
+		char *addr = strtok(NULL, " "); //zi fu fen ge
+		int len = 0;
+		paddr_t baseaddr = 0;
+		sscanf(n, "%d", &len);
+		sscanf(addr, "%x", &baseaddr);
+    Log("%s", addr);
+		for (int i = 0; i < len ;i++)
+		{
+			printf("%x\n", paddr_read(baseaddr,4));
+			baseaddr = baseaddr + 4;
+		}
+	}
+	return 0;
+}
+
+static int cmd_p(char *args) {
+	bool success;
+	word_t res = expr(args, &success);
+	printf("The result is: %u\n", res);
+	return 0;
+}
+
+static int cmd_w(char *args) {
+  if (args == NULL) {
+    printf("No args!\n");
+  }else {
+    create_watchpoint(args);
+  }
+  return 0;
+}
+
+static int cmd_d(char* args) {
+  if (args == NULL) {
+    printf("No args!\n");
+  }else {
+    delete_watchpoint(atoi(args));
+  }
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -62,7 +134,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "single step", cmd_si },
+  { "info", "program information", cmd_info},
+  { "x", "scan memory", cmd_x},
+  { "p", "Expression evaluation", cmd_p},
+  { "w", "set watchpoint", cmd_w},
+  { "d", "delete watchpoint", cmd_d},
   /* TODO: Add more commands */
 
 };
@@ -97,22 +174,23 @@ void sdb_set_batch_mode() {
 }
 
 void sdb_mainloop() {
+#ifdef CONFIG_BATCHMODE
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
   }
-
-  for (char *str; (str = rl_gets()) != NULL; ) {
+#endif
+  for (char *str; (str = rl_gets()) != NULL; ) {  //调用字符读取函数
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
-    char *cmd = strtok(str, " ");
+    char *cmd = strtok(str, " "); //读取第一个字符作为命令
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
-    char *args = cmd + strlen(cmd) + 1;
+    char *args = cmd + strlen(cmd) + 1; //参数从cmd后面加1开始
     if (args >= str_end) {
       args = NULL;
     }
@@ -125,7 +203,7 @@ void sdb_mainloop() {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { return; }
+        if (cmd_table[i].handler(args) < 0) { return; } //根据参数进行调用
         break;
       }
     }
@@ -134,10 +212,48 @@ void sdb_mainloop() {
   }
 }
 
+void expr_test() {  //表达式测试
+  Log("expr_test!");
+  FILE *fp = fopen("/home/ciroha/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+  if (fp == NULL) perror("test error");
+  
+  word_t correct_res;
+  char *tmp = NULL;
+  bool success = false;
+  size_t len = 0;
+  ssize_t read;
+
+  while (1) {
+    if (fscanf(fp, "%u", &correct_res) == -1) break;
+    //Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+    read = getline(&tmp, &len, fp);
+    tmp[read-1] = '\0'; //将结束字符串设为空
+    Log("testing! correct_res = %u, tmp = %s", correct_res, tmp);
+    word_t res = expr(tmp, &success);
+    Log("res = %u", res);
+    //assert(success);
+    if (res != correct_res) {
+      puts(tmp);
+      printf("expected: %u , got: %u\n", correct_res, res);
+      //assert(0);
+    }
+    else {
+      Log("Test pass with %u", res);
+    }
+
+  }
+
+  fclose(fp);
+  if(tmp) free(tmp);
+
+  Log("expr test pass");
+}
+
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
 
+  //expr_test();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }

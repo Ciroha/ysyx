@@ -131,6 +131,7 @@ config TRACE
   bool "Enable tracer"
   default y
 
+
 config TRACE_START
   depends on TRACE
   int "When tracing is enabled (unit: number of instructions)"
@@ -151,6 +152,25 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
+config MTRACE_READ
+  depends on TRACE
+  bool "Enable read memory tracer"
+  default n
+
+config MTRACE_WRITE
+  depends on TRACE
+  bool "Enable write memory tracer"
+  default y
+
+config FTRACE
+  depends on TRACE
+  bool "Enable function tracer"
+  default n
+
+config IRINGBUF
+  depends on TRACE && ITRACE
+  bool "Enable iringbuf"
+  default y
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
@@ -215,3 +235,11 @@ config RT_CHECK
   default y
 
 endmenu
+
+config WATCHPOINT
+  bool "Enable watchpoint"
+  default y
+
+config BATCHMODE
+  bool "Enable batchmode"
+  default y

@@ -24,6 +24,16 @@
  * You can modify this value as you want.
  */
 #define MAX_INST_TO_PRINT 10
+#define MAX_IRINGBUF 16
+
+typedef struct{
+  word_t pc;
+  uint32_t inst;
+}Iring;
+
+Iring iringbuf[MAX_IRINGBUF];
+int ringcount = 0;
+bool full = false;
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -31,13 +41,36 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+void wp_difftest();
 
-static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
+void display_ringbuf() {
+  if (!full && !ringcount) return;
+  int end = ringcount;
+  int i = full ? ringcount : 0;
+
+  void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+  char buf[128];
+  char *p;
+  do {
+    p = buf;
+    p += sprintf(buf, "%s" FMT_WORD ": %08x ", (i+1)%MAX_IRINGBUF==end?" --> ":"     ", iringbuf[i].pc, iringbuf[i].inst);
+    disassemble(p, buf+sizeof(buf)-p, iringbuf[i].pc, (uint8_t *)&iringbuf[i].inst, 4);
+
+    if ((i+1)%MAX_IRINGBUF==end) printf(ANSI_FG_RED);
+    puts(buf);
+  } while ((i = (i+1)%MAX_IRINGBUF) != end);
+  puts(ANSI_NONE);
+}
+
+static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftest相关函数定义
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); } //TODO 有改动！原先没有CONFIG_，其实一样？
 #endif
-  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); } //如果小于10条则打印指令
+  
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
+  
+  IFDEF(CONFIG_WATCHPOINT, wp_difftest();)  //这里可以在menuconfig中修改
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
@@ -69,17 +102,24 @@ static void exec_once(Decode *s, vaddr_t pc) {
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
 #endif
+
+//iringbuf
+iringbuf[ringcount].pc = s->pc;
+iringbuf[ringcount].inst = s->isa.inst.val;
+ringcount = (ringcount + 1) % MAX_IRINGBUF;
+full = full || ringcount == 0;
 }
 
-static void execute(uint64_t n) {
-  Decode s;
+static void execute(uint64_t n) { 
+  Decode s; //Decode是译码信息结构体
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
-    g_nr_guest_inst ++;
-    trace_and_difftest(&s, cpu.pc);
+    g_nr_guest_inst ++; //客户指令记录
+    trace_and_difftest(&s, cpu.pc); //追踪与pc检测
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
+  IFDEF(CONFIG_IRINGBUF, display_ringbuf();)
 }
 
 static void statistic() {
@@ -91,15 +131,15 @@ static void statistic() {
   else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
 }
 
-void assert_fail_msg() {
+void assert_fail_msg() {  //错误处理函数
   isa_reg_display();
   statistic();
 }
 
 /* Simulate how the CPU works. */
-void cpu_exec(uint64_t n) {
+void cpu_exec(uint64_t n) {   //cpu执行函数
   g_print_step = (n < MAX_INST_TO_PRINT);
-  switch (nemu_state.state) {
+  switch (nemu_state.state) { //检查当前状态
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
       return;
@@ -108,15 +148,15 @@ void cpu_exec(uint64_t n) {
 
   uint64_t timer_start = get_time();
 
-  execute(n);
+  execute(n); //根据传入的数字n执行n次
 
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 
   switch (nemu_state.state) {
-    case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
+    case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break; //检查状态，如果正在运行，则暂停
 
-    case NEMU_END: case NEMU_ABORT:
+    case NEMU_END: case NEMU_ABORT: //如果是运行结束或出错，给出相应提示
       Log("nemu: %s at pc = " FMT_WORD,
           (nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
