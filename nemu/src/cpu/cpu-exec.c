@@ -66,7 +66,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftes
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); } //TODO 有改动！原先没有CONFIG_，其实一样？
 #endif
-  // if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); } //如果小于10条则打印指令
+  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); } //如果小于10条则打印指令
   
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   
