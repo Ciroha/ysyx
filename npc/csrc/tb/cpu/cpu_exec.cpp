@@ -1,6 +1,7 @@
 #include <common.h>
 #include <cpu.h>
 #include <memory.h>
+#include <ftrace.h>
 
 #define MAX_INST_TO_PRINT 10
 #define MAX_IRINGBUF 16
@@ -10,6 +11,9 @@
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
+static uint8_t opcode;
+uint32_t pc, snpc, dnpc;
+
 
 void wave_dump();
 void close_wave();
@@ -29,9 +33,28 @@ void reset(int n) {
     cpu.rst = 0;
 }
 
+void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
+  uint32_t i = inst;
+  int rs1 = BITS(i, 19, 15);
+  int rd = BITS(i, 11, 7);
+  int imm = SEXT(BITS(i, 31, 20), 12);
+  char *prev_fname = find_func(pc);
+  char *now_fname = find_func(dnpc); 
+  if(type == JAL) ftrace_write(CALL, now_fname, dnpc, pc);
+  else if(type == JALR){
+    if(rs1 == 1 && imm == 0 && rd == 0)
+      ftrace_write(RET, prev_fname, dnpc, pc);
+    else
+      ftrace_write(CALL, now_fname, dnpc, pc);
+  }
+}
+
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
+        pc = cpu.pc;
+        snpc = cpu.pc + 4;
         single_cycle();
+        dnpc = cpu.pc;
         char buf[128] = {0};
         char *p = buf;
         p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
@@ -50,6 +73,13 @@ static void execute(uint32_t n) {
         disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
         if (g_print_step)
             puts(buf);
+        
+        opcode = BITS(cpu.inst, 6, 0);
+        if (opcode == 0b1101111)
+            ftrace(JAL, pc, dnpc, cpu.inst);
+        else if (opcode == 0b1100111)
+            ftrace(JALR, pc, dnpc, cpu.inst);
+        
         wave_dump();
     }
 }
