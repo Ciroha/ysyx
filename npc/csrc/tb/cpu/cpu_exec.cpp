@@ -119,7 +119,7 @@ void cpu_exec(uint64_t n) {
     // execute(n);
     // // close_wave();
     while(n > 0){
-		cpu.inst = pmem_read(cpu.pc);
+		cpu.inst = 0b00000000010100000000000010010011;
 		char p2[128] = {0};
 		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
 		if(g_print_step)
