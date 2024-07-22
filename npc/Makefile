@@ -51,7 +51,7 @@ include ../Makefile
 .PHONY:clean run
 
 run: sim
-	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
+	$(NPC_HOME)/builds/$(TOPNAME) $(ARGS) $(IMG)
 
 gdb: sim
 	gdb -s $(NPC_HOME)/builds/$(TOPNAME) --args $(NPC_HOME)/builds/$(TOPNAME) $(IMG)
