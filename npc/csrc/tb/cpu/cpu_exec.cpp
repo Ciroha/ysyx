@@ -13,9 +13,9 @@ static bool g_print_step = false;
 typedef struct{
   uint32_t pc;
   uint32_t inst;
-}Iring;
+}Decode;
 
-Iring iringbuf[MAX_IRINGBUF];
+Decode disasmbuf[MAX_IRINGBUF];
 int ringcount = 0;
 bool full = false;
 
@@ -24,7 +24,7 @@ void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
 void open_wave();
-extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
