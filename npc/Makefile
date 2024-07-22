@@ -53,5 +53,8 @@ include ../Makefile
 run: sim
 	$(NPC_HOME)/builds/$(TOPNAME) $(IMG)
 
+gdb: sim
+	gdb -s $(NPC_HOME)/builds/$(TOPNAME) --args $(NPC_HOME)/builds/$(TOPNAME) $(IMG)
+
 clean:
 	-rm -rf builds/* result top.dot top.png vsrc/*.png
