@@ -40,7 +40,7 @@ static void execute(uint32_t n) {
         p += 1;
         disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
         if (g_print_step)
-            puts(p);
+            puts(buf);
         // wave_dump();
     }
 }
