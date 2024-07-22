@@ -28,7 +28,7 @@ void reset(int n) {
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         single_cycle();
-        char buf[128];
+        char buf[128] = {0};
         char *p = buf;
         p += snprintf(p, sizeof(buf), "0x%08" "x" ":", cpu.pc);
         int ilen = 4;
@@ -36,11 +36,11 @@ static void execute(uint32_t n) {
         for (int i = ilen - 1; i >= 0; i--) {
             p += snprintf(p, 4, "%02x", inst[i]);
         }
-        // memset(p, ' ', 1);
-        // p ++;
+        memset(p, ' ', 1);
+        p += 1;
         disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.pc, 4);
-        // if (g_print_step)
-        //     puts(buf);
+        if (g_print_step)
+            puts(buf);
         // wave_dump();
     }
 }
