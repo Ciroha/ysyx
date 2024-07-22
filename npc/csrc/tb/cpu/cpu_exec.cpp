@@ -26,9 +26,15 @@ void isa_reg_display();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
-void single_cycle() {
-    cpu.clk = 0; cpu.eval(); wave_dump();
-    cpu.clk = 1; cpu.eval(); cpu.inst = pmem_read(cpu.pc); wave_dump();
+// void single_cycle() {
+//     cpu.clk = 0; cpu.eval(); wave_dump();
+//     cpu.clk = 1; cpu.eval(); cpu.inst = pmem_read(cpu.pc); wave_dump();
+// }
+void single_cycle(){  //  0 --> 0 > 1 --> 1 > 0 this is a cycle in cpu
+	cpu.clk=0;   //negedge 1->0 no
+    cpu.eval();  //process 0->0 refresh combination logic and make them stable
+	cpu.clk=1;   //posedge 0->1 refresh sequential logic
+    cpu.eval();  //process 1->1 refresh sequential logic(sim)
 }
 
 void reset(int n) {
@@ -74,44 +80,60 @@ void record_inst_trace(char *p, uint8_t *inst ,uint32_t pc){
   disassemble(p, ps+128-p, (uint64_t)pc, inst, ilen);
 }
 
-static void execute(uint32_t n) {
-    for (; n > 0; n --) {
-        single_cycle();
-        // char buf[128];
-        // char *p = buf;
-        // p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
-        // int ilen = 4;
-        // uint8_t *inst = (uint8_t *)&cpu.inst;
-        // for (int i = ilen - 1; i >= 0; i--) {
-        //     p += snprintf(p, 4, "%02x", inst[i]);
-        // }
-        // int ilen_max = 4;
-        // int space_len = ilen_max - ilen;
-        // if (space_len < 0) space_len = 0;
-        // space_len = space_len * 3 + 1;
-        // memset(p, ' ', space_len);
-        // p += space_len;
-        // disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 4);
-        // if (g_print_step)
-        //     puts(buf);
-        // wave_dump();
-        // iringbuf[ringcount].pc = cpu.pc;
-        // iringbuf[ringcount].inst = cpu.inst;
-        // ringcount = (ringcount + 1) % MAX_IRINGBUF;
-        // full = full || ringcount == 0;
-        char p2[128] = {0};
+// static void execute(uint32_t n) {
+//     for (; n > 0; n --) {
+//         single_cycle();
+//         // char buf[128];
+//         // char *p = buf;
+//         // p += sprintf(buf, "%s" "0x%08" "x" ": %08x ", "     ", cpu.pc, cpu.inst);
+//         // int ilen = 4;
+//         // uint8_t *inst = (uint8_t *)&cpu.inst;
+//         // for (int i = ilen - 1; i >= 0; i--) {
+//         //     p += snprintf(p, 4, "%02x", inst[i]);
+//         // }
+//         // int ilen_max = 4;
+//         // int space_len = ilen_max - ilen;
+//         // if (space_len < 0) space_len = 0;
+//         // space_len = space_len * 3 + 1;
+//         // memset(p, ' ', space_len);
+//         // p += space_len;
+//         // disassemble(p, buf + sizeof(buf) - p, cpu.pc, inst, 4);
+//         // if (g_print_step)
+//         //     puts(buf);
+//         // wave_dump();
+//         // iringbuf[ringcount].pc = cpu.pc;
+//         // iringbuf[ringcount].inst = cpu.inst;
+//         // ringcount = (ringcount + 1) % MAX_IRINGBUF;
+//         // full = full || ringcount == 0;
+//         char p2[128] = {0};
+// 		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
+// 		if(g_print_step)
+// 			puts(p2);
+//     }
+//     // display_ringbuf();
+// }
+
+
+void cpu_exec(uint32_t n) {
+    g_print_step = (n < MAX_INST_TO_PRINT);
+    // execute(n);
+    // // close_wave();
+    while(n > 0){
+		cpu.inst = pmem_read(cpu.pc);
+		char p2[128] = {0};
 		record_inst_trace(p2,(uint8_t *)&cpu.inst,cpu.pc);
 		if(g_print_step)
 			puts(p2);
-    }
-    // display_ringbuf();
-}
-
-
-void cpu_exec(uint64_t n) {
-    g_print_step = (n < MAX_INST_TO_PRINT);
-    execute(n);
-    // close_wave();
+		extern int check_w();
+  		int no = check_w();
+  		if(no != 0){
+    		printf("NO.%d watchpoint has been trigger\n",no);
+			return;
+  		}
+		single_cycle();
+		wave_dump();
+		n--;
+	}
 }
 
 extern "C" void npc_trap(){
