@@ -63,6 +63,6 @@ void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(50);   //需要分配足够大的内存
     long img_size = load_img();
-	// init_ftrace(elf_file);
+	init_ftrace(elf_file);
     return;
 }
