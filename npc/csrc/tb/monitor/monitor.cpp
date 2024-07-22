@@ -1,19 +1,24 @@
 #include <memory.h>
 #include <common.h>
 #include <getopt.h>
+#include <ftrace.h>
 
 static int parse_args(int argc, char *argv[]);
 static size_t load_img();
+
 static char *img_file = NULL;
+static char *elf_file = NULL;
 
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
 		{"help"     , no_argument      , NULL, 'h'},
+		{"ftrace"   , required_argument, NULL, 'f'},
 		{0          , 0                , NULL,  0 },
 	};
 	int o;
-	while ( (o = getopt_long(argc, argv, "-h", table, NULL)) != -1) {
+	while ( (o = getopt_long(argc, argv, "-hf:", table, NULL)) != -1) {
 		switch (o) {
+			case 'f': elf_file = optarg; break;
 			case 1: img_file = optarg; return 0;
 			default:
 				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -58,5 +63,6 @@ void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(50);   //需要分配足够大的内存
     long img_size = load_img();
+	init_ftrace(elf_file);
     return;
 }
