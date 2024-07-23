@@ -58,9 +58,9 @@ static void execute(uint32_t n) {
         dnpc = cpu.pc;
         char buf[128] = {0};
         char *p = buf;
-        p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
+        p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
         int ilen = 4;
-        uint8_t *inst = (uint8_t *)&cpu.inst;
+        uint8_t *inst = (uint8_t *)&inst_temp;
         for (int i = ilen - 1; i >= 0; i--) {
             p += snprintf(p, 4, " %02x", inst[i]);
         }
@@ -71,7 +71,7 @@ static void execute(uint32_t n) {
         memset(p, ' ', space_len);
         p += space_len;
         
-        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
+        disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
         if (g_print_step)
             puts(buf);
         
