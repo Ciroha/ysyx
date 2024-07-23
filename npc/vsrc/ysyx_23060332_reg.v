@@ -31,7 +31,7 @@ always @(posedge clk) begin
         end
     end
     else begin
-        if (reg_wen) begin
+        if ((waddr != 0) && reg_wen) begin
             regs[waddr] <= wdata;
         end
     end
