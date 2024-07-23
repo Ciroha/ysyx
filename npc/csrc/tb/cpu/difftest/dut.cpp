@@ -63,8 +63,8 @@ static void checkregs(CPU_state *ref, vaddr_t pc) {
 void difftest_step() {
     CPU_state ref_r;
     ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
-    ref_difftest_exec(1);
     // difftest_memcpy(CONFIG_MBASE, ref_pmem, CONFIG_MSIZE, DIFFTEST_TO_DUT);
     checkregs(&ref_r, sim_cpu.pc);
+    ref_difftest_exec(1);
     // checkmem(ref_pmem, sim_cpu.pc);
 }
