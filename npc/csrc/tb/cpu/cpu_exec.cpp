@@ -19,6 +19,7 @@ void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
+void reg_read();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
@@ -74,8 +75,10 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-        
+
         single_cycle();
+
+        reg_read();
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
