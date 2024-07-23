@@ -77,11 +77,10 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-        
+        difftest_step();
         sim_cpu.pc = cpu.pc;
         single_cycle();
         reg_read();
-        difftest_step();
 
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
