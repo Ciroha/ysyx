@@ -75,7 +75,7 @@ static void execute(uint32_t n) {
             puts(buf);
         
         opcode = BITS(cpu.inst, 6, 0);
-        if (opcode == 0b1101111)
+        if (opcode == 0b1100111)
             ftrace(JAL, pc, dnpc, cpu.inst);
         else if (opcode == 0b1100111)
             ftrace(JALR, pc, dnpc, cpu.inst);
