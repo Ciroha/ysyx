@@ -77,8 +77,10 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-        difftest_step();
+        
         sim_cpu.pc = cpu.pc;
+        difftest_step();
+        
         single_cycle();
         reg_read();
 
