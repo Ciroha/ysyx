@@ -48,14 +48,14 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 
 static void checkregs(CPU_state *ref, vaddr_t pc) {
     bool flag = true;
-    if(ref->pc != cpu.pc)
+    if(ref->pc != pc)
         flag = false;
     for(int i = 0; i < 32; i++){
         if(ref->gpr[i] != gpr[i])
             flag = false;
     }
     if(flag == false){
-        printf("ref-pc=%x,dut-pc=%x\n",ref->pc, cpu.pc);
+        printf("ref-pc=%x,dut-pc=%x\n",ref->pc, pc);
         isa_reg_display();
     }
 }
