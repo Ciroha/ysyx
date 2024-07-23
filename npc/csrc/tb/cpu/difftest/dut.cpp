@@ -64,11 +64,13 @@ static void checkregs(CPU_state *ref, vaddr_t pc) {
     if(flag == false){
         printf("ref-pc=%x,dut-pc=%x\n",ref->pc, pc);
         for(int i = 0; i < 32; i++){
-            if(ref->gpr[i] > RESET_VECTOR){
-                printf("ref-reg-%3s     %x\n",regs1[i],ref->gpr[i]);
-            }
-            else {
-                printf("ref-reg-%3s     %d\n",regs1[i],ref->gpr[i]);
+            if(ref->gpr[i] != gpr[i]){
+                if(ref->gpr[i] > RESET_VECTOR){
+                    printf("ref-reg-%3s     %x\n",regs1[i],ref->gpr[i]);
+                }
+                else {
+                    printf("ref-reg-%3s     %d\n",regs1[i],ref->gpr[i]);
+                }
             }
         }
         printf("NPC:\n");
