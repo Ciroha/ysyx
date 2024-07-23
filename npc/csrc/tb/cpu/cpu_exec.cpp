@@ -12,7 +12,7 @@
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
 static uint8_t opcode;
-uint32_t pc, snpc, dnpc;
+uint32_t pc, snpc, dnpc, inst_temp;
 
 
 void wave_dump();
@@ -53,6 +53,7 @@ static void execute(uint32_t n) {
     for (; n > 0; n --) {
         pc = cpu.pc;
         snpc = cpu.pc + 4;
+        inst_temp = cpu.inst;
         single_cycle();
         dnpc = cpu.pc;
         char buf[128] = {0};
@@ -74,11 +75,11 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-        opcode = BITS(cpu.inst, 6, 0);
+        opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
-            ftrace(JAL, pc, dnpc, cpu.inst);
+            ftrace(JAL, pc, dnpc, inst_temp);
         else if (opcode == 0b1100111)
-            ftrace(JALR, pc, dnpc, cpu.inst);
+            ftrace(JALR, pc, dnpc, inst_temp);
         
         wave_dump();
     }
