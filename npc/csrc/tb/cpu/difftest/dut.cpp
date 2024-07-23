@@ -2,6 +2,11 @@
 #include <common.h>
 #include "debug.h"
 #include "stdint.h"
+#include "memory.h"
+#include "cpu.h"
+
+enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
+uint32_t gpr[32];
 
 void (*ref_difftest_memcpy)(uint32_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
@@ -44,13 +49,13 @@ static void checkregs(CPU_state *ref, vaddr_t pc) {
     bool flag = true;
     if(ref->pc != cpu.pc)
         flag = false;
-    for(int i = 0; i < reg_num; i++){
+    for(int i = 0; i < 32; i++){
         if(ref->gpr[i] != gpr[i])
             flag = false;
     }
     if(flag == false){
         printf("ref-pc=%x,dut-pc=%x\n",ref->pc, cpu.pc);
-        for(int i = 0; i < reg_num; i++){
+        for(int i = 0; i < 32; i++){
             printf("ref-reg-%3s     %d\n",regs[i],ref->gpr[i]);
         }
     }
