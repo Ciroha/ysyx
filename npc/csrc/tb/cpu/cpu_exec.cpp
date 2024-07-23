@@ -54,8 +54,7 @@ static void execute(uint32_t n) {
         pc = cpu.pc;
         snpc = cpu.pc + 4;
         inst_temp = cpu.inst;
-        single_cycle();
-        dnpc = cpu.pc;
+
         char buf[128] = {0};
         char *p = buf;
         p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
@@ -75,6 +74,9 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
+        
+        single_cycle();
+        dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
             ftrace(JAL, pc, dnpc, inst_temp);
