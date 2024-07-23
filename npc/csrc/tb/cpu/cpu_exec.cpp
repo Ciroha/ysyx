@@ -13,14 +13,17 @@ Vysyx_23060332_top cpu;
 static bool g_print_step = false;
 static uint8_t opcode;
 uint32_t pc, snpc, dnpc, inst_temp;
+CPU_state sim_cpu;
 
 
 void wave_dump();
 void close_wave();
 uint32_t isa_reg_str2val(const char *s, bool *success);
 void isa_reg_display();
+void reg_read();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+void difftest_step();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -75,7 +78,12 @@ static void execute(uint32_t n) {
             puts(buf);
         
         
+        sim_cpu.pc = cpu.pc;
+        difftest_step();
+        
         single_cycle();
+        reg_read();
+
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
@@ -99,6 +107,7 @@ extern "C" void npc_trap(){
     wave_dump();
 	close_wave();
 	// printf("trap in %#x",dut.pc);
+    reg_read();
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
