@@ -66,7 +66,7 @@ always @(*) begin
         end
 
         `INST_JALR: begin
-            reg_wen_o = `WriteEnable;
+            reg_wen_o = (waddr_i == 0) ? `WriteDisable: `WriteEnable;
             wdata = op1 + op2;
             jump_en = `JumpEnable;
             jump_addr = (op1_jump + op2_jump) & ~(32'b1);
