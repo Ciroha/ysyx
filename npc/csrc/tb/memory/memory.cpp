@@ -1,4 +1,5 @@
-#include "/home/ciroha/ysyx-workbench/npc/csrc/tb/include/memory.h"
+#include "memory.h"
+#include "common.h"
 
 static uint32_t *memory = NULL;
 
