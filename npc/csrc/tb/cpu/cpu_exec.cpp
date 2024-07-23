@@ -78,7 +78,7 @@ static void execute(uint32_t n) {
 
         single_cycle();
 
-        reg_read();
+        // reg_read();
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
