@@ -16,18 +16,6 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top_
     npc_trap();
 }
 
-extern "C" void reg_read(int i, int regs_i);
-
-VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_read_TOP(IData/*31:0*/ i, IData/*31:0*/ regs_i) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_read_TOP\n"); );
-    // Body
-    int i__Vcvt;
-    for (size_t i__Vidx = 0; i__Vidx < 1; ++i__Vidx) i__Vcvt = i;
-    int regs_i__Vcvt;
-    for (size_t regs_i__Vidx = 0; regs_i__Vidx < 1; ++regs_i__Vidx) regs_i__Vcvt = regs_i;
-    reg_read(i__Vcvt, regs_i__Vcvt);
-}
-
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__ico(Vysyx_23060332_top___024root* vlSelf);
 #endif  // VL_DEBUG

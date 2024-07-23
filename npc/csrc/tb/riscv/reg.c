@@ -9,7 +9,7 @@
 #include <Vysyx_23060332_top.h>
 #include "Vysyx_23060332_top___024root.h"
 
-Vysyx_23060332_top cpu;
+// Vysyx_23060332_top cpu;
 
 uint32_t gpr[32];
 
