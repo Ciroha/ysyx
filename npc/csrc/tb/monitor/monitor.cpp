@@ -20,7 +20,7 @@ static int parse_args(int argc, char *argv[]) {
 		{0          , 0                , NULL,  0 },
 	};
 	int o;
-	while ( (o = getopt_long(argc, argv, "-hf:", table, NULL)) != -1) {
+	while ( (o = getopt_long(argc, argv, "-hf:d:", table, NULL)) != -1) {
 		switch (o) {
 			case 'f': elf_file = optarg; break;
 			case 'd': diff_so_file = optarg; break;
