@@ -38,12 +38,12 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
     return 0;
 }
 
-// extern "C" void reg_read(int i, uint32_t regs_i) {
-//     gpr[i] = regs_i;
-// }
-
-void reg_read() {
-    for (int i = 0; i < 32; i ++) {
-        gpr[i] = cpu.rootp -> ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[i];
-    }
+extern "C" void reg_read(int i, uint32_t regs_i) {
+    gpr[i] = regs_i;
 }
+
+// void reg_read() {
+//     for (int i = 0; i < 32; i ++) {
+//         gpr[i] = cpu.rootp -> ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[i];
+//     }
+// }
