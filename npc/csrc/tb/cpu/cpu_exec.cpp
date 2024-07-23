@@ -12,7 +12,7 @@
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
 static uint8_t opcode;
-uint32_t pc, snpc, dnpc;
+uint32_t pc, snpc, dnpc, inst_temp;
 
 
 void wave_dump();
@@ -53,13 +53,13 @@ static void execute(uint32_t n) {
     for (; n > 0; n --) {
         pc = cpu.pc;
         snpc = cpu.pc + 4;
-        single_cycle();
-        dnpc = cpu.pc;
+        inst_temp = cpu.inst;
+
         char buf[128] = {0};
         char *p = buf;
-        p += snprintf(p, sizeof(buf), FMT_WORD ":", cpu.pc);
+        p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
         int ilen = 4;
-        uint8_t *inst = (uint8_t *)&cpu.inst;
+        uint8_t *inst = (uint8_t *)&inst_temp;
         for (int i = ilen - 1; i >= 0; i--) {
             p += snprintf(p, 4, " %02x", inst[i]);
         }
@@ -70,15 +70,18 @@ static void execute(uint32_t n) {
         memset(p, ' ', space_len);
         p += space_len;
         
-        disassemble(p, buf + sizeof(buf) - p, cpu.pc, (uint8_t *)&cpu.inst, 4);
+        disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
         if (g_print_step)
             puts(buf);
         
-        opcode = BITS(cpu.inst, 6, 0);
+        
+        single_cycle();
+        dnpc = cpu.pc;
+        opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
-            ftrace(JAL, pc, dnpc, cpu.inst);
+            ftrace(JAL, pc, dnpc, inst_temp);
         else if (opcode == 0b1100111)
-            ftrace(JALR, pc, dnpc, cpu.inst);
+            ftrace(JALR, pc, dnpc, inst_temp);
         
         wave_dump();
     }
