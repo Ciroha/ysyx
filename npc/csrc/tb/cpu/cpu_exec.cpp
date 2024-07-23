@@ -13,6 +13,7 @@ Vysyx_23060332_top cpu;
 static bool g_print_step = false;
 static uint8_t opcode;
 uint32_t pc, snpc, dnpc, inst_temp;
+CPU_state sim_cpu;
 
 
 void wave_dump();
@@ -75,10 +76,10 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-
+        reg_read();
+        sim_cpu.pc = cpu.pc;
         single_cycle();
 
-        reg_read();
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
         if (opcode == 0b1101111)
@@ -102,6 +103,7 @@ extern "C" void npc_trap(){
     wave_dump();
 	close_wave();
 	// printf("trap in %#x",dut.pc);
+    reg_read();
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {

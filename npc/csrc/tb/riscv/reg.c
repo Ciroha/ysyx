@@ -5,13 +5,15 @@
 #include "string.h"
 #include "assert.h"
 #include "stdbool.h"
+#include "common.h"
 
 #include <Vysyx_23060332_top.h>
 #include "Vysyx_23060332_top___024root.h"
 
 extern Vysyx_23060332_top cpu;
 
-uint32_t gpr[32];
+extern uint32_t gpr[32];
+extern CPU_state sim_cpu;
 
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -45,5 +47,6 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
 void reg_read() {
     for (int i = 0; i < 32; i ++) {
         gpr[i] = cpu.rootp -> ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[i];
+        sim_cpu -> gpr[i] = cpu.rootp -> ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[i];
     }
 }
