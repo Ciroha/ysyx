@@ -23,6 +23,7 @@ void isa_reg_display();
 void reg_read();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+void difftest_step();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -76,9 +77,11 @@ static void execute(uint32_t n) {
         if (g_print_step)
             puts(buf);
         
-        reg_read();
+
         sim_cpu.pc = cpu.pc;
         single_cycle();
+        reg_read();
+        difftest_step();
 
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
