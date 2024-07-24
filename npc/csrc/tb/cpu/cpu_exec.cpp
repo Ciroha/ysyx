@@ -118,7 +118,7 @@ extern "C" void npc_trap(){
 	if (reg_success && (reg_val == 0)) {
 		Log(ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) " at pc = %#x\n", cpu.pc);
 	}else{
-		Log("ANSI_FG_RED HIT BAD TRAPANSI_NONE at pc = %#x\n", cpu.pc);
+		Log(ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED) " at pc = %#x\n", cpu.pc);
 	}
 	exit(0);
 }
