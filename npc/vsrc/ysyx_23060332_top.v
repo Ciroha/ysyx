@@ -41,7 +41,6 @@ wire                ex_reg_reg_wen;
 
 //mem
 wire                mem_wen;
-wire mem_valid;
 wire [`MemAddrBus]  mem_waddr;
 wire [`MemDataBus]  mem_wdata;
 wire [7:0]          mem_wmask;
@@ -91,7 +90,6 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .jump_addr(jump_addr),
     .jump_en(jump_en),
     .mem_wen(mem_wen),
-    .mem_valid(mem_valid),
     .mem_waddr(mem_waddr),
     .mem_wdata(mem_wdata),
     .mem_wmask(mem_wmask),
@@ -116,7 +114,6 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
   ysyx_23060332_mem  ysyx_23060332_mem_inst (
     // .clk(clk),
     .mem_wen(mem_wen),
-    .mem_valid(mem_valid),
     .mem_waddr(mem_waddr),
     .mem_wdata(mem_wdata),
     .mem_wmask(mem_wmask),
