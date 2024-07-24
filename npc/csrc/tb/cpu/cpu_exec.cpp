@@ -96,9 +96,8 @@ static void execute(uint32_t n) {
         single_cycle();
 
         dnpc = cpu.pc;
-        reg_read();
         trace_and_difftest();
-        
+        reg_read();
         wave_dump();
     }
 }
@@ -119,9 +118,9 @@ extern "C" void npc_trap(){
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
-		printf("HIT GOOD TRAP at pc = %#x\n", cpu.pc);
+		Log("HIT GOOD TRAP at pc = %#x\n", cpu.pc);
 	}else{
-		printf("HIT BAD TRAP at pc = %#x\n", cpu.pc);
+		Log("HIT BAD TRAP at pc = %#x\n", cpu.pc);
 	}
 	exit(0);
 }

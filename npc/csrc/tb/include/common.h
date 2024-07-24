@@ -10,6 +10,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <debug.h>
 
 #define word_t uint32_t
 #define vaddr_t uint32_t
