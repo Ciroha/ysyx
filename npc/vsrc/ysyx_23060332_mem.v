@@ -20,6 +20,7 @@ always @(*) begin
     // rdata = pmem_read(mem_raddr);
     if (mem_wen) begin // 有写请求时
         pmem_write(mem_waddr, mem_wdata, mem_wmask);
+        Log("Address is: %#010x, write mem is %#010x", mem_waddr, mem_wdata);
     end
 end
 
