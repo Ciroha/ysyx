@@ -15,9 +15,9 @@ wire                jump_en;
 //id
 wire [`InstAddrBus] inst_addr;
 /* verilator lint_off UNOPTFLAT */
-wire [`RegDataBus]  rdata1;
+wire [`RegDataBus]  reg_rdata1;
 /* verilator lint_on UNOPTFLAT */
-wire [`RegDataBus]  rdata2;
+wire [`RegDataBus]  reg_rdata2;
 
 //ex
 wire [`RegDataBus]  op1;
@@ -27,6 +27,8 @@ wire [`RegDataBus]  op2_jump;
 wire                id_ex_reg_wen;
 wire [`RegAddrBus]  id_ex_waddr;
 wire [`InstBus]     id_ex_inst;
+wire [`RegDataBus]  id_ex_reg_rdata1;
+wire [`RegDataBus]  id_ex_reg_rdata2;
 
 //reg
 /* verilator lint_off UNOPTFLAT */
@@ -50,12 +52,14 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
   ysyx_23060332_idu  ysyx_23060332_idu_inst (
     .inst_i(inst),
     .inst_addr(inst_addr),
-    .rdata1(rdata1),
-    .rdata2(rdata2),
+    .reg_rdata1_i(reg_rdata1),
+    .reg_rdata2_i(reg_rdata2),
     .op1(op1),
     .op2(op2),
     .op1_jump(op1_jump),
     .op2_jump(op2_jump),
+    .reg_rdata1_o(id_ex_reg_rdata1),
+    .reg_rdata2_o(id_ex_reg_rdata2),
     .reg_wen(id_ex_reg_wen),
     .waddr(id_ex_waddr),
     .inst_o(id_ex_inst),
@@ -68,11 +72,18 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .op2(op2),
     .op1_jump(op1_jump),
     .op2_jump(op2_jump),
+    .reg_rdata1_i(id_ex_reg_rdata1),
+    .reg_rdata2_i(id_ex_reg_rdata2),
     .reg_wen_i(id_ex_reg_wen),
     .waddr_i(id_ex_waddr),
     .inst_i(id_ex_inst),
+    .mem_rdata(mem_rdata),
     .jump_addr(jump_addr),
     .jump_en(jump_en),
+    .mem_wen(mem_wen),
+    .mem_waddr(mem_waddr),
+    .mem_wdata(mem_wdata),
+    .mem_wmask(mem_wmask),
     .waddr_o(ex_reg_waddr),
     .wdata(ex_reg_wdata),
     .reg_wen_o(ex_reg_reg_wen)
@@ -86,9 +97,17 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .waddr(ex_reg_waddr),
     .wdata(ex_reg_wdata),
     .reg_wen(ex_reg_reg_wen),
-    .rdata1(rdata1),
-    .rdata2(rdata2)
+    .reg_rdata1_o(reg_rdata1),
+    .reg_rdata2_o(reg_rdata2)
   );
 
+  ysyx_23060332_mem  ysyx_23060332_mem_inst (
+    .mem_wen(mem_wen),
+    .mem_waddr(mem_waddr),
+    .mem_wdata(mem_wdata),
+    .mem_wmask(mem_wmask),
+    .mem_rdata(mem_rdata),
+    .waddr(waddr)
+  );
     
 endmodule

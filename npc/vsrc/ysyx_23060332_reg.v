@@ -14,8 +14,8 @@ module ysyx_23060332_reg (
     input wire                  reg_wen,
 
     //to idu
-    output reg [`RegDataBus]    rdata1,
-    output reg [`RegDataBus]    rdata2
+    output reg [`RegDataBus]    reg_rdata1,
+    output reg [`RegDataBus]    reg_rdata2
 
 );
 
@@ -45,23 +45,23 @@ end
 
 //reg1
 always @(*) begin
-    rdata1 = 32'b0;
+    reg_rdata1 = 32'b0;
     if (raddr1 == 5'd0) begin
-        rdata1 = 32'b0;
+        reg_rdata1 = 32'b0;
     end
     else begin
-        rdata1 = regs[raddr1];
+        reg_rdata1 = regs[raddr1];
     end
 end
 
 //reg2
 always @(*) begin
-    rdata2 = 32'b0;
+    reg_rdata2 = 32'b0;
     if (raddr2 == 5'd0) begin
-        rdata2 = 32'b0;
+        reg_rdata2 = 32'b0;
     end
     else begin
-        rdata2 = regs[raddr2];
+        reg_rdata2 = regs[raddr2];
     end
 end
     

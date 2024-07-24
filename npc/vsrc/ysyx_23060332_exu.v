@@ -5,13 +5,25 @@ module ysyx_23060332_exu (
     input wire [`RegDataBus]    op2,
     input wire [`RegDataBus]    op1_jump,
     input wire [`RegDataBus]    op2_jump,
+    input wire [`RegDataBus]    reg_rdata1_i,
+    input wire [`RegDataBus]    reg_rdata2_i,
+
     input wire                  reg_wen_i,
     input wire [`RegAddrBus]    waddr_i,
     input wire [`InstBus]       inst_i,
 
+    //From mem
+    input wire [`MemDataBus]    mem_rdata,
+
     //To pc
     output reg [`InstAddrBus]   jump_addr,
     output reg                  jump_en,
+
+    //To mem
+    output reg                  mem_wen,
+    output reg [`MemAddrBus]    mem_waddr,
+    output reg [`MemDataBus]    mem_wdata,
+    output reg [7:0]            mem_wmask,
 
     //To reg
     output reg [`RegAddrBus]    waddr_o,
@@ -33,6 +45,10 @@ always @(*) begin
     reg_wen_o = `WriteDisable;
     waddr_o = waddr_i;
     wdata = `ZeroWord;
+    mem_wen = `WriteDisable;
+    mem_waddr = `ZeroWord;
+    mem_wdata = `ZeroWord;
+    mem_wmask = 7'b0;
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
@@ -47,7 +63,10 @@ always @(*) begin
         `INST_TYPE_S: begin
             case (func3)
                 `INST_SW: begin
-                    
+                    mem_wen = `WriteEnable;
+                    mem_wdata = reg_rdata2_i;
+                    mem_waddr = op1 + op2;
+                    mem_wmask = 8'b00001111;
                 end
                 default: ;
             endcase

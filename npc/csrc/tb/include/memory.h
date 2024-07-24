@@ -12,5 +12,6 @@ uint8_t* guest_to_host(uint32_t paddr);
 uint32_t host_to_guest(uint8_t *haddr);
 void init_mem(size_t size);
 extern "C" int pmem_read(int raddr);
+extern "C" void pmem_write(int waddr, int wdata, char wmask);
 
 #endif

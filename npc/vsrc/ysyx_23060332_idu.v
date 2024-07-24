@@ -5,14 +5,16 @@ module ysyx_23060332_idu (
     input wire [`InstAddrBus]   inst_addr,
 
     //From reg
-    input wire [`RegDataBus]    rdata1,
-    input wire [`RegDataBus]    rdata2,
+    input wire [`RegDataBus]    reg_rdata1_i,
+    input wire [`RegDataBus]    reg_rdata2_i,
 
     //To EXU
     output reg [`RegDataBus]    op1,
     output reg [`RegDataBus]    op2,
     output reg [`RegDataBus]    op1_jump,
     output reg [`RegDataBus]    op2_jump,
+    output reg [`RegDataBus]    reg_rdata1_o,
+    output reg [`RegDataBus]    reg_rdata2_o,
     output reg                  reg_wen,
     output reg [`RegAddrBus]    waddr,
     output reg [`InstBus]       inst_o,
@@ -40,6 +42,8 @@ end
 always @(*) begin
     //初始化
     inst_o = inst_i;
+    reg_rdata1_o = reg_rdata1_i;
+    reg_rdata2_o = reg_rdata2_i;
     reg_wen = `WriteDisable;
     waddr = `ZeroReg;
     raddr1 = `ZeroReg;
@@ -57,7 +61,7 @@ always @(*) begin
                     waddr = rd;
                     raddr1 = rs1;
                     raddr2 = `ZeroReg;
-                    op1 = rdata1;
+                    op1 = reg_rdata1_i;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
                 default: npc_trap();
@@ -71,7 +75,7 @@ always @(*) begin
                     waddr = `ZeroReg;
                     raddr1 = rs1;
                     raddr2 = rs2;
-                    op1 = rdata1;
+                    op1 = reg_rdata1_i;
                     op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
                 end
                 default: npc_trap();
@@ -108,7 +112,7 @@ always @(*) begin
             raddr2 = `ZeroReg;
             op1 = inst_addr;
             op2 = 32'd4;
-            op1_jump = rdata1;
+            op1_jump = reg_rdata1_i;
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
