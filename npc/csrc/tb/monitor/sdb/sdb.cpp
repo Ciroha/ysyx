@@ -3,7 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <cpu.h>
-
+#include "memory.h"
 
 static char* rl_gets() {
     static char *line_read = NULL;
