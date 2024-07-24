@@ -49,7 +49,7 @@ always @(*) begin
     mem_wen = `WriteDisable;
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
-    mem_wmask = 7'b0;
+    mem_wmask = 8'b0;
     mem_raddr = `ZeroWord;
     case (opcode)
         `INST_TYPE_I: begin
