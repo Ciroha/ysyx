@@ -24,15 +24,15 @@ integer i;
 
 // import "DPI-C" function void reg_read(input int i, input int regs_i);
 
-always @(*) begin
+always @(posedge clk) begin
     if (rst) begin
         for (i = 0; i < 32; i++) begin
-            regs[i] = 32'b0;
+            regs[i] <= 32'b0;
         end
     end
     else begin
         if ((waddr != 0) && reg_wen) begin
-            regs[waddr] = wdata;
+            regs[waddr] <= wdata;
         end
     end
 end
