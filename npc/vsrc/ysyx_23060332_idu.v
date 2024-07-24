@@ -41,7 +41,7 @@ end
 
 always @(*) begin
     //初始化
-    inst_o = inst_i;
+    
     reg_rdata1_o = reg_rdata1_i;
     reg_rdata2_o = reg_rdata2_i;
     reg_wen = `WriteDisable;
@@ -52,6 +52,7 @@ always @(*) begin
     op2 = `ZeroWord;
     op1_jump = `ZeroWord;
     op2_jump = `ZeroWord;
+    inst_o = inst_i;
 
     case (opcode)
         `INST_TYPE_I: begin
