@@ -98,7 +98,6 @@ static void execute(uint32_t n) {
         // dnpc = cpu.pc;
         // trace_and_difftest();
         // reg_read();
-        wave_dump();
     }
 }
 
