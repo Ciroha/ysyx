@@ -24,7 +24,7 @@ integer i;
 
 // import "DPI-C" function void reg_read(input int i, input int regs_i);
 
-always @(posedge clk) begin
+always @(*) begin
     if (rst) begin
         for (i = 0; i < 32; i++) begin
             regs[i] <= 32'b0;
