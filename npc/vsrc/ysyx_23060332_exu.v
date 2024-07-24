@@ -65,8 +65,9 @@ always @(*) begin
         `INST_TYPE_S: begin
             case (func3)
                 `INST_SW: begin
+                    mem_waddr = op1 + op2;    
                     mem_wdata = reg_rdata2_i;
-                    mem_waddr = op1 + op2;
+                    
                     mem_wmask = 8'b00001111;
                     mem_wen = `WriteEnable;
                 end
