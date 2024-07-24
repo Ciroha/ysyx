@@ -91,13 +91,13 @@ static void execute(uint32_t n) {
         sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
         inst_temp = cpu.inst;
-        disassemble_display();
+        // disassemble_display();
 
         single_cycle();
 
         dnpc = cpu.pc;
         // trace_and_difftest();
-        reg_read();
+        // reg_read();
         wave_dump();
     }
 }
