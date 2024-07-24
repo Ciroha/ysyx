@@ -82,8 +82,10 @@ static void execute(uint32_t n) {
         
         
         single_cycle();
+
+        
         difftest_step();
-        reg_read();
+        
 
         dnpc = cpu.pc;
         opcode = BITS(inst_temp, 6, 0);
@@ -91,6 +93,8 @@ static void execute(uint32_t n) {
             ftrace(JAL, pc, dnpc, inst_temp);
         else if (opcode == 0b1100111)
             ftrace(JALR, pc, dnpc, inst_temp);
+
+        reg_read();
         
         wave_dump();
     }
