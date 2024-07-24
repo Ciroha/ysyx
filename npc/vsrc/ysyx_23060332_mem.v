@@ -3,6 +3,7 @@
 module ysyx_23060332_mem (
     // input clk,
     input wire                  mem_wen,
+    input wire mem_valid,
     input wire [`MemAddrBus]    mem_waddr,
     input wire [`MemDataBus]    mem_wdata,
     input wire [7:0]            mem_wmask,
