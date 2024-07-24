@@ -6,7 +6,6 @@
 #define MAX_INST_TO_PRINT 10
 #define MAX_IRINGBUF 16
 #define FMT_WORD "0x%08" "x"
-#define ANSI_NONE "\33[0m"
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
@@ -111,7 +110,6 @@ extern "C" void npc_trap(){
 	bool reg_success = false;
     wave_dump();
 	close_wave();
-	// printf("trap in %#x",dut.pc);
     reg_read();
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
