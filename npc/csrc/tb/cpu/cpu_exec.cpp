@@ -6,7 +6,6 @@
 #define MAX_INST_TO_PRINT 10
 #define MAX_IRINGBUF 16
 #define FMT_WORD "0x%08" "x"
-#define ANSI_FG_RED "\33[1;31m"
 #define ANSI_NONE "\33[0m"
 
 Vysyx_23060332_top cpu;
@@ -117,9 +116,9 @@ extern "C" void npc_trap(){
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
-		Log("HIT GOOD TRAP at pc = %#x\n", cpu.pc);
+		Log("ANSI_FG_GREEN HIT GOOD TRAPANSI_NONE at pc = %#x\n", cpu.pc);
 	}else{
-		Log("HIT BAD TRAP at pc = %#x\n", cpu.pc);
+		Log("ANSI_FG_RED HIT BAD TRAPANSI_NONE at pc = %#x\n", cpu.pc);
 	}
 	exit(0);
 }
