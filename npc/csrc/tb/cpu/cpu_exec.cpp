@@ -96,8 +96,9 @@ static void execute(uint32_t n) {
         single_cycle();
 
         dnpc = cpu.pc;
-        trace_and_difftest();
         reg_read();
+        trace_and_difftest();
+        
         wave_dump();
     }
 }
