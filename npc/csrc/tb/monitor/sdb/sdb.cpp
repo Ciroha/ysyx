@@ -23,7 +23,6 @@ static char* rl_gets() {
 }
 
 void isa_reg_display();
-uint32_t pmem_read(uint32_t vaddr);
 
 static int cmd_help(char *args);
 
