@@ -87,17 +87,17 @@ void disassemble_display() {
 
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
-        // pc = cpu.pc;
-        // sim_cpu.pc = cpu.pc;
-        // snpc = cpu.pc + 4;
-        // inst_temp = cpu.inst;
-        // disassemble_display();
+        pc = cpu.pc;
+        sim_cpu.pc = cpu.pc;
+        snpc = cpu.pc + 4;
+        inst_temp = cpu.inst;
+        disassemble_display();
 
         single_cycle();
 
-        // dnpc = cpu.pc;
-        // trace_and_difftest();
-        // reg_read();
+        dnpc = cpu.pc;
+        trace_and_difftest();
+        reg_read();
     }
 }
 
