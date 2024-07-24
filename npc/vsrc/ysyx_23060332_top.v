@@ -39,6 +39,13 @@ wire [`RegAddrBus]  ex_reg_waddr;
 wire [`RegDataBus]  ex_reg_wdata;
 wire                ex_reg_reg_wen;
 
+//mem
+wire                mem_wen;
+wire [`MemAddrBus]  mem_waddr;
+wire [`MemDataBus]  mem_wdata;
+wire [7:0]          mem_wmask;
+
+
 
 ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .clk(clk),
@@ -97,8 +104,8 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .waddr(ex_reg_waddr),
     .wdata(ex_reg_wdata),
     .reg_wen(ex_reg_reg_wen),
-    .reg_rdata1_o(reg_rdata1),
-    .reg_rdata2_o(reg_rdata2)
+    .reg_rdata1(reg_rdata1),
+    .reg_rdata2(reg_rdata2)
   );
 
   ysyx_23060332_mem  ysyx_23060332_mem_inst (
