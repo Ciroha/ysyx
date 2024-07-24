@@ -56,7 +56,7 @@ static size_t load_img(){
 
 	fseek(fp, 0 , SEEK_SET);
 	// Log("Reading.....");
-	int ret = fread(guest_to_host(0x80000000), size, 1, fp);
+	int ret = fread(guest_to_host(RESET_VECTOR), size, 4, fp);
 	Log("Read successfully!!");
 	assert(ret == 1);
 
