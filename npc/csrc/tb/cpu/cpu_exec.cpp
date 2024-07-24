@@ -6,8 +6,6 @@
 #define MAX_INST_TO_PRINT 10
 #define MAX_IRINGBUF 16
 #define FMT_WORD "0x%08" "x"
-#define ANSI_FG_RED "\33[1;31m"
-#define ANSI_NONE "\33[0m"
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
@@ -52,46 +50,52 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
   }
 }
 
+void trace_and_difftest() {
+    //difftest
+    difftest_step();
+
+    //ftrace
+    opcode = BITS(inst_temp, 6, 0);
+    if (opcode == 0b1101111)
+        ftrace(JAL, pc, dnpc, inst_temp);
+    else if (opcode == 0b1100111)
+        ftrace(JALR, pc, dnpc, inst_temp);
+}
+
+void disassemble_display() {
+    char buf[128] = {0};
+    char *p = buf;
+    p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
+    int ilen = 4;
+    uint8_t *inst = (uint8_t *)&inst_temp;
+    for (int i = ilen - 1; i >= 0; i--) {
+        p += snprintf(p, 4, " %02x", inst[i]);
+    }
+    int ilen_max = 4;
+    int space_len = ilen_max - ilen;
+    if (space_len < 0) space_len = 0;
+    space_len = space_len * 3 + 1;
+    memset(p, ' ', space_len);
+    p += space_len;
+        
+    disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
+    if (g_print_step)
+        puts(buf);
+}
+
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         pc = cpu.pc;
+        sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
         inst_temp = cpu.inst;
+        disassemble_display();
 
-        char buf[128] = {0};
-        char *p = buf;
-        p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
-        int ilen = 4;
-        uint8_t *inst = (uint8_t *)&inst_temp;
-        for (int i = ilen - 1; i >= 0; i--) {
-            p += snprintf(p, 4, " %02x", inst[i]);
-        }
-        int ilen_max = 4;
-        int space_len = ilen_max - ilen;
-        if (space_len < 0) space_len = 0;
-        space_len = space_len * 3 + 1;
-        memset(p, ' ', space_len);
-        p += space_len;
-        
-        disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
-        if (g_print_step)
-            puts(buf);
-        
-        
-        sim_cpu.pc = cpu.pc;
-        difftest_step();
-        
         single_cycle();
-        reg_read();
 
         dnpc = cpu.pc;
-        opcode = BITS(inst_temp, 6, 0);
-        if (opcode == 0b1101111)
-            ftrace(JAL, pc, dnpc, inst_temp);
-        else if (opcode == 0b1100111)
-            ftrace(JALR, pc, dnpc, inst_temp);
-        
-        wave_dump();
+        trace_and_difftest();
+        reg_read();
     }
 }
 
@@ -106,14 +110,13 @@ extern "C" void npc_trap(){
 	bool reg_success = false;
     wave_dump();
 	close_wave();
-	// printf("trap in %#x",dut.pc);
     reg_read();
     isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
-		printf("HIT GOOD TRAP at pc = %#x\n", cpu.pc);
+		Log(ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) " at pc = %#x\n", cpu.pc);
 	}else{
-		printf("HIT BAD TRAP at pc = %#x\n", cpu.pc);
+		Log(ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED) " at pc = %#x\n", cpu.pc);
 	}
 	exit(0);
 }

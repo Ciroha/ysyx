@@ -3,6 +3,8 @@
 `define InstAddrBus 31:0
 `define RegDataBus  31:0
 `define RegAddrBus  4:0
+`define MemDataBus  31:0
+`define MemAddrBus  31:0
 `define ZeroReg     5'b0
 `define ZeroWord    32'h0
 
