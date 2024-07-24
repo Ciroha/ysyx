@@ -25,6 +25,7 @@ void init_mem(size_t size) {
 }
 
 extern "C" int pmem_read(int raddr){
-	int ret = host_read(guest_to_host(raddr), 4);
+	int temp = raddr & ~0x3u;
+	int ret = host_read(guest_to_host(temp), 4);
 	return ret;
 }
