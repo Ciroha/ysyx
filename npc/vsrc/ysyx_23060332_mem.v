@@ -1,7 +1,7 @@
 `include "ysyx_23060332_define.v"
 
 module ysyx_23060332_mem (
-    input clk,
+    // input clk,
     input wire                  mem_wen,
     input wire [`MemAddrBus]    mem_waddr,
     input wire [`MemDataBus]    mem_wdata,
@@ -17,10 +17,12 @@ import "DPI-C" function void pmem_write(input int waddr, input int wdata, input 
 reg [31:0] rdata;
 assign mem_rdata = rdata;
 
-always @(posedge clk) begin
-    // rdata = pmem_read(mem_raddr);
-    if (mem_wen) begin // 有写请求时
-        pmem_write(mem_waddr, mem_wdata, mem_wmask);
+always @(*) begin
+    if (mem_valid) begin
+        // rdata = pmem_read(mem_raddr);
+        if (mem_wen) begin // 有写请求时
+            pmem_write(mem_waddr, mem_wdata, mem_wmask);
+        end
     end
 end
 

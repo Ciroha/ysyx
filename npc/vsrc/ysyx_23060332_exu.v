@@ -21,6 +21,7 @@ module ysyx_23060332_exu (
 
     //To mem
     output reg                  mem_wen,
+    output reg mem_valid,
     output reg [`MemAddrBus]    mem_waddr,
     output reg [`MemDataBus]    mem_wdata,
     output reg [7:0]            mem_wmask,
@@ -47,6 +48,7 @@ always @(*) begin
     waddr_o = waddr_i;
     wdata = `ZeroWord;
     mem_wen = `WriteDisable;
+    mem_valid = `WriteDisable;
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
@@ -66,6 +68,7 @@ always @(*) begin
             case (func3)
                 `INST_SW: begin
                     mem_wen = `WriteEnable;
+                    mem_valid = `WriteEnable;
                     mem_waddr = op1 + op2;
                     mem_wdata = reg_rdata2_i;
                     mem_wmask = 8'b00001111;

@@ -93,6 +93,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_init_sub__TOP__0(Vysyx_230
     tracep->declBus(c+62,"imm", false,-1, 11,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("ysyx_23060332_mem_inst ");
+    tracep->declBit(c+51,"clk", false,-1);
     tracep->declBit(c+3,"mem_wen", false,-1);
     tracep->declBus(c+15,"mem_waddr", false,-1, 31,0);
     tracep->declBus(c+16,"mem_wdata", false,-1, 31,0);
