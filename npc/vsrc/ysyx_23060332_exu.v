@@ -24,6 +24,7 @@ module ysyx_23060332_exu (
     output reg [`MemAddrBus]    mem_waddr,
     output reg [`MemDataBus]    mem_wdata,
     output reg [7:0]            mem_wmask,
+    output reg [`MemAddrBus]    mem_raddr,
 
     //To reg
     output reg [`RegAddrBus]    waddr_o,
@@ -49,6 +50,7 @@ always @(*) begin
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
     mem_wmask = 7'b0;
+    mem_raddr = `ZeroWord;
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)

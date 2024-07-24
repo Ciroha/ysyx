@@ -44,6 +44,8 @@ wire                mem_wen;
 wire [`MemAddrBus]  mem_waddr;
 wire [`MemDataBus]  mem_wdata;
 wire [7:0]          mem_wmask;
+wire [`MemAddrBus]  mem_raddr;
+wire [`MemDataBus]  mem_rdata;
 
 
 
@@ -91,6 +93,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .mem_waddr(mem_waddr),
     .mem_wdata(mem_wdata),
     .mem_wmask(mem_wmask),
+    .mem_raddr(mem_raddr),
     .waddr_o(ex_reg_waddr),
     .wdata(ex_reg_wdata),
     .reg_wen_o(ex_reg_reg_wen)
@@ -114,7 +117,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .mem_wdata(mem_wdata),
     .mem_wmask(mem_wmask),
     .mem_rdata(mem_rdata),
-    .waddr(waddr)
+    .mem_raddr(mem_raddr)
   );
     
 endmodule
