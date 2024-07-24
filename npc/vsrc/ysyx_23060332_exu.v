@@ -68,7 +68,7 @@ always @(*) begin
                     mem_wen = `WriteEnable;
                     mem_wdata = reg_rdata2_i;
                     mem_waddr = op1 + op2;
-                    mem_wmask = 8'b00000001;
+                    mem_wmask = 8'b00001001;
                 end
                 default: ;
             endcase
