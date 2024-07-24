@@ -27,6 +27,7 @@ void init_mem(size_t size) {
 extern "C" int pmem_read(int raddr){
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
+	Log("Address is: %#x, read mem is %#x\n", temp, ret);
 	return ret;
 }
 
