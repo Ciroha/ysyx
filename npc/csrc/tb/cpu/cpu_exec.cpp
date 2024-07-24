@@ -52,50 +52,52 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
   }
 }
 
+void trace_and_difftest() {
+    //difftest
+    difftest_step();
+
+    //ftrace
+    opcode = BITS(inst_temp, 6, 0);
+    if (opcode == 0b1101111)
+        ftrace(JAL, pc, dnpc, inst_temp);
+    else if (opcode == 0b1100111)
+        ftrace(JALR, pc, dnpc, inst_temp);
+}
+
+void disassemble_display() {
+    char buf[128] = {0};
+    char *p = buf;
+    p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
+    int ilen = 4;
+    uint8_t *inst = (uint8_t *)&inst_temp;
+    for (int i = ilen - 1; i >= 0; i--) {
+        p += snprintf(p, 4, " %02x", inst[i]);
+    }
+    int ilen_max = 4;
+    int space_len = ilen_max - ilen;
+    if (space_len < 0) space_len = 0;
+    space_len = space_len * 3 + 1;
+    memset(p, ' ', space_len);
+    p += space_len;
+        
+    disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
+    if (g_print_step)
+        puts(buf);
+}
+
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
         pc = cpu.pc;
+        sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
         inst_temp = cpu.inst;
+        disassemble_display();
 
-        char buf[128] = {0};
-        char *p = buf;
-        p += snprintf(p, sizeof(buf), FMT_WORD ":", pc);
-        int ilen = 4;
-        uint8_t *inst = (uint8_t *)&inst_temp;
-        for (int i = ilen - 1; i >= 0; i--) {
-            p += snprintf(p, 4, " %02x", inst[i]);
-        }
-        int ilen_max = 4;
-        int space_len = ilen_max - ilen;
-        if (space_len < 0) space_len = 0;
-        space_len = space_len * 3 + 1;
-        memset(p, ' ', space_len);
-        p += space_len;
-        
-        disassemble(p, buf + sizeof(buf) - p, pc, (uint8_t *)&inst_temp, 4);
-        if (g_print_step)
-            puts(buf);
-        
-        
-        sim_cpu.pc = cpu.pc;
-        
-        
         single_cycle();
 
-        
-        difftest_step();
-        
-
         dnpc = cpu.pc;
-        opcode = BITS(inst_temp, 6, 0);
-        if (opcode == 0b1101111)
-            ftrace(JAL, pc, dnpc, inst_temp);
-        else if (opcode == 0b1100111)
-            ftrace(JALR, pc, dnpc, inst_temp);
-
+        trace_and_difftest();
         reg_read();
-        
         wave_dump();
     }
 }
