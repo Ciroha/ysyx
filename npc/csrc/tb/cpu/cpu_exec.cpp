@@ -79,9 +79,10 @@ static void execute(uint32_t n) {
         
         
         sim_cpu.pc = cpu.pc;
-        difftest_step();
+        
         
         single_cycle();
+        difftest_step();
         reg_read();
 
         dnpc = cpu.pc;
