@@ -42,7 +42,7 @@ static int parse_args(int argc, char *argv[]) {
 static size_t load_img(){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
-		printf("No image is given. Use the default build-in image.\n");
+		Log("No image is given. Use the default build-in image.\n");
     	return 50; // built-in image size
 	}
 
@@ -52,12 +52,12 @@ static size_t load_img(){
 	fseek(fp, 0, SEEK_END);
 	size_t size = ftell(fp);
 
-	printf("The image is %s, size = %ld\n", img_file, size);
+	Log("The image is %s, size = %ld\n", img_file, size);
 
 	fseek(fp, 0 , SEEK_SET);
-	printf("Reading.....\n");
+	Log("Reading.....\n");
 	int ret = fread(guest_to_host(0x80000000), size, 1, fp);
-	printf("Read successfully!!\n");
+	Log("Read successfully!!\n");
 	assert(ret == 1);
 
 	fclose(fp);
