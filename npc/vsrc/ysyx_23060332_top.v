@@ -112,7 +112,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
   );
 
   ysyx_23060332_mem  ysyx_23060332_mem_inst (
-    // .clk(clk),
+    .clk(clk),
     .mem_wen(mem_wen),
     .mem_waddr(mem_waddr),
     .mem_wdata(mem_wdata),
