@@ -37,8 +37,9 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
 	int temp = waddr & ~0x3u;
 	for (int i = 0; i < 4; i++) {
 		if (wmask & (1 << i)) {
-			host_write(guest_to_host(temp), 4, wdata);
+			host_write(guest_to_host(temp), 1, wdata);
 		}
+		wdata = wdata >> 8;
 		temp++;
 	}
 }
