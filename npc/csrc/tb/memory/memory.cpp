@@ -39,6 +39,6 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
 		if (wmask & (1 << i)) {
 			host_write(guest_to_host(temp), 1, wdata);
 		}
-		temp++;
+		temp = temp + 4;
 	}
 }
