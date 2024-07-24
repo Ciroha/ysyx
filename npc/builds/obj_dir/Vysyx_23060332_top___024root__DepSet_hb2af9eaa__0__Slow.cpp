@@ -18,10 +18,10 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_triggers__stl(Vysyx_230603
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root___eval_triggers__stl\n"); );
     // Body
     vlSelf->__VstlTriggered.at(0U) = (0U == vlSelf->__VstlIterCount);
-    vlSelf->__VstlTriggered.at(1U) = (vlSelf->ysyx_23060332_top__DOT__reg_rdata1 
-                                      != vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__reg_rdata1);
-    vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__reg_rdata1 
-        = vlSelf->ysyx_23060332_top__DOT__reg_rdata1;
+    vlSelf->__VstlTriggered.at(1U) = ((IData)(vlSelf->ysyx_23060332_top__DOT__raddr1) 
+                                      != (IData)(vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1));
+    vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1 
+        = vlSelf->ysyx_23060332_top__DOT__raddr1;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VstlDidInit))))) {
         vlSelf->__VstlDidInit = 1U;
         vlSelf->__VstlTriggered.at(1U) = 1U;
