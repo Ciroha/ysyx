@@ -96,6 +96,20 @@ always @(*) begin
             endcase
         end
 
+        `INST_TYPE_R: begin
+            case (func3)
+                `INST_ADD_SUB: begin
+                    reg_wen = `WriteEnable;
+                    waddr = rd;
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = reg_rdata1_i;
+                    op2 = reg_rdata2_i;
+                end 
+                default: ;
+            endcase
+        end
+
         `INST_LUI: begin
             reg_wen = `WriteEnable;
             waddr = rd;
