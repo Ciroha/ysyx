@@ -9,7 +9,6 @@
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
-static bool npc_status = true;
 static uint8_t opcode;
 uint32_t pc, snpc, dnpc, inst_temp;
 CPU_state sim_cpu;
@@ -23,7 +22,6 @@ void reg_read();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 void difftest_step();
-int status_check();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
@@ -88,7 +86,6 @@ void disassemble_display() {
 
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
-        status_check();
         pc = cpu.pc;
         sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
