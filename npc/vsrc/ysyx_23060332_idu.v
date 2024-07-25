@@ -32,7 +32,7 @@ wire    [4:0]   rs2     =   inst_i[24:20];
 wire    [11:0]  imm     =   inst_i[31:20];
 
 import "DPI-C" function void npc_trap();
-import "DPI-C" function void halt(int code);
+// import "DPI-C" function void halt(int code);
 
 always @(*) begin
     if (inst_i == `INST_EBREAK) begin
@@ -65,7 +65,7 @@ always @(*) begin
                     op1 = reg_rdata1_i;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
-                default: halt(1);
+                default: npc_trap();
             endcase
         end
 
@@ -79,7 +79,7 @@ always @(*) begin
                     op1 = reg_rdata1_i;
                     op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
                 end
-                default: halt(1);
+                default: npc_trap();
             endcase
         end
 
@@ -147,7 +147,7 @@ always @(*) begin
 
         default: begin
             if (inst_i != `INST_NOP) begin
-                halt(1);
+                npc_trap();
             end
         end
     endcase
