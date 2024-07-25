@@ -87,6 +87,7 @@ void disassemble_display() {
 
 static void execute(uint32_t n) {
     for (; n > 0; n --) {
+        status_check();
         pc = cpu.pc;
         sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
