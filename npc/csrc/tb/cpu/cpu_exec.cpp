@@ -124,5 +124,5 @@ extern "C" void npc_trap(){
 	}else{
 		Log(ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED) " at pc = %#x\n", cpu.pc);
 	}
-	exit(0);
+	exit(1);
 }
