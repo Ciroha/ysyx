@@ -116,6 +116,7 @@ int status_check() {
 
 extern "C" void halt_return() {
     npc_status = false;
+    return;
 }
 
 extern "C" void npc_trap(){
