@@ -7,6 +7,7 @@ module ysyx_23060332_mem (
     input wire [`MemDataBus]    mem_wdata,
     input wire [7:0]            mem_wmask,
     input wire [`MemAddrBus]    mem_raddr,
+    input wire                  mem_ren,
 
     output reg [`MemDataBus]    mem_rdata
 );
@@ -14,8 +15,15 @@ module ysyx_23060332_mem (
 import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 
-reg [31:0] rdata;
-assign mem_rdata = rdata;
+// reg [31:0] rdata;
+// assign mem_rdata = rdata;
+
+always @(*) begin
+    mem_rdata = `ZeroWord;
+    if (mem_ren) begin
+        mem_rdata = pmem_read(mem_raddr);
+    end
+end
 
 always @(posedge clk) begin
     // rdata = pmem_read(mem_raddr);

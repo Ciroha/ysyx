@@ -82,6 +82,20 @@ always @(*) begin
             endcase
         end
 
+        `INST_TYPE_L: begin
+            case (func3)
+                `INST_LW: begin
+                    reg_wen = `WriteEnable;
+                    waddr = rd;
+                    raddr1 = rs1;
+                    raddr2 = `ZeroReg;
+                    op1 = reg_rdata1_i;
+                    op2 = {{20{inst_i[31]}}, {imm}};
+                end 
+                default: ;
+            endcase
+        end
+
         `INST_LUI: begin
             reg_wen = `WriteEnable;
             waddr = rd;
