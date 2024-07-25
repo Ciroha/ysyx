@@ -14,7 +14,7 @@ module ysyx_23060332_pc (
 
 import "DPI-C" function int pmem_read(input int raddr);
 
-always @(*) begin
+always @(posedge clk) begin
     if (rst) begin
         inst_o = `ZeroWord;
     end
