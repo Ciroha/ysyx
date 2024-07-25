@@ -129,7 +129,7 @@ extern "C" void invalid_inst() {
         "* The machine is always right!\n"
         "* Every line of untested code is always wrong!\n\n", ANSI_FG_RED), "RISC_V MANNUL");
 
-  exit(0);
+  exit(1);
 }
 
 extern "C" void npc_trap(){
