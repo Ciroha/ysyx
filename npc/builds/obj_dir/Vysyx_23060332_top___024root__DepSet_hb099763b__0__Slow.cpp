@@ -80,7 +80,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__stl(Vysyx_230603
 }
 #endif  // VL_DEBUG
 
-void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &pmem_read__Vfuncrtn);
 void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
 
 VL_ATTR_COLD void Vysyx_23060332_top___024root___stl_sequent__TOP__0(Vysyx_23060332_top___024root* vlSelf) {
@@ -88,12 +87,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___stl_sequent__TOP__0(Vysyx_23060
     Vysyx_23060332_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root___stl_sequent__TOP__0\n"); );
     // Body
-    if (vlSelf->rst) {
-        vlSelf->ysyx_23060332_top__DOT__inst = 0U;
-    } else {
-        Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read_TOP(vlSelf->pc, vlSelf->__Vfunc_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read__0__Vfuncout);
-        vlSelf->ysyx_23060332_top__DOT__inst = vlSelf->__Vfunc_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read__0__Vfuncout;
-    }
     if ((0x100073U == vlSelf->ysyx_23060332_top__DOT__inst)) {
         Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
     }
@@ -181,17 +174,13 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___stl_sequent__TOP__0(Vysyx_23060
     }
 }
 
-void Vysyx_23060332_top___024root___act_sequent__TOP__0(Vysyx_23060332_top___024root* vlSelf);
-void Vysyx_23060332_top___024root___act_sequent__TOP__1(Vysyx_23060332_top___024root* vlSelf);
+void Vysyx_23060332_top___024root___nba_comb__TOP__0(Vysyx_23060332_top___024root* vlSelf);
 
 VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_stl(Vysyx_23060332_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vysyx_23060332_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root___eval_stl\n"); );
     // Body
-    if ((vlSelf->__VstlTriggered.at(0U) | vlSelf->__VstlTriggered.at(1U))) {
-        Vysyx_23060332_top___024root___act_sequent__TOP__0(vlSelf);
-    }
     if (vlSelf->__VstlTriggered.at(0U)) {
         Vysyx_23060332_top___024root___stl_sequent__TOP__0(vlSelf);
         vlSelf->__Vm_traceActivity[4U] = 1U;
@@ -201,7 +190,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_stl(Vysyx_23060332_top___0
         vlSelf->__Vm_traceActivity[0U] = 1U;
     }
     if ((vlSelf->__VstlTriggered.at(0U) | vlSelf->__VstlTriggered.at(1U))) {
-        Vysyx_23060332_top___024root___act_sequent__TOP__1(vlSelf);
+        Vysyx_23060332_top___024root___nba_comb__TOP__0(vlSelf);
         vlSelf->__Vm_traceActivity[4U] = 1U;
         vlSelf->__Vm_traceActivity[3U] = 1U;
         vlSelf->__Vm_traceActivity[2U] = 1U;
@@ -209,21 +198,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_stl(Vysyx_23060332_top___0
         vlSelf->__Vm_traceActivity[0U] = 1U;
     }
 }
-
-#ifdef VL_DEBUG
-VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__ico(Vysyx_23060332_top___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vysyx_23060332_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root___dump_triggers__ico\n"); );
-    // Body
-    if ((1U & (~ (IData)(vlSelf->__VicoTriggered.any())))) {
-        VL_DBG_MSGF("         No triggers active\n");
-    }
-    if (vlSelf->__VicoTriggered.at(0U)) {
-        VL_DBG_MSGF("         'ico' region trigger index 0 is active: Internal 'ico' trigger - first iteration\n");
-    }
-}
-#endif  // VL_DEBUG
 
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__act(Vysyx_23060332_top___024root* vlSelf) {
@@ -235,10 +209,10 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__act(Vysyx_230603
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VactTriggered.at(0U)) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @([hybrid] ysyx_23060332_top.raddr1)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge clk)\n");
     }
     if (vlSelf->__VactTriggered.at(1U)) {
-        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 1 is active: @([hybrid] ysyx_23060332_top.raddr1)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -253,10 +227,10 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___dump_triggers__nba(Vysyx_230603
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VnbaTriggered.at(0U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @([hybrid] ysyx_23060332_top.raddr1)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge clk)\n");
     }
     if (vlSelf->__VnbaTriggered.at(1U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @([hybrid] ysyx_23060332_top.raddr1)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -293,7 +267,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
     }
     vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__i = 0;
     vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__rdata = 0;
-    vlSelf->__Vfunc_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read__0__Vfuncout = 0;
     vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1 = 0;
     vlSelf->__VstlDidInit = 0;
     vlSelf->__Vtrigrprev__TOP__clk = 0;

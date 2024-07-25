@@ -15,12 +15,12 @@ module ysyx_23060332_pc (
 import "DPI-C" function int pmem_read(input int raddr);
 
 always @(posedge clk) begin
-    if (rst) begin
-        inst_o = `ZeroWord;
-    end
-    else begin
+    // if (rst) begin
+    //     inst_o = `ZeroWord;
+    // end
+    // else begin
         inst_o = pmem_read(pc);
-    end
+    // end
 end
 
 always @(posedge clk) begin
