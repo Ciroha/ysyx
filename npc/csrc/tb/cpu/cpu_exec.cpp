@@ -24,8 +24,8 @@ extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int
 void difftest_step();
 
 void single_cycle() {
-    cpu.clk = 0; cpu.eval(); wave_dump();
     cpu.clk = 1; cpu.eval(); wave_dump();
+    cpu.clk = 0; cpu.eval(); wave_dump();
     // cpu.inst = pmem_read(cpu.pc);
 }
 
