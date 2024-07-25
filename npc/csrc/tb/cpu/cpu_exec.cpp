@@ -25,7 +25,7 @@ void difftest_step();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
-    cpu.clk = 1; cpu.eval(); cpu.inst = pmem_read(cpu.pc); wave_dump();
+    cpu.clk = 1; cpu.eval(); wave_dump();cpu.inst = pmem_read(cpu.pc);
 }
 
 void reset(int n) {
