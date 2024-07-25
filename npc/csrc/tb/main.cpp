@@ -19,7 +19,6 @@ uint32_t* init_monitor(int argc, char *argv[]);
 void sdb_mainloop();
 void init_wave();
 void close_wave();
-int status_check();
 
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
@@ -28,5 +27,4 @@ int main(int argc, char *argv[]){
 	reset(5);
 	sdb_mainloop();
 	close_wave();
-	return status_check();
 }
