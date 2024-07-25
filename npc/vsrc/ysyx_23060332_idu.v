@@ -32,7 +32,7 @@ wire    [4:0]   rs2     =   inst_i[24:20];
 wire    [11:0]  imm     =   inst_i[31:20];
 
 import "DPI-C" function void npc_trap();
-// import "DPI-C" function void halt(int code);
+import "DPI-C" function int halt_return();
 
 always @(*) begin
     if (inst_i == `INST_EBREAK) begin
@@ -147,7 +147,7 @@ always @(*) begin
 
         default: begin
             if (inst_i != `INST_NOP) begin
-                npc_trap();
+                halt_return();
             end
         end
     endcase

@@ -9,6 +9,7 @@
 
 Vysyx_23060332_top cpu;
 static bool g_print_step = false;
+static bool npc_status = true;
 static uint8_t opcode;
 uint32_t pc, snpc, dnpc, inst_temp;
 CPU_state sim_cpu;
@@ -108,9 +109,14 @@ void cpu_exec(uint64_t n) {
     // close_wave();
 }
 
-// extern "C" void halt(int code) {
-//     asm volatile("mv a0, %0; ebreak" : :"r"(code));
-// }
+int status_check() {
+    if (npc_status) return 0;
+    else return 1;
+}
+
+extern "C" void halt_return() {
+    npc_status = false;
+}
 
 extern "C" void npc_trap(){
 	bool reg_success = false;
@@ -124,5 +130,5 @@ extern "C" void npc_trap(){
 	}else{
 		Log(ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED) " at pc = %#x\n", cpu.pc);
 	}
-	exit(1);
+	exit(0);
 }
