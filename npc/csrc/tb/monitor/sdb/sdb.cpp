@@ -23,6 +23,7 @@ static char* rl_gets() {
 }
 
 void isa_reg_display();
+int status_check();
 
 static int cmd_help(char *args);
 
@@ -121,6 +122,9 @@ static int cmd_help(char *args) {
 
 void sdb_mainloop() {
     for (char *str; (str = rl_gets()) != NULL; ) {
+        if (status_check())
+            return;
+        
         char *str_end = str + strlen(str);
 
         char *cmd = strtok(str, " ");
