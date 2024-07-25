@@ -65,7 +65,7 @@ always @(*) begin
                     op1 = reg_rdata1_i;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
-                default: npc_trap();
+                default: halt_return();
             endcase
         end
 

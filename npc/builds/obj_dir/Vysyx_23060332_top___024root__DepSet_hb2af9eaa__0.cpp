@@ -28,14 +28,12 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top_
     npc_trap();
 }
 
-extern "C" int halt_return();
+extern "C" void halt_return();
 
-VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP(IData/*31:0*/ &halt_return__Vfuncrtn) {
+VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP() {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP\n"); );
     // Body
-    int halt_return__Vfuncrtn__Vcvt;
-    halt_return__Vfuncrtn__Vcvt = halt_return();
-    halt_return__Vfuncrtn = halt_return__Vfuncrtn__Vcvt;
+    halt_return();
 }
 
 extern "C" void pmem_write(int waddr, int wdata, char wmask);
