@@ -108,6 +108,30 @@ void cpu_exec(uint64_t n) {
     // close_wave();
 }
 
+extern "C" void invalid_inst() {
+  uint32_t temp[2];
+  vaddr_t pc = cpu.pc;
+  temp[0] = pmem_read(pc);
+  temp[1] = pmem_read(pc+4);
+
+  uint8_t *p = (uint8_t *)temp;
+  printf("invalid opcode(PC = " FMT_WORD "):\n"
+      "\t%02x %02x %02x %02x %02x %02x %02x %02x ...\n"
+      "\t%08x %08x...\n",
+      cpu.pc, p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], temp[0], temp[1]);
+
+  printf("There are two cases which will trigger this unexpected exception:\n"
+      "1. The instruction at PC = " FMT_WORD " is not implemented.\n"
+      "2. Something is implemented incorrectly.\n", cpu.pc);
+  printf("Find this PC(" FMT_WORD ") in the disassembling result to distinguish which case it is.\n\n", cpu.pc);
+  printf(ANSI_FMT("If it is the first case, see\n%s\nfor more details.\n\n"
+        "If it is the second case, remember:\n"
+        "* The machine is always right!\n"
+        "* Every line of untested code is always wrong!\n\n", ANSI_FG_RED), "RISC_V MANNUL");
+
+  exit(1);
+}
+
 extern "C" void npc_trap(){
 	bool reg_success = false;
     wave_dump();

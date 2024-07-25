@@ -28,6 +28,14 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top_
     npc_trap();
 }
 
+extern "C" void invalid_inst();
+
+VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__invalid_inst_TOP() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__invalid_inst_TOP\n"); );
+    // Body
+    invalid_inst();
+}
+
 extern "C" void pmem_write(int waddr, int wdata, char wmask);
 
 VL_INLINE_OPT void Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, CData/*7:0*/ wmask) {
@@ -70,14 +78,19 @@ void Vysyx_23060332_top___024root___eval_triggers__act(Vysyx_23060332_top___024r
     // Body
     vlSelf->__VactTriggered.at(0U) = ((IData)(vlSelf->ysyx_23060332_top__DOT__raddr1) 
                                       != (IData)(vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1));
-    vlSelf->__VactTriggered.at(1U) = ((IData)(vlSelf->clk) 
+    vlSelf->__VactTriggered.at(1U) = ((IData)(vlSelf->ysyx_23060332_top__DOT__raddr2) 
+                                      != (IData)(vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr2));
+    vlSelf->__VactTriggered.at(2U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
     vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1 
         = vlSelf->ysyx_23060332_top__DOT__raddr1;
+    vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr2 
+        = vlSelf->ysyx_23060332_top__DOT__raddr2;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
         vlSelf->__VactDidInit = 1U;
         vlSelf->__VactTriggered.at(0U) = 1U;
+        vlSelf->__VactTriggered.at(1U) = 1U;
     }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {

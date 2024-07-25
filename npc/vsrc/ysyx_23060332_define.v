@@ -7,6 +7,8 @@
 `define MemAddrBus  31:0
 `define ZeroReg     5'b0
 `define ZeroWord    32'h0
+`define ReadDisable     1'b0
+`define ReadEnable      1'b1  
 
 //Reg
 `define WriteDisable    1'b0
@@ -18,9 +20,16 @@
 
 //R-Type
 `define INST_TYPE_R 7'b0110011
+`define INST_ADD_SUB    3'b000
+`define INST_SLL    3'b001
+`define INST_SLT    3'b010
+`define INST_SLTU   3'b011
 
 //I-Type Load
 `define INST_TYPE_L 7'b0000011
+`define INST_LB     3'b000
+`define INST_LH     3'b001
+`define INST_LW     3'b010
 
 //I-Type Imm
 `define INST_TYPE_I 7'b0010011
