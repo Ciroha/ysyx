@@ -108,6 +108,10 @@ void cpu_exec(uint64_t n) {
     // close_wave();
 }
 
+extern "C" void halt(int code) {
+    asm volatile("mv a0, %0; ebreak" : :"r"(code));
+}
+
 extern "C" void npc_trap(){
 	bool reg_success = false;
     wave_dump();
