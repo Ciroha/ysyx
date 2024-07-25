@@ -23,6 +23,7 @@ void reg_read();
 void open_wave();
 extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 void difftest_step();
+int status_check();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
