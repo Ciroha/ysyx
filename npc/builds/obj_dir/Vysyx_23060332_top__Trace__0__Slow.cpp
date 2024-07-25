@@ -93,7 +93,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_init_sub__TOP__0(Vysyx_230
     tracep->declBus(c+62,"imm", false,-1, 11,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("ysyx_23060332_mem_inst ");
-    tracep->declBit(c+65,"clk", false,-1);
+    tracep->declBit(c+51,"clk", false,-1);
     tracep->declBit(c+3,"mem_wen", false,-1);
     tracep->declBus(c+15,"mem_waddr", false,-1, 31,0);
     tracep->declBus(c+16,"mem_wdata", false,-1, 31,0);
@@ -236,5 +236,4 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_full_sub_0(Vysyx_23060332_
     bufp->fullSData(oldp+62,((vlSelf->inst >> 0x14U)),12);
     bufp->fullIData(oldp+63,(0U),32);
     bufp->fullIData(oldp+64,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__rdata),32);
-    bufp->fullBit(oldp+65,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__clk));
 }
