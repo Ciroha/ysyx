@@ -305,7 +305,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___ico_sequent__TOP__0(Vysyx_2306
                             << 0xcU) | (vlSelf->ysyx_23060332_top__DOT__inst 
                                         >> 0x14U));
                 } else {
-                    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
+                    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP();
                 }
             } else if ((0U != vlSelf->ysyx_23060332_top__DOT__inst)) {
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP();
@@ -828,7 +828,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___act_comb__TOP__0(Vysyx_2306033
                             << 0xcU) | (vlSelf->ysyx_23060332_top__DOT__inst 
                                         >> 0x14U));
                 } else {
-                    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__npc_trap_TOP();
+                    Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP();
                 }
             } else if ((0U != vlSelf->ysyx_23060332_top__DOT__inst)) {
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_idu_inst__DOT__halt_return_TOP();
