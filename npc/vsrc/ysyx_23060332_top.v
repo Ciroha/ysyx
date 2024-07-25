@@ -2,7 +2,7 @@
 module ysyx_23060332_top (
     input clk,
     input rst,
-    input [`InstBus]        inst,
+    // input [`InstBus]        inst,
     // input [`InstAddrBus]    pc_i,
 
     output [`InstAddrBus]   pc
@@ -18,6 +18,7 @@ wire [`InstAddrBus] inst_addr;
 wire [`RegDataBus]  reg_rdata1;
 /* verilator lint_on UNOPTFLAT */
 wire [`RegDataBus]  reg_rdata2;
+wire [`InstBus]     inst;
 
 //ex
 wire [`RegDataBus]  op1;
@@ -55,6 +56,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .jump_addr(jump_addr),
     .jump_en(jump_en),
     .pc(pc),
+    .inst_o(inst),
     .inst_addr(inst_addr)
   );
 

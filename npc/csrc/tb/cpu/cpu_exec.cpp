@@ -25,7 +25,8 @@ void difftest_step();
 
 void single_cycle() {
     cpu.clk = 0; cpu.eval(); wave_dump();
-    cpu.clk = 1; cpu.eval(); wave_dump();cpu.inst = pmem_read(cpu.pc);
+    cpu.clk = 1; cpu.eval(); wave_dump();
+    // cpu.inst = pmem_read(cpu.pc);
 }
 
 void reset(int n) {
@@ -88,7 +89,8 @@ static void execute(uint32_t n) {
         pc = cpu.pc;
         sim_cpu.pc = cpu.pc;
         snpc = cpu.pc + 4;
-        inst_temp = cpu.inst;
+        // inst_temp = cpu.inst;
+        inst_temp = pmem_read(cpu.pc);
         disassemble_display();
 
         single_cycle();
