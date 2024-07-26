@@ -18,15 +18,15 @@ import "DPI-C" function void pmem_write(input int waddr, input int wdata, input 
 
 // reg [31:0] rdata;
 // assign mem_rdata = rdata;
-// assign valid = 
+assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff);
 
 always @(*) begin 
     mem_rdata = `ZeroWord;
-    // if (valid) begin
+    if (valid) begin
         if (mem_ren) begin
             mem_rdata = pmem_read(mem_raddr);
         end
-    // end
+    end
 end
 
 always @(posedge clk) begin
