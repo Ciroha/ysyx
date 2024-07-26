@@ -57,7 +57,7 @@ always @(*) begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
-                `INST_ADDI: begin
+                `INST_ADDI, `INST_SLTIU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -93,7 +93,7 @@ always @(*) begin
                     op1 = reg_rdata1_i;
                     op2 = {{20{inst_i[31]}}, {imm}};
                 end 
-                default: ;
+                default: invalid_inst();
             endcase
         end
 
@@ -107,7 +107,21 @@ always @(*) begin
                     op1 = reg_rdata1_i;
                     op2 = reg_rdata2_i;
                 end 
-                default: ;
+                default: invalid_inst();
+            endcase
+        end
+
+        `INST_TYPE_B: begin
+            case (func3)
+                `INST_BEQ, `INST_BNE: begin
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = reg_rdata1_i;
+                    op2 = reg_rdata2_i;
+                    op1_jump = inst_addr;
+                    op2_jump = {{19{inst_i[31]}},{inst_i[31]},{inst_i[7]},{inst_i[30:25]},{inst_i[11:8]},1'b0};
+                end
+                default: invalid_inst();
             endcase
         end
 

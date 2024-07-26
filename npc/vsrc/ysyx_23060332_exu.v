@@ -26,6 +26,7 @@ module ysyx_23060332_exu (
     output reg [7:0]            mem_wmask,
     output reg [`MemAddrBus]    mem_raddr,
     output reg                  mem_ren,
+    // output reg                  valid,
 
     //To reg
     output reg [`RegAddrBus]    waddr_o,
@@ -44,6 +45,7 @@ always @(*) begin
     //初始化
     jump_en = `JumpDisable;
     jump_addr = `ZeroWord;
+    mem_ren = `ReadDisable;
     reg_wen_o = reg_wen_i;
     waddr_o = waddr_i;
     wdata = `ZeroWord;
@@ -52,13 +54,17 @@ always @(*) begin
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
     mem_raddr = `ZeroWord;
-    mem_ren = `ReadDisable;
+    // valid = `ReadDisable;
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
                 `INST_ADDI: begin
                     // reg_wen_o = `WriteEnable;
                     wdata = op1 + op2;
+                end
+
+                `INST_SLTIU: begin
+                    wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
                 default: ;
             endcase
@@ -83,6 +89,7 @@ always @(*) begin
                     mem_raddr = op1 + op2;
                     // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
+                    // valid = `ReadEnable;
                 end 
                 default: ;
             endcase
@@ -98,6 +105,20 @@ always @(*) begin
                         wdata = op1 - op2;
                     end
                 end 
+                default: ;
+            endcase
+        end
+
+        `INST_TYPE_B: begin
+            case (func3)
+                `INST_BEQ: begin
+                    jump_en = (op1 == op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 == op2) ? (op1_jump + op2_jump) : `ZeroWord;
+                end
+                `INST_BNE: begin
+                    jump_en = (op1 != op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 != op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end
                 default: ;
             endcase
         end

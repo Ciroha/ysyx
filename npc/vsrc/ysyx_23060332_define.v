@@ -34,6 +34,11 @@
 //I-Type Imm
 `define INST_TYPE_I 7'b0010011
 `define INST_ADDI   3'b000
+`define INST_SLTI   3'b010
+`define INST_SLTIU  3'b011
+`define INST_XORI   3'b100
+`define INST_ORI    3'b110
+`define INST_ANDI   3'b111
 
 //S-Type
 `define INST_TYPE_S 7'b0100011
@@ -41,6 +46,8 @@
 
 //B-Type
 `define INST_TYPE_B 7'b1100011
+`define INST_BEQ    3'b000
+`define INST_BNE    3'b001
 
 //J-Type
 

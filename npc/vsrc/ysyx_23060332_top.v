@@ -46,8 +46,11 @@ wire [`MemAddrBus]  mem_waddr;
 wire [`MemDataBus]  mem_wdata;
 wire [7:0]          mem_wmask;
 wire [`MemAddrBus]  mem_raddr;
+/* verilator lint_off UNOPTFLAT */
 wire [`MemDataBus]  mem_rdata;
+/* verilator lint_on UNOPTFLAT */
 wire                mem_ren;
+// wire                valid;
 
 
 
@@ -98,6 +101,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .mem_wmask(mem_wmask),
     .mem_raddr(mem_raddr),
     .mem_ren(mem_ren),
+    // .valid(valid),
     .waddr_o(ex_reg_waddr),
     .wdata(ex_reg_wdata),
     .reg_wen_o(ex_reg_reg_wen)
@@ -124,6 +128,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .mem_rdata(mem_rdata),
     .mem_raddr(mem_raddr),
     .mem_ren(mem_ren)
+    // .valid(valid)
   );
     
 endmodule
