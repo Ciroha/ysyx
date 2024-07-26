@@ -40,8 +40,6 @@ wire    [2:0]   func3   =   inst_i[14:12];
 // wire    [4:0]   rs2     =   inst_i[24:20];
 // wire    [11:0]  imm     =   inst_i[31:20];
 
-import "DPI-C" function void invalid_inst();
-
 always @(*) begin
     //初始化
     jump_en = `JumpDisable;
@@ -66,7 +64,7 @@ always @(*) begin
                 `INST_SLTIU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
-                default: invalid_inst();
+                default: ;
             endcase
         end
 
@@ -78,7 +76,7 @@ always @(*) begin
                     mem_wdata = reg_rdata2_i;
                     mem_wmask = 8'b00001111;
                 end
-                default: invalid_inst();
+                default: ;
             endcase
         end
 
@@ -90,7 +88,7 @@ always @(*) begin
                     // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
                 end 
-                default: invalid_inst();
+                default: ;
             endcase
         end
 
@@ -104,7 +102,7 @@ always @(*) begin
                         wdata = op1 - op2;
                     end
                 end 
-                default: invalid_inst();
+                default: ;
             endcase
         end
 
@@ -118,7 +116,7 @@ always @(*) begin
                     jump_en = (op1 != op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 != op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
                 end
-                default: invalid_inst();
+                default: ;
             endcase
         end
 
@@ -141,7 +139,7 @@ always @(*) begin
             jump_addr = (op1_jump + op2_jump) & ~(32'b1);
         end
 
-        default: invalid_inst();
+        default: ;
     endcase
 end
 
