@@ -45,7 +45,7 @@ end
 
 //reg1
 always @(*) begin
-    reg_rdata1 = 32'b0;
+    // reg_rdata1 = 32'b0;
     if (raddr1 == 5'd0) begin
         reg_rdata1 = 32'b0;
     end
