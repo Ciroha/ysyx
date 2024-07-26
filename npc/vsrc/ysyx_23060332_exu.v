@@ -55,7 +55,7 @@ always @(*) begin
     mem_ren = `ReadDisable;
     case (opcode)
         `INST_TYPE_I: begin
-            mem_raddr = `ZeroWord;
+            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_ADDI: begin
                     // reg_wen_o = `WriteEnable;
@@ -70,7 +70,7 @@ always @(*) begin
         end
 
         `INST_TYPE_S: begin
-            mem_raddr = `ZeroWord;
+            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_SW: begin
                     mem_wen = `WriteEnable;
