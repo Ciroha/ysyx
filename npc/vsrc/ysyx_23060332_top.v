@@ -39,6 +39,7 @@ wire [`RegAddrBus]  raddr2;
 wire [`RegAddrBus]  ex_reg_waddr;
 wire [`RegDataBus]  ex_reg_wdata;
 wire                ex_reg_reg_wen;
+wire                reg_valid;  
 
 //mem
 wire                mem_wen;
