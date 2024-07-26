@@ -48,13 +48,11 @@ end
 
 //reg1
 always @(*) begin
-    reg_valid = 1'b0;
     if (raddr1 == 5'd0) begin
         reg_rdata1 = 32'b0;
     end
     else begin
         reg_rdata1 = regs[raddr1];
-        reg_valid = 1'b1;
     end
 end
 

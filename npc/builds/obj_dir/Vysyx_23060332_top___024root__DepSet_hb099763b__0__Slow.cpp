@@ -248,6 +248,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
     vlSelf->ysyx_23060332_top__DOT__raddr2 = 0;
     vlSelf->ysyx_23060332_top__DOT__ex_reg_wdata = 0;
     vlSelf->ysyx_23060332_top__DOT__ex_reg_reg_wen = 0;
+    vlSelf->ysyx_23060332_top__DOT__reg_valid = 0;
     vlSelf->ysyx_23060332_top__DOT__mem_wen = 0;
     vlSelf->ysyx_23060332_top__DOT__mem_waddr = 0;
     vlSelf->ysyx_23060332_top__DOT__mem_wdata = 0;
@@ -255,7 +256,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
     vlSelf->ysyx_23060332_top__DOT__mem_raddr = 0;
     vlSelf->ysyx_23060332_top__DOT__mem_rdata = 0;
     vlSelf->ysyx_23060332_top__DOT__mem_ren = 0;
-    vlSelf->ysyx_23060332_top__DOT__reg_valid = 0;
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
         vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[__Vi0] = 0;
     }
