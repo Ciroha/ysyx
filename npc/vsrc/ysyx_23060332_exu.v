@@ -26,7 +26,7 @@ module ysyx_23060332_exu (
     output reg [7:0]            mem_wmask,
     output reg [`MemAddrBus]    mem_raddr,
     output reg                  mem_ren,
-    output reg                  valid,
+    // output reg                  valid,
 
     //To reg
     output reg [`RegAddrBus]    waddr_o,
@@ -54,7 +54,7 @@ always @(*) begin
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
     mem_raddr = `ZeroWord;
-    valid = `ReadDisable;
+    // valid = `ReadDisable;
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
@@ -89,7 +89,7 @@ always @(*) begin
                     mem_raddr = op1 + op2;
                     // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
-                    valid = `ReadEnable;
+                    // valid = `ReadEnable;
                 end 
                 default: ;
             endcase
