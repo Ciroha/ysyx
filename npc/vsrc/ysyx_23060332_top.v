@@ -46,7 +46,9 @@ wire [`MemAddrBus]  mem_waddr;
 wire [`MemDataBus]  mem_wdata;
 wire [7:0]          mem_wmask;
 wire [`MemAddrBus]  mem_raddr;
+/* verilator lint_off UNOPTFLAT */
 wire [`MemDataBus]  mem_rdata;
+/* verilator lint_on UNOPTFLAT */
 wire                mem_ren;
 
 

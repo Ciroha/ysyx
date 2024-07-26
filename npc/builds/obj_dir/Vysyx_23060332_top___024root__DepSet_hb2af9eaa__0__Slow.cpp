@@ -22,14 +22,19 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___eval_triggers__stl(Vysyx_230603
                                       != (IData)(vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1));
     vlSelf->__VstlTriggered.at(2U) = ((IData)(vlSelf->ysyx_23060332_top__DOT__raddr2) 
                                       != (IData)(vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr2));
+    vlSelf->__VstlTriggered.at(3U) = (vlSelf->ysyx_23060332_top__DOT__mem_rdata 
+                                      != vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__mem_rdata);
     vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1 
         = vlSelf->ysyx_23060332_top__DOT__raddr1;
     vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr2 
         = vlSelf->ysyx_23060332_top__DOT__raddr2;
+    vlSelf->__Vtrigrprev__TOP__ysyx_23060332_top__DOT__mem_rdata 
+        = vlSelf->ysyx_23060332_top__DOT__mem_rdata;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VstlDidInit))))) {
         vlSelf->__VstlDidInit = 1U;
         vlSelf->__VstlTriggered.at(1U) = 1U;
         vlSelf->__VstlTriggered.at(2U) = 1U;
+        vlSelf->__VstlTriggered.at(3U) = 1U;
     }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
