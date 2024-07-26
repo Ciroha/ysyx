@@ -125,7 +125,6 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_init_sub__TOP__0(Vysyx_230
     tracep->declBit(c+12,"reg_wen", false,-1);
     tracep->declBus(c+64,"reg_rdata1", false,-1, 31,0);
     tracep->declBus(c+65,"reg_rdata2", false,-1, 31,0);
-    tracep->declBit(c+67,"reg_valid", false,-1);
     for (int i = 0; i < 32; ++i) {
         tracep->declBus(c+28+i*1,"regs", true,(i+0), 31,0);
     }
@@ -244,5 +243,4 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_full_sub_0(Vysyx_23060332_
     bufp->fullIData(oldp+64,(vlSelf->ysyx_23060332_top__DOT__reg_rdata1),32);
     bufp->fullIData(oldp+65,(vlSelf->ysyx_23060332_top__DOT__reg_rdata2),32);
     bufp->fullIData(oldp+66,(vlSelf->ysyx_23060332_top__DOT__mem_wdata),32);
-    bufp->fullBit(oldp+67,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__reg_valid));
 }

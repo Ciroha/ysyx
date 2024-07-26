@@ -86,10 +86,10 @@ always @(*) begin
             case (func3)
                 `INST_LW: begin
                     mem_ren = `ReadEnable;
-                    valid = `ReadEnable;
                     mem_raddr = op1 + op2;
                     // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
+                    valid = `ReadEnable;
                 end 
                 default: ;
             endcase
