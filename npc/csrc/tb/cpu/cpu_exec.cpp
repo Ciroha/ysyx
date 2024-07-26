@@ -119,8 +119,6 @@ extern "C" void invalid_inst() {
         "\t%02x %02x %02x %02x %02x %02x %02x %02x ...\n"
         "\t%08x %08x...\n",
         cpu.pc, p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], temp[0], temp[1]);
-    disassemble_display();
-
 
     printf("There are two cases which will trigger this unexpected exception:\n"
         "1. The instruction at PC = " FMT_WORD " is not implemented.\n"

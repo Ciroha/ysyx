@@ -57,7 +57,7 @@ always @(*) begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
-                `INST_ADDI: begin
+                `INST_ADDI, `INST_SLTIU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;

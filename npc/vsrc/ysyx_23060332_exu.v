@@ -60,6 +60,10 @@ always @(*) begin
                     // reg_wen_o = `WriteEnable;
                     wdata = op1 + op2;
                 end
+
+                `INST_SLTIU: begin
+                    wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
                 default: ;
             endcase
         end
