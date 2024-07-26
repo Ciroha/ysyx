@@ -51,10 +51,11 @@ always @(*) begin
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
-    mem_raddr = `ZeroWord;
+    // mem_raddr = `ZeroWord;
     mem_ren = `ReadDisable;
     case (opcode)
         `INST_TYPE_I: begin
+            mem_raddr = `ZeroWord;
             case (func3)
                 `INST_ADDI: begin
                     // reg_wen_o = `WriteEnable;
@@ -69,6 +70,7 @@ always @(*) begin
         end
 
         `INST_TYPE_S: begin
+            mem_raddr = `ZeroWord;
             case (func3)
                 `INST_SW: begin
                     mem_wen = `WriteEnable;
@@ -81,6 +83,7 @@ always @(*) begin
         end
 
         `INST_TYPE_L: begin
+            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_LW: begin
                     mem_ren = `ReadEnable;
