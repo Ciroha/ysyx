@@ -15,10 +15,7 @@ module ysyx_23060332_reg (
 
     //to idu
     output reg [`RegDataBus]    reg_rdata1,
-    output reg [`RegDataBus]    reg_rdata2,
-
-    //to exu
-    output reg                  reg_valid
+    output reg [`RegDataBus]    reg_rdata2
 
 );
 

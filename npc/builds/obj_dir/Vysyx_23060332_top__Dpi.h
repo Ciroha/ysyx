@@ -22,7 +22,7 @@ extern "C" {
     extern void npc_trap();
     // DPI import at /home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_pc.v:15:29
     extern int pmem_read(int raddr);
-    // DPI import at /home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_mem.v:16:30
+    // DPI import at /home/ciroha/ysyx-workbench/npc/vsrc/ysyx_23060332_mem.v:17:30
     extern void pmem_write(int waddr, int wdata, char wmask);
 
 #ifdef __cplusplus
