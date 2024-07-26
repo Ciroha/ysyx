@@ -112,6 +112,10 @@ always @(*) begin
                     jump_en = (op1 == op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 == op2) ? (op1_jump + op2_jump) : `ZeroWord;
                 end
+                `INST_BNE: begin
+                    jump_en = (op1 != op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 != op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end
                 default: ;
             endcase
         end

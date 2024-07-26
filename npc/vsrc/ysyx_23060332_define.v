@@ -47,6 +47,7 @@
 //B-Type
 `define INST_TYPE_B 7'b1100011
 `define INST_BEQ    3'b000
+`define INST_BNE    3'b001
 
 //J-Type
 
