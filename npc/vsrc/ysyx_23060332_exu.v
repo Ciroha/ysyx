@@ -15,6 +15,9 @@ module ysyx_23060332_exu (
     //From mem
     input wire [`MemDataBus]    mem_rdata,
 
+    //from reg
+    input wire                  reg_valid,
+
     //To pc
     output reg [`InstAddrBus]   jump_addr,
     output reg                  jump_en,
@@ -83,7 +86,7 @@ always @(*) begin
         `INST_TYPE_L: begin
             case (func3)
                 `INST_LW: begin
-                    mem_ren = `ReadEnable;
+                    mem_ren = (reg_valid) ? `ReadEnable: `ReadDisable;
                     mem_raddr = op1 + op2;
                     // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;

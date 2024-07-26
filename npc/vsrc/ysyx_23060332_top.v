@@ -92,6 +92,7 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .waddr_i(id_ex_waddr),
     .inst_i(id_ex_inst),
     .mem_rdata(mem_rdata),
+    .reg_valid(reg_valid),
     .jump_addr(jump_addr),
     .jump_en(jump_en),
     .mem_wen(mem_wen),
@@ -114,7 +115,8 @@ ysyx_23060332_pc  ysyx_23060332_pc_inst (
     .wdata(ex_reg_wdata),
     .reg_wen(ex_reg_reg_wen),
     .reg_rdata1(reg_rdata1),
-    .reg_rdata2(reg_rdata2)
+    .reg_rdata2(reg_rdata2),
+    .reg_valid(reg_valid)
   );
 
   ysyx_23060332_mem  ysyx_23060332_mem_inst (

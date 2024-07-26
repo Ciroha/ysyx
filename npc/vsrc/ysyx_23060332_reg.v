@@ -15,7 +15,10 @@ module ysyx_23060332_reg (
 
     //to idu
     output reg [`RegDataBus]    reg_rdata1,
-    output reg [`RegDataBus]    reg_rdata2
+    output reg [`RegDataBus]    reg_rdata2,
+
+    //to exu
+    output reg                  reg_valid
 
 );
 
@@ -45,11 +48,13 @@ end
 
 //reg1
 always @(*) begin
+    reg_valid = 1'b0;
     if (raddr1 == 5'd0) begin
         reg_rdata1 = 32'b0;
     end
     else begin
         reg_rdata1 = regs[raddr1];
+        reg_valid = 1'b1;
     end
 end
 
