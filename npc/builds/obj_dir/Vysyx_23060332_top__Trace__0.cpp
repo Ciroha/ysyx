@@ -27,23 +27,23 @@ void Vysyx_23060332_top___024root__trace_chg_sub_0(Vysyx_23060332_top___024root*
                       | vlSelf->__Vm_traceActivity[2U]) 
                      | vlSelf->__Vm_traceActivity[4U]))) {
         bufp->chgIData(oldp+0,(vlSelf->ysyx_23060332_top__DOT__jump_addr),32);
-        bufp->chgIData(oldp+1,(vlSelf->ysyx_23060332_top__DOT__op1),32);
-        bufp->chgIData(oldp+2,(vlSelf->ysyx_23060332_top__DOT__op2),32);
-        bufp->chgIData(oldp+3,(vlSelf->ysyx_23060332_top__DOT__op1_jump),32);
-        bufp->chgIData(oldp+4,(vlSelf->ysyx_23060332_top__DOT__op2_jump),32);
-        bufp->chgBit(oldp+5,(vlSelf->ysyx_23060332_top__DOT__id_ex_reg_wen));
-        bufp->chgCData(oldp+6,(vlSelf->ysyx_23060332_top__DOT__id_ex_waddr),5);
-        bufp->chgCData(oldp+7,(vlSelf->ysyx_23060332_top__DOT__raddr1),5);
-        bufp->chgCData(oldp+8,(vlSelf->ysyx_23060332_top__DOT__raddr2),5);
-        bufp->chgIData(oldp+9,(vlSelf->ysyx_23060332_top__DOT__ex_reg_wdata),32);
-        bufp->chgBit(oldp+10,(vlSelf->ysyx_23060332_top__DOT__ex_reg_reg_wen));
-        bufp->chgIData(oldp+11,(vlSelf->ysyx_23060332_top__DOT__mem_waddr),32);
-        bufp->chgIData(oldp+12,(vlSelf->ysyx_23060332_top__DOT__mem_raddr),32);
-        bufp->chgIData(oldp+13,(vlSelf->ysyx_23060332_top__DOT__mem_rdata),32);
+        bufp->chgBit(oldp+1,(vlSelf->ysyx_23060332_top__DOT__jump_en));
+        bufp->chgIData(oldp+2,(vlSelf->ysyx_23060332_top__DOT__op1),32);
+        bufp->chgIData(oldp+3,(vlSelf->ysyx_23060332_top__DOT__op2),32);
+        bufp->chgIData(oldp+4,(vlSelf->ysyx_23060332_top__DOT__op1_jump),32);
+        bufp->chgIData(oldp+5,(vlSelf->ysyx_23060332_top__DOT__op2_jump),32);
+        bufp->chgBit(oldp+6,(vlSelf->ysyx_23060332_top__DOT__id_ex_reg_wen));
+        bufp->chgCData(oldp+7,(vlSelf->ysyx_23060332_top__DOT__id_ex_waddr),5);
+        bufp->chgCData(oldp+8,(vlSelf->ysyx_23060332_top__DOT__raddr1),5);
+        bufp->chgCData(oldp+9,(vlSelf->ysyx_23060332_top__DOT__raddr2),5);
+        bufp->chgIData(oldp+10,(vlSelf->ysyx_23060332_top__DOT__ex_reg_wdata),32);
+        bufp->chgBit(oldp+11,(vlSelf->ysyx_23060332_top__DOT__ex_reg_reg_wen));
+        bufp->chgIData(oldp+12,(vlSelf->ysyx_23060332_top__DOT__mem_waddr),32);
+        bufp->chgIData(oldp+13,(vlSelf->ysyx_23060332_top__DOT__mem_raddr),32);
+        bufp->chgIData(oldp+14,(vlSelf->ysyx_23060332_top__DOT__mem_rdata),32);
     }
     if (VL_UNLIKELY((vlSelf->__Vm_traceActivity[1U] 
                      | vlSelf->__Vm_traceActivity[3U]))) {
-        bufp->chgBit(oldp+14,(vlSelf->ysyx_23060332_top__DOT__jump_en));
         bufp->chgIData(oldp+15,(vlSelf->ysyx_23060332_top__DOT__inst),32);
         bufp->chgBit(oldp+16,(vlSelf->ysyx_23060332_top__DOT__mem_wen));
         bufp->chgCData(oldp+17,(vlSelf->ysyx_23060332_top__DOT__mem_wmask),8);
