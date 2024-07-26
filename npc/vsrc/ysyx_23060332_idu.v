@@ -111,6 +111,20 @@ always @(*) begin
             endcase
         end
 
+        `INST_TYPE_B: begin
+            case (func3)
+                `INST_BEQ: begin
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = reg_rdata1_i;
+                    op2 = reg_rdata2_i;
+                    op1_jump = inst_addr;
+                    op2_jump = {{19{inst_i[31]}},{inst_i[31]},{inst_i[7]},{inst_i[30:25]},{inst_i[11:8]},1'b0};
+                end
+                default: ;
+            endcase
+        end
+
         `INST_LUI: begin
             reg_wen = `WriteEnable;
             waddr = rd;

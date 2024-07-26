@@ -106,6 +106,16 @@ always @(*) begin
             endcase
         end
 
+        `INST_TYPE_B: begin
+            case (func3)
+                `INST_BEQ: begin
+                    jump_en = (op1 == op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 == op2) ? (op1_jump + op2_jump) : `ZeroWord;
+                end
+                default: ;
+            endcase
+        end
+
         `INST_LUI, `INST_AUIPC: begin
             reg_wen_o = `WriteEnable;
             wdata = op1 + op2;
