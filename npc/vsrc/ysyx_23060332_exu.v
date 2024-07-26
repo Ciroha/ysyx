@@ -44,6 +44,7 @@ always @(*) begin
     //初始化
     jump_en = `JumpDisable;
     jump_addr = `ZeroWord;
+    mem_ren = `ReadDisable;
     reg_wen_o = reg_wen_i;
     waddr_o = waddr_i;
     wdata = `ZeroWord;
@@ -51,11 +52,9 @@ always @(*) begin
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
-    // mem_raddr = `ZeroWord;
-    mem_ren = `ReadDisable;
+    mem_raddr = `ZeroWord;
     case (opcode)
         `INST_TYPE_I: begin
-            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_ADDI: begin
                     // reg_wen_o = `WriteEnable;
@@ -70,7 +69,6 @@ always @(*) begin
         end
 
         `INST_TYPE_S: begin
-            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_SW: begin
                     mem_wen = `WriteEnable;
@@ -83,7 +81,6 @@ always @(*) begin
         end
 
         `INST_TYPE_L: begin
-            // mem_raddr = `ZeroWord;
             case (func3)
                 `INST_LW: begin
                     mem_ren = `ReadEnable;
