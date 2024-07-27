@@ -69,7 +69,7 @@ always @(*) begin
                 `INST_ANDI: begin
                     wdata = op1 & op2;
                 end
-                
+
                 `INST_SRLI_SRAI: begin
                     if (inst_i[30] == 1'b1) begin
                         wdata = (op1 >> inst_i[24:20]) | ({32{op1[31]}} & ~(32'hffffffff >> inst_i[24:20]));
@@ -133,6 +133,15 @@ always @(*) begin
                         wdata = op1 - op2;
                     end
                 end 
+                `INST_SLL: begin
+                    wdata = op1 << op2[4:0];
+                end
+                `INST_SLTU: begin
+                    wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
+                `INST_AND: begin
+                    wdata = op1 & op2;
+                end
                 default: ;
             endcase
         end

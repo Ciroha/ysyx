@@ -99,7 +99,7 @@ always @(*) begin
 
         `INST_TYPE_R: begin
             case (func3)
-                `INST_ADD_SUB: begin
+                `INST_ADD_SUB, `INST_SLL, `INST_SLTU, `INST_AND: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;

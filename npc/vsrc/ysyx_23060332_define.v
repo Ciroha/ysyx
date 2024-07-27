@@ -24,6 +24,10 @@
 `define INST_SLL    3'b001
 `define INST_SLT    3'b010
 `define INST_SLTU   3'b011
+`define INST_XOR    3'b100
+`define INST_SRL_SRA    3'b101
+`define INST_OR     3'b110
+`define INST_AND    3'b111
 
 //I-Type Load
 `define INST_TYPE_L 7'b0000011
