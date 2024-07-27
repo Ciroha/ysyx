@@ -170,10 +170,18 @@ always @(*) begin
                     jump_en = (op1 != op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 != op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
                 end
+                `INST_BLT: begin
+                    jump_en = ($signed(op1) < $signed(op2)) ? `JumpEnable : `JumpDisable;
+                    jump_addr = ($signed(op1) < $signed(op2)) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end
                 `INST_BGE: begin
                     jump_en = ($signed(op1) >= $signed(op2)) ? `JumpEnable : `JumpDisable;
                     jump_addr = ($signed(op1) >= $signed(op2)) ? (op1_jump + op2_jump) : `ZeroWord;
                 end
+                `INST_BLTU: begin
+                    jump_en = (op1 < op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 < op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end                
                 `INST_BGEU: begin
                     jump_en = (op1 >= op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 >= op2) ? (op1_jump + op2_jump) : `ZeroWord;

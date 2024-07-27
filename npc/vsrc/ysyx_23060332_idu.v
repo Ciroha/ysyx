@@ -113,7 +113,7 @@ always @(*) begin
 
         `INST_TYPE_B: begin
             case (func3)
-                `INST_BEQ, `INST_BNE, `INST_BGE, `INST_BGEU: begin
+                `INST_BEQ, `INST_BNE, `INST_BLT, `INST_BGE, `INST_BLTU, `INST_BGEU: begin
                     raddr1 = rs1;
                     raddr2 = rs2;
                     op1 = reg_rdata1_i;
