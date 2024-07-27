@@ -31,7 +31,7 @@ always @(*) begin
             case (mem_raddr[1:0])
                 2'b00: mem_rdata = temp1;
                 2'b01: mem_rdata = {{temp2[7:0]},{temp1[31:8]}};
-                2'b10: mem_rdata = {{temp2[15:0]},{temp1[31:15]}};
+                2'b10: mem_rdata = {{temp2[15:0]},{temp1[31:16]}};
                 2'b11: mem_rdata = {{temp2[23:0]},{temp1[31:24]}};
                 default: ;
             endcase
