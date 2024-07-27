@@ -147,6 +147,14 @@ always @(*) begin
                 `INST_SLTU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
+                `INST_SRL_SRA: begin
+                    if (inst_i[30]) begin
+                        wdata = (op1 >> op2[4:0]) | ({32{op1[31]}} & ~(32'hffffffff >> op2[4:0]));
+                    end
+                    else begin
+                        wdata = op1 >> op2[4:0];
+                    end
+                end
                 `INST_OR: begin
                     wdata = op1 | op2;
                 end
