@@ -1684,7 +1684,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 << 0x18U), 
-                                                                                (0xf8U 
+                                                                                (8U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 3U)));
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(
@@ -1692,14 +1692,14 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 >> 8U), 
-                                                                                (0xf7U 
+                                                                                (7U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 1U)));
             } else {
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 << 0x10U), 
-                                                                                (0xfcU 
+                                                                                (0xcU 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 2U)));
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(
@@ -1707,7 +1707,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 >> 0x10U), 
-                                                                                (0xf3U 
+                                                                                (3U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 2U)));
             }
@@ -1715,7 +1715,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
             Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 << 8U), 
-                                                                                (0xfeU 
+                                                                                (0xeU 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 1U)));
             Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(
@@ -1723,7 +1723,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
                                                                                 >> 0x18U), 
-                                                                                (0xf1U 
+                                                                                (1U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 3U)));
         } else {

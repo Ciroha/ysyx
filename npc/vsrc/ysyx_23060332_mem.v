@@ -16,8 +16,6 @@ module ysyx_23060332_mem (
 import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 
-// reg [31:0] rdata;
-// assign mem_rdata = rdata;
 wire valid;
 assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff);
 reg [31:0] temp1, temp2;
@@ -39,15 +37,9 @@ always @(*) begin
             endcase
         end
     end
-    // if (valid) begin
-    //     if (mem_ren) begin
-    //         mem_rdata = pmem_read(mem_raddr);
-    //     end
-    // end
 end
 
 always @(posedge clk) begin
-    // rdata = pmem_read(mem_raddr);
     if (mem_wen) begin // 有写请求时
         case (mem_waddr[1:0])
             2'b00: pmem_write(mem_waddr, mem_wdata, mem_wmask);
