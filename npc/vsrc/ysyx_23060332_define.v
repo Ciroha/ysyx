@@ -30,6 +30,8 @@
 `define INST_LB     3'b000
 `define INST_LH     3'b001
 `define INST_LW     3'b010
+`define INST_LBU    3'b100
+`define INST_LHU    3'b101
 
 //I-Type Imm
 `define INST_TYPE_I 7'b0010011

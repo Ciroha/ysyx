@@ -102,14 +102,18 @@ always @(*) begin
         end
 
         `INST_TYPE_L: begin
+            mem_ren = `ReadEnable;
+            mem_raddr = op1 + op2;
             case (func3)
                 `INST_LW: begin
-                    mem_ren = `ReadEnable;
-                    mem_raddr = op1 + op2;
-                    // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
-                    // valid = `ReadEnable;
                 end 
+                `INST_LB: begin
+                    wdata = {{24{mem_rdata[7]}}, {mem_rdata[7:0]}};
+                end
+                `INST_LBU: begin
+                    wdata = {{24'h0}, {mem_rdata[7:0]}};
+                end
                 default: ;
             endcase
         end
