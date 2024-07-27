@@ -292,6 +292,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___ctor_var_reset(Vysyx_23060332_t
         vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__regs[__Vi0] = 0;
     }
     vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_reg_inst__DOT__i = 0;
+    vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__valid = 0;
     vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 = 0;
     vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2 = 0;
     vlSelf->__Vfunc_ysyx_23060332_top__DOT__ysyx_23060332_pc_inst__DOT__pmem_read__0__Vfuncout = 0;
