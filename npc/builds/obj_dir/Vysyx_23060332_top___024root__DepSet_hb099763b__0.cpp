@@ -650,8 +650,8 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___ico_sequent__TOP__0(Vysyx_2306
                             << 8U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
                                       >> 0x18U)) : 
                        ((vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2 
-                         << 0x11U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
-                                      >> 0xfU))) : 
+                         << 0x10U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
+                                      >> 0x10U))) : 
                    ((1U & vlSelf->ysyx_23060332_top__DOT__mem_raddr)
                      ? ((vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2 
                          << 0x18U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
@@ -1467,8 +1467,8 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___act_comb__TOP__0(Vysyx_2306033
                             << 8U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
                                       >> 0x18U)) : 
                        ((vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2 
-                         << 0x11U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
-                                      >> 0xfU))) : 
+                         << 0x10U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
+                                      >> 0x10U))) : 
                    ((1U & vlSelf->ysyx_23060332_top__DOT__mem_raddr)
                      ? ((vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2 
                          << 0x18U) | (vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1 
