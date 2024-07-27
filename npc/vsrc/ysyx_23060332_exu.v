@@ -74,6 +74,10 @@ always @(*) begin
                     wdata = op1 & op2;
                 end
 
+                `INST_SLLI: begin
+                    wdata = op1 << inst_i[24:20];
+                end
+
                 `INST_SRLI_SRAI: begin
                     if (inst_i[30] == 1'b1) begin
                         wdata = (op1 >> inst_i[24:20]) | ({32{op1[31]}} & ~(32'hffffffff >> inst_i[24:20]));
@@ -117,11 +121,17 @@ always @(*) begin
                 `INST_LW: begin
                     wdata = mem_rdata;
                 end 
+                `INST_LH: begin
+                    wdata = {{16{mem_rdata[15]}}, {mem_rdata[15:0]}};
+                end
                 `INST_LB: begin
                     wdata = {{24{mem_rdata[7]}}, {mem_rdata[7:0]}};
                 end
                 `INST_LBU: begin
                     wdata = {{24'h0}, {mem_rdata[7:0]}};
+                end
+                `INST_LHU: begin
+                    wdata = {{16'h0}, {mem_rdata[15:0]}};
                 end
                 default: ;
             endcase
@@ -140,8 +150,19 @@ always @(*) begin
                 `INST_SLL: begin
                     wdata = op1 << op2[4:0];
                 end
+                `INST_SLT: begin
+                    wdata = ($signed(op1) < $signed(op2)) ? 32'h1: 32'h0;
+                end
                 `INST_SLTU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
+                `INST_SRL_SRA: begin
+                    if (inst_i[30]) begin
+                        wdata = (op1 >> op2[4:0]) | ({32{op1[31]}} & ~(32'hffffffff >> op2[4:0]));
+                    end
+                    else begin
+                        wdata = op1 >> op2[4:0];
+                    end
                 end
                 `INST_OR: begin
                     wdata = op1 | op2;
@@ -165,6 +186,22 @@ always @(*) begin
                 `INST_BNE: begin
                     jump_en = (op1 != op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 != op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end
+                `INST_BLT: begin
+                    jump_en = ($signed(op1) < $signed(op2)) ? `JumpEnable : `JumpDisable;
+                    jump_addr = ($signed(op1) < $signed(op2)) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end
+                `INST_BGE: begin
+                    jump_en = ($signed(op1) >= $signed(op2)) ? `JumpEnable : `JumpDisable;
+                    jump_addr = ($signed(op1) >= $signed(op2)) ? (op1_jump + op2_jump) : `ZeroWord;
+                end
+                `INST_BLTU: begin
+                    jump_en = (op1 < op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 < op2) ? (op1_jump + op2_jump) : `ZeroWord;                    
+                end                
+                `INST_BGEU: begin
+                    jump_en = (op1 >= op2) ? `JumpEnable : `JumpDisable;
+                    jump_addr = (op1 >= op2) ? (op1_jump + op2_jump) : `ZeroWord;
                 end
                 default: ;
             endcase

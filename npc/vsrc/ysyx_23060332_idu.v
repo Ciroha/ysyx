@@ -57,7 +57,7 @@ always @(*) begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
-                `INST_ADDI, `INST_SLTIU, `INST_XORI, `INST_ANDI, `INST_SRLI_SRAI: begin
+                `INST_ADDI, `INST_SLTIU, `INST_XORI, `INST_ANDI, `INST_SLLI, `INST_SRLI_SRAI: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -85,7 +85,7 @@ always @(*) begin
 
         `INST_TYPE_L: begin
             case (func3)
-                `INST_LW, `INST_LB, `INST_LBU: begin
+                `INST_LW, `INST_LH, `INST_LB, `INST_LBU, `INST_LHU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -99,7 +99,7 @@ always @(*) begin
 
         `INST_TYPE_R: begin
             case (func3)
-                `INST_ADD_SUB, `INST_SLL, `INST_SLTU, `INST_XOR, `INST_OR, `INST_AND: begin
+                `INST_ADD_SUB, `INST_SLL, `INST_SLT, `INST_SLTU, `INST_XOR, `INST_SRL_SRA, `INST_OR, `INST_AND: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -113,7 +113,7 @@ always @(*) begin
 
         `INST_TYPE_B: begin
             case (func3)
-                `INST_BEQ, `INST_BNE: begin
+                `INST_BEQ, `INST_BNE, `INST_BLT, `INST_BGE, `INST_BLTU, `INST_BGEU: begin
                     raddr1 = rs1;
                     raddr2 = rs2;
                     op1 = reg_rdata1_i;

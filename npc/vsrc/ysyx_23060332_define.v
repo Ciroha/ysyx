@@ -58,6 +58,10 @@
 `define INST_TYPE_B 7'b1100011
 `define INST_BEQ    3'b000
 `define INST_BNE    3'b001
+`define INST_BLT    3'b100
+`define INST_BGE    3'b101
+`define INST_BLTU   3'b110
+`define INST_BGEU   3'b111
 
 //J-Type
 
