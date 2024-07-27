@@ -143,6 +143,12 @@ always @(*) begin
                 `INST_SLTU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
+                `INST_OR: begin
+                    wdata = op1 | op2;
+                end
+                `INST_XOR:begin
+                    wdata = op1 ^ op2;
+                end
                 `INST_AND: begin
                     wdata = op1 & op2;
                 end
