@@ -5,20 +5,25 @@
 
 static int parse_args(int argc, char *argv[]);
 static size_t load_img();
+void init_difftest(char *ref_so_file, long img_size, int port);
 
 static char *img_file = NULL;
 static char *elf_file = NULL;
+static char *diff_so_file = NULL;
+static int difftest_port = 1234;
 
 static int parse_args(int argc, char *argv[]) {
 	const struct option table[] = {
 		{"help"     , no_argument      , NULL, 'h'},
 		{"ftrace"   , required_argument, NULL, 'f'},
+		{"diff"		, required_argument, NULL, 'd'},
 		{0          , 0                , NULL,  0 },
 	};
 	int o;
-	while ( (o = getopt_long(argc, argv, "-hf:", table, NULL)) != -1) {
+	while ( (o = getopt_long(argc, argv, "-hf:d:", table, NULL)) != -1) {
 		switch (o) {
 			case 'f': elf_file = optarg; break;
+			case 'd': diff_so_file = optarg; break;
 			case 1: img_file = optarg; return 0;
 			default:
 				printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -37,7 +42,7 @@ static int parse_args(int argc, char *argv[]) {
 static size_t load_img(){
 	printf("image file is %s\n", img_file);
 	if (img_file == NULL) {
-		printf("No image is given. Use the default build-in image.\n");
+		Log("No image is given. Use the default build-in image.");
     	return 50; // built-in image size
 	}
 
@@ -47,12 +52,12 @@ static size_t load_img(){
 	fseek(fp, 0, SEEK_END);
 	size_t size = ftell(fp);
 
-	printf("The image is %s, size = %ld\n", img_file, size);
+	Log("The image is %s, size = %ld", img_file, size);
 
 	fseek(fp, 0 , SEEK_SET);
-	printf("Reading.....\n");
-	int ret = fread(guest_to_host(0x80000000), size, 1, fp);
-	printf("Read successfully!!\n");
+	// Log("Reading.....");
+	int ret = fread(guest_to_host(RESET_VECTOR), size, 4, fp);
+	Log("Read successfully!!");
 	assert(ret == 1);
 
 	fclose(fp);
@@ -61,8 +66,9 @@ static size_t load_img(){
 
 void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
-    init_mem(50);   //需要分配足够大的内存
+    init_mem(40960);   //需要分配足够大的内存
     long img_size = load_img();
+	init_difftest(diff_so_file, img_size, difftest_port);
 	init_ftrace(elf_file);
     return;
 }

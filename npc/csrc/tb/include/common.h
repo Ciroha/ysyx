@@ -10,4 +10,18 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <debug.h>
+
+#define word_t uint32_t
+#define vaddr_t uint32_t
+
+#define RESET_VECTOR 0x80000000
+
+typedef struct {
+  word_t gpr[32];
+  vaddr_t pc;
+} CPU_state;
+
+extern CPU_state sim_cpu;
+
 #endif

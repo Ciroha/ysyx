@@ -14,15 +14,15 @@ module ysyx_23060332_reg (
     input wire                  reg_wen,
 
     //to idu
-    output reg [`RegDataBus]    rdata1,
-    output reg [`RegDataBus]    rdata2
+    output reg [`RegDataBus]    reg_rdata1,
+    output reg [`RegDataBus]    reg_rdata2
 
 );
 
 reg [31:0] regs [0:31];
 integer i;
 
-import "DPI-C" function void reg_read(input int i, input int regs_i);
+// import "DPI-C" function void reg_read(input int i, input int regs_i);
 
 always @(posedge clk) begin
     if (rst) begin
@@ -31,40 +31,35 @@ always @(posedge clk) begin
         end
     end
     else begin
-        if (reg_wen) begin
+        if ((waddr != 0) && reg_wen) begin
             regs[waddr] <= wdata;
         end
     end
-    // for (i = 0; i < 32; i++) begin
-    //     reg_read(i, regs[i]);
-    // end
 end
 
-always @(*) begin
-    for (i = 0; i < 32; i++) begin
-        reg_read(i, regs[i]);
-    end
-end
+// always @(*) begin
+//     for (i = 0; i < 32; i++) begin
+//         reg_read(i, regs[i]);
+//     end
+// end
 
 //reg1
 always @(*) begin
-    rdata1 = 32'b0;
     if (raddr1 == 5'd0) begin
-        rdata1 = 32'b0;
+        reg_rdata1 = 32'b0;
     end
     else begin
-        rdata1 = regs[raddr1];
+        reg_rdata1 = regs[raddr1];
     end
 end
 
 //reg2
 always @(*) begin
-    rdata2 = 32'b0;
     if (raddr2 == 5'd0) begin
-        rdata2 = 32'b0;
+        reg_rdata2 = 32'b0;
     end
     else begin
-        rdata2 = regs[raddr2];
+        reg_rdata2 = regs[raddr2];
     end
 end
     

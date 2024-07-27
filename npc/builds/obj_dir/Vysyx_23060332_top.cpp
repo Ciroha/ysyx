@@ -14,7 +14,6 @@ Vysyx_23060332_top::Vysyx_23060332_top(VerilatedContext* _vcontextp__, const cha
     , vlSymsp{new Vysyx_23060332_top__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
-    , inst{vlSymsp->TOP.inst}
     , pc{vlSymsp->TOP.pc}
     , rootp{&(vlSymsp->TOP)}
 {

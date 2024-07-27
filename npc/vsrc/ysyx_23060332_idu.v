@@ -5,14 +5,16 @@ module ysyx_23060332_idu (
     input wire [`InstAddrBus]   inst_addr,
 
     //From reg
-    input wire [`RegDataBus]    rdata1,
-    input wire [`RegDataBus]    rdata2,
+    input wire [`RegDataBus]    reg_rdata1_i,
+    input wire [`RegDataBus]    reg_rdata2_i,
 
     //To EXU
     output reg [`RegDataBus]    op1,
     output reg [`RegDataBus]    op2,
     output reg [`RegDataBus]    op1_jump,
     output reg [`RegDataBus]    op2_jump,
+    output reg [`RegDataBus]    reg_rdata1_o,
+    output reg [`RegDataBus]    reg_rdata2_o,
     output reg                  reg_wen,
     output reg [`RegAddrBus]    waddr,
     output reg [`InstBus]       inst_o,
@@ -30,6 +32,7 @@ wire    [4:0]   rs2     =   inst_i[24:20];
 wire    [11:0]  imm     =   inst_i[31:20];
 
 import "DPI-C" function void npc_trap();
+import "DPI-C" function void invalid_inst();
 
 always @(*) begin
     if (inst_i == `INST_EBREAK) begin
@@ -40,6 +43,8 @@ end
 always @(*) begin
     //初始化
     inst_o = inst_i;
+    reg_rdata1_o = reg_rdata1_i;
+    reg_rdata2_o = reg_rdata2_i;
     reg_wen = `WriteDisable;
     waddr = `ZeroReg;
     raddr1 = `ZeroReg;
@@ -52,29 +57,71 @@ always @(*) begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
-                `INST_ADDI: begin
+                `INST_ADDI, `INST_SLTIU, `INST_XORI, `INST_ANDI, `INST_SLLI, `INST_SRLI_SRAI: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
                     raddr2 = `ZeroReg;
-                    op1 = rdata1;
+                    op1 = reg_rdata1_i;
                     op2 = {{20{imm[11]}}, {imm}};
                 end 
-                default: npc_trap();
+                default: invalid_inst();
             endcase
         end
 
         `INST_TYPE_S: begin
             case (func3)
-                `INST_SW: begin
+                `INST_SW, `INST_SH, `INST_SB: begin
                     reg_wen = `WriteDisable;
                     waddr = `ZeroReg;
                     raddr1 = rs1;
                     raddr2 = rs2;
-                    op1 = rdata1;
+                    op1 = reg_rdata1_i;
                     op2 = {{20{inst_i[31]}}, {inst_i[31:25]}, {inst_i[11:7]}};
                 end
-                default: npc_trap();
+                default: invalid_inst();
+            endcase
+        end
+
+        `INST_TYPE_L: begin
+            case (func3)
+                `INST_LW, `INST_LH, `INST_LB, `INST_LBU, `INST_LHU: begin
+                    reg_wen = `WriteEnable;
+                    waddr = rd;
+                    raddr1 = rs1;
+                    raddr2 = `ZeroReg;
+                    op1 = reg_rdata1_i;
+                    op2 = {{20{inst_i[31]}}, {imm}};
+                end 
+                default: invalid_inst();
+            endcase
+        end
+
+        `INST_TYPE_R: begin
+            case (func3)
+                `INST_ADD_SUB, `INST_SLL, `INST_SLT, `INST_SLTU, `INST_XOR, `INST_SRL_SRA, `INST_OR, `INST_AND: begin
+                    reg_wen = `WriteEnable;
+                    waddr = rd;
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = reg_rdata1_i;
+                    op2 = reg_rdata2_i;
+                end 
+                default: invalid_inst();
+            endcase
+        end
+
+        `INST_TYPE_B: begin
+            case (func3)
+                `INST_BEQ, `INST_BNE, `INST_BLT, `INST_BGE, `INST_BLTU, `INST_BGEU: begin
+                    raddr1 = rs1;
+                    raddr2 = rs2;
+                    op1 = reg_rdata1_i;
+                    op2 = reg_rdata2_i;
+                    op1_jump = inst_addr;
+                    op2_jump = {{19{inst_i[31]}},{inst_i[31]},{inst_i[7]},{inst_i[30:25]},{inst_i[11:8]},1'b0};
+                end
+                default: invalid_inst();
             endcase
         end
 
@@ -108,13 +155,13 @@ always @(*) begin
             raddr2 = `ZeroReg;
             op1 = inst_addr;
             op2 = 32'd4;
-            op1_jump = rdata1;
+            op1_jump = reg_rdata1_i;
             op2_jump = {{20{inst_i[31]}}, inst_i[31:20]};
         end
 
         default: begin
             if (inst_i != `INST_NOP) begin
-                npc_trap();
+                invalid_inst();
             end
         end
     endcase

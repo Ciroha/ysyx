@@ -8,8 +8,20 @@ module ysyx_23060332_pc (
     input wire                  jump_en,
 
     output reg [`InstAddrBus]   pc,
+    output reg [`InstBus]       inst_o,
     output reg [`InstAddrBus]   inst_addr
 );
+
+import "DPI-C" function int pmem_read(input int raddr);
+
+always @(*) begin
+    if (rst) begin
+        inst_o = `ZeroWord;
+    end
+    else begin
+        inst_o = pmem_read(pc);
+    end
+end
 
 always @(posedge clk) begin
     if (rst) begin

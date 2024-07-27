@@ -3,7 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <cpu.h>
-
+#include "memory.h"
 
 static char* rl_gets() {
     static char *line_read = NULL;
@@ -23,7 +23,6 @@ static char* rl_gets() {
 }
 
 void isa_reg_display();
-uint32_t pmem_read(uint32_t vaddr);
 
 static int cmd_help(char *args);
 
@@ -121,6 +120,10 @@ static int cmd_help(char *args) {
 }
 
 void sdb_mainloop() {
+
+    cmd_c(NULL);
+    return;
+
     for (char *str; (str = rl_gets()) != NULL; ) {
         char *str_end = str + strlen(str);
 
