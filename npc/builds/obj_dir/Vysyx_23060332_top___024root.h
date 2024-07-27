@@ -24,7 +24,6 @@ class Vysyx_23060332_top___024root final : public VerilatedModule {
     CData/*0:0*/ ysyx_23060332_top__DOT__mem_wen;
     CData/*7:0*/ ysyx_23060332_top__DOT__mem_wmask;
     CData/*0:0*/ ysyx_23060332_top__DOT__mem_ren;
-    CData/*0:0*/ ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__valid;
     CData/*4:0*/ __Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr1;
     CData/*4:0*/ __Vtrigrprev__TOP__ysyx_23060332_top__DOT__raddr2;
     CData/*0:0*/ __VstlDidInit;

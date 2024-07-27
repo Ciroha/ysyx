@@ -187,7 +187,8 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root__trace_full_sub_0(Vysyx_23060332_
     bufp->fullIData(oldp+13,(vlSelf->ysyx_23060332_top__DOT__mem_waddr),32);
     bufp->fullIData(oldp+14,(vlSelf->ysyx_23060332_top__DOT__mem_raddr),32);
     bufp->fullIData(oldp+15,(vlSelf->ysyx_23060332_top__DOT__mem_rdata),32);
-    bufp->fullBit(oldp+16,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__valid));
+    bufp->fullBit(oldp+16,(((0x80000000U <= vlSelf->ysyx_23060332_top__DOT__mem_raddr) 
+                            & (0x87ffffffU >= vlSelf->ysyx_23060332_top__DOT__mem_raddr))));
     bufp->fullIData(oldp+17,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp1),32);
     bufp->fullIData(oldp+18,(vlSelf->ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__temp2),32);
     bufp->fullIData(oldp+19,(vlSelf->ysyx_23060332_top__DOT__inst),32);
