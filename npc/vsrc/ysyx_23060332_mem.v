@@ -25,7 +25,13 @@ always @(*) begin
     mem_rdata = `ZeroWord;
     if (valid) begin
         if (mem_ren) begin
-            mem_rdata = pmem_read(mem_raddr);
+            case (mem_raddr[1:0])
+                2'b00: mem_rdata = pmem_read(mem_raddr);
+                2'b01: mem_rdata = {{pmem_read(mem_raddr+4)[7:0]},{pmem_read(mem_raddr)[31:8]}};
+                2'b10: mem_rdata = {{pmem_read(mem_raddr+4)[15:0]},{pmem_read(mem_raddr)[31:15]}};
+                2'b11: mem_rdata = {{pmem_read(mem_raddr+4)[23:0]},{pmem_read(mem_raddr)[31:24]}};
+                default: ;
+            endcase
         end
     end
 end
