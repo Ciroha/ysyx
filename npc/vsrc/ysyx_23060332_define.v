@@ -24,12 +24,18 @@
 `define INST_SLL    3'b001
 `define INST_SLT    3'b010
 `define INST_SLTU   3'b011
+`define INST_XOR    3'b100
+`define INST_SRL_SRA    3'b101
+`define INST_OR     3'b110
+`define INST_AND    3'b111
 
 //I-Type Load
 `define INST_TYPE_L 7'b0000011
 `define INST_LB     3'b000
 `define INST_LH     3'b001
 `define INST_LW     3'b010
+`define INST_LBU    3'b100
+`define INST_LHU    3'b101
 
 //I-Type Imm
 `define INST_TYPE_I 7'b0010011
@@ -39,9 +45,13 @@
 `define INST_XORI   3'b100
 `define INST_ORI    3'b110
 `define INST_ANDI   3'b111
+`define INST_SLLI   3'b001
+`define INST_SRLI_SRAI   3'b101
 
 //S-Type
 `define INST_TYPE_S 7'b0100011
+`define INST_SB     3'b000
+`define INST_SH     3'b001
 `define INST_SW     3'b010
 
 //B-Type

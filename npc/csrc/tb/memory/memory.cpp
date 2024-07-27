@@ -37,7 +37,7 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
   	// `wmask`中每比特表示`wdata`中1个字节的掩码,
   	// 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
 	int temp = waddr & ~0x3u;
-	Log("Address is: %#010x, write mem is %#010x", temp, wdata);
+	Log("Address is: %#010x, write mem is %#010x, mask is %d", temp, wdata, wmask);
 	for (int i = 0; i < 4; i++) {
 		if (wmask & (1 << i)) {
 			host_write(guest_to_host(temp), 1, wdata);

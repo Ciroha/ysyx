@@ -59,12 +59,28 @@ always @(*) begin
         `INST_TYPE_I: begin
             case (func3)
                 `INST_ADDI: begin
-                    // reg_wen_o = `WriteEnable;
                     wdata = op1 + op2;
                 end
 
                 `INST_SLTIU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
+
+                `INST_XORI: begin
+                    wdata = op1 ^ op2;
+                end
+
+                `INST_ANDI: begin
+                    wdata = op1 & op2;
+                end
+
+                `INST_SRLI_SRAI: begin
+                    if (inst_i[30] == 1'b1) begin
+                        wdata = (op1 >> inst_i[24:20]) | ({32{op1[31]}} & ~(32'hffffffff >> inst_i[24:20]));
+                    end
+                    else begin
+                        wdata = op1 >> inst_i[24:20];
+                    end
                 end
                 default: ;
             endcase
@@ -78,19 +94,35 @@ always @(*) begin
                     mem_wdata = reg_rdata2_i;
                     mem_wmask = 8'b00001111;
                 end
+                `INST_SH: begin
+                    mem_wen = `WriteEnable;
+                    mem_waddr = op1 + op2;
+                    mem_wdata = reg_rdata2_i;
+                    mem_wmask = 8'b00000011;
+                end
+                `INST_SB: begin
+                    mem_wen = `WriteEnable;
+                    mem_waddr = op1 + op2;
+                    mem_wdata = reg_rdata2_i;
+                    mem_wmask = 8'b00000001;
+                end
                 default: ;
             endcase
         end
 
         `INST_TYPE_L: begin
+            mem_ren = `ReadEnable;
+            mem_raddr = op1 + op2;
             case (func3)
                 `INST_LW: begin
-                    mem_ren = `ReadEnable;
-                    mem_raddr = op1 + op2;
-                    // reg_wen_o = `WriteEnable;
                     wdata = mem_rdata;
-                    // valid = `ReadEnable;
                 end 
+                `INST_LB: begin
+                    wdata = {{24{mem_rdata[7]}}, {mem_rdata[7:0]}};
+                end
+                `INST_LBU: begin
+                    wdata = {{24'h0}, {mem_rdata[7:0]}};
+                end
                 default: ;
             endcase
         end
@@ -105,6 +137,21 @@ always @(*) begin
                         wdata = op1 - op2;
                     end
                 end 
+                `INST_SLL: begin
+                    wdata = op1 << op2[4:0];
+                end
+                `INST_SLTU: begin
+                    wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
+                `INST_OR: begin
+                    wdata = op1 | op2;
+                end
+                `INST_XOR:begin
+                    wdata = op1 ^ op2;
+                end
+                `INST_AND: begin
+                    wdata = op1 & op2;
+                end
                 default: ;
             endcase
         end

@@ -57,7 +57,7 @@ always @(*) begin
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
-                `INST_ADDI, `INST_SLTIU: begin
+                `INST_ADDI, `INST_SLTIU, `INST_XORI, `INST_ANDI, `INST_SRLI_SRAI: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -71,7 +71,7 @@ always @(*) begin
 
         `INST_TYPE_S: begin
             case (func3)
-                `INST_SW: begin
+                `INST_SW, `INST_SH, `INST_SB: begin
                     reg_wen = `WriteDisable;
                     waddr = `ZeroReg;
                     raddr1 = rs1;
@@ -85,7 +85,7 @@ always @(*) begin
 
         `INST_TYPE_L: begin
             case (func3)
-                `INST_LW: begin
+                `INST_LW, `INST_LB, `INST_LBU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -99,7 +99,7 @@ always @(*) begin
 
         `INST_TYPE_R: begin
             case (func3)
-                `INST_ADD_SUB: begin
+                `INST_ADD_SUB, `INST_SLL, `INST_SLTU, `INST_XOR, `INST_OR, `INST_AND: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
