@@ -52,16 +52,16 @@ always @(posedge clk) begin
         case (mem_waddr[1:0])
             2'b00: pmem_write(mem_waddr, mem_wdata, mem_wmask);
             2'b01: begin
-                pmem_write(mem_waddr, mem_wdata << 2, (mem_wmask << 1 & 8'b11111110));
-                pmem_write(mem_waddr + 4, mem_wdata >> 6, (mem_wmask >> 3 & 8'b11110001));
+                pmem_write(mem_waddr, mem_wdata << 8, (mem_wmask << 1 & 8'b11111110));
+                pmem_write(mem_waddr + 4, mem_wdata >> 24, (mem_wmask >> 3 & 8'b11110001));
             end
             2'b10: begin
-                pmem_write(mem_waddr, mem_wdata << 4, (mem_wmask << 2 & 8'b11111100));
-                pmem_write(mem_waddr + 4, mem_wdata >> 4, (mem_wmask >> 2 & 8'b11110011));
+                pmem_write(mem_waddr, mem_wdata << 16, (mem_wmask << 2 & 8'b11111100));
+                pmem_write(mem_waddr + 4, mem_wdata >> 16, (mem_wmask >> 2 & 8'b11110011));
             end
             2'b11: begin
-                pmem_write(mem_waddr, mem_wdata << 6, (mem_wmask << 3 & 8'b11111000));
-                pmem_write(mem_waddr + 4, mem_wdata >> 2, (mem_wmask >> 1 & 8'b11110111));
+                pmem_write(mem_waddr, mem_wdata << 24, (mem_wmask << 3 & 8'b11111000));
+                pmem_write(mem_waddr + 4, mem_wdata >> 8, (mem_wmask >> 1 & 8'b11110111));
             end
             default: ;
         endcase
