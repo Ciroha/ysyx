@@ -130,6 +130,9 @@ always @(*) begin
                 `INST_LBU: begin
                     wdata = {{24'h0}, {mem_rdata[7:0]}};
                 end
+                `INST_LHU: begin
+                    wdata = {{16'h0}, {mem_rdata[15:0]}};
+                end
                 default: ;
             endcase
         end

@@ -85,7 +85,7 @@ always @(*) begin
 
         `INST_TYPE_L: begin
             case (func3)
-                `INST_LW, `INST_LH, `INST_LB, `INST_LBU: begin
+                `INST_LW, `INST_LH, `INST_LB, `INST_LBU, `INST_LHU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
