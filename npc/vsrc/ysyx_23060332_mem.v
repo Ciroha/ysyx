@@ -20,7 +20,7 @@ import "DPI-C" function void pmem_write(input int waddr, input int wdata, input 
 // assign mem_rdata = rdata;
 wire valid;
 assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff);
-wire [31:0] temp1, temp2;
+reg [31:0] temp1, temp2;
 
 always @(*) begin 
     mem_rdata = `ZeroWord;
