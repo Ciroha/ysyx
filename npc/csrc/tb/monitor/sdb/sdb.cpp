@@ -121,7 +121,7 @@ static int cmd_help(char *args) {
 
 void sdb_mainloop() {
 
-    cmd_c();
+    cmd_c(NULL);
     return;
 
     for (char *str; (str = rl_gets()) != NULL; ) {
