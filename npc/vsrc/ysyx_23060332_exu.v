@@ -78,6 +78,18 @@ always @(*) begin
                     mem_wdata = reg_rdata2_i;
                     mem_wmask = 8'b00001111;
                 end
+                `INST_SH: begin
+                    mem_wen = `WriteEnable;
+                    mem_waddr = op1 + op2;
+                    mem_wdata = reg_rdata2_i;
+                    mem_wmask = 8'b00000011;
+                end
+                `INST_SB: begin
+                    mem_wen = `WriteEnable;
+                    mem_waddr = op1 + op2;
+                    mem_wdata = reg_rdata2_i;
+                    mem_wmask = 8'b00000001;
+                end
                 default: ;
             endcase
         end

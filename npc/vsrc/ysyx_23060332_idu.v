@@ -71,7 +71,7 @@ always @(*) begin
 
         `INST_TYPE_S: begin
             case (func3)
-                `INST_SW: begin
+                `INST_SW, `INST_SH, `INST_SB: begin
                     reg_wen = `WriteDisable;
                     waddr = `ZeroReg;
                     raddr1 = rs1;

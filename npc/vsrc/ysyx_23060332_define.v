@@ -42,6 +42,8 @@
 
 //S-Type
 `define INST_TYPE_S 7'b0100011
+`define INST_SB     3'b000
+`define INST_SH     3'b001
 `define INST_SW     3'b010
 
 //B-Type
