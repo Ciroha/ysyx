@@ -1683,7 +1683,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
             if ((1U & vlSelf->ysyx_23060332_top__DOT__mem_waddr)) {
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                << 6U), 
+                                                                                << 0x18U), 
                                                                                 (0xf8U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 3U)));
@@ -1691,14 +1691,14 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 ((IData)(4U) 
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                >> 2U), 
+                                                                                >> 8U), 
                                                                                 (0xf7U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 1U)));
             } else {
                 Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                << 4U), 
+                                                                                << 0x10U), 
                                                                                 (0xfcU 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 2U)));
@@ -1706,7 +1706,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 ((IData)(4U) 
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                >> 4U), 
+                                                                                >> 0x10U), 
                                                                                 (0xf3U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 2U)));
@@ -1714,7 +1714,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
         } else if ((1U & vlSelf->ysyx_23060332_top__DOT__mem_waddr)) {
             Vysyx_23060332_top___024root____Vdpiimwrap_ysyx_23060332_top__DOT__ysyx_23060332_mem_inst__DOT__pmem_write_TOP(vlSelf->ysyx_23060332_top__DOT__mem_waddr, 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                << 2U), 
+                                                                                << 8U), 
                                                                                 (0xfeU 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 << 1U)));
@@ -1722,7 +1722,7 @@ VL_INLINE_OPT void Vysyx_23060332_top___024root___nba_sequent__TOP__0(Vysyx_2306
                                                                                 ((IData)(4U) 
                                                                                 + vlSelf->ysyx_23060332_top__DOT__mem_waddr), 
                                                                                 (vlSelf->ysyx_23060332_top__DOT__mem_wdata 
-                                                                                >> 6U), 
+                                                                                >> 0x18U), 
                                                                                 (0xf1U 
                                                                                 & ((IData)(vlSelf->ysyx_23060332_top__DOT__mem_wmask) 
                                                                                 >> 3U)));
