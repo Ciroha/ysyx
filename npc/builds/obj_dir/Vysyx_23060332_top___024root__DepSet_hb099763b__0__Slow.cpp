@@ -147,10 +147,7 @@ VL_ATTR_COLD void Vysyx_23060332_top___024root___stl_sequent__TOP__0(Vysyx_23060
                                   >> 2U)))) {
                         if ((2U & vlSelf->ysyx_23060332_top__DOT__inst)) {
                             if ((1U & vlSelf->ysyx_23060332_top__DOT__inst)) {
-                                if ((2U == (7U & (vlSelf->ysyx_23060332_top__DOT__inst 
-                                                  >> 0xcU)))) {
-                                    vlSelf->ysyx_23060332_top__DOT__mem_ren = 1U;
-                                }
+                                vlSelf->ysyx_23060332_top__DOT__mem_ren = 1U;
                             }
                         }
                     }

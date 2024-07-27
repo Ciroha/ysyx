@@ -65,6 +65,11 @@ always @(*) begin
                 `INST_SLTIU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
+
+                `INST_ANDI: begin
+                    wdata = op1 & op2;
+                end
+                
                 `INST_SRLI_SRAI: begin
                     if (inst_i[30] == 1'b1) begin
                         wdata = (op1 >> inst_i[24:20]) | ({32{op1[31]}} & ~(32'hffffffff >> inst_i[24:20]));
