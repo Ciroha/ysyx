@@ -85,7 +85,7 @@ always @(*) begin
 
         `INST_TYPE_L: begin
             case (func3)
-                `INST_LW, `INST_LB, `INST_LBU: begin
+                `INST_LW, `INST_LH, `INST_LB, `INST_LBU: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;
@@ -99,7 +99,7 @@ always @(*) begin
 
         `INST_TYPE_R: begin
             case (func3)
-                `INST_ADD_SUB, `INST_SLL, `INST_SLTU, `INST_XOR, `INST_SRL_SRA, `INST_OR, `INST_AND: begin
+                `INST_ADD_SUB, `INST_SLL, `INST_SLT, `INST_SLTU, `INST_XOR, `INST_SRL_SRA, `INST_OR, `INST_AND: begin
                     reg_wen = `WriteEnable;
                     waddr = rd;
                     raddr1 = rs1;

@@ -121,6 +121,9 @@ always @(*) begin
                 `INST_LW: begin
                     wdata = mem_rdata;
                 end 
+                `INST_LH: begin
+                    wdata = {{16{mem_rdata[15]}}, {mem_rdata[15:0]}};
+                end
                 `INST_LB: begin
                     wdata = {{24{mem_rdata[7]}}, {mem_rdata[7:0]}};
                 end
@@ -143,6 +146,9 @@ always @(*) begin
                 end 
                 `INST_SLL: begin
                     wdata = op1 << op2[4:0];
+                end
+                `INST_SLT: begin
+                    wdata = ($signed(op1) < $signed(op2)) ? 32'h1: 32'h0;
                 end
                 `INST_SLTU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
