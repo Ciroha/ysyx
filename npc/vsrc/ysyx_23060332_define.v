@@ -39,6 +39,8 @@
 `define INST_XORI   3'b100
 `define INST_ORI    3'b110
 `define INST_ANDI   3'b111
+`define INST_SLLI   3'b001
+`define INST_SRLI_SRAI   3'b101
 
 //S-Type
 `define INST_TYPE_S 7'b0100011

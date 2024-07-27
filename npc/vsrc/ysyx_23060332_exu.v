@@ -59,12 +59,19 @@ always @(*) begin
         `INST_TYPE_I: begin
             case (func3)
                 `INST_ADDI: begin
-                    // reg_wen_o = `WriteEnable;
                     wdata = op1 + op2;
                 end
 
                 `INST_SLTIU: begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
+                end
+                `INST_SRLI_SRAI: begin
+                    if (inst_i[30] == 1'b1) begin
+                        wdata = (op1 >> inst_i[24:20]) | ({32{op1[31]}} & ~(32'hffffffff >> inst_i[24:20]));
+                    end
+                    else begin
+                        wdata = op1 >> inst_i[24:20];
+                    end
                 end
                 default: ;
             endcase
