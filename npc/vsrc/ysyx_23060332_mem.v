@@ -24,26 +24,26 @@ assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff);
 
 always @(*) begin 
     mem_rdata = `ZeroWord;
-    // temp1 = `ZeroWord;
-    // temp2 = `ZeroWord;
-    // if (valid) begin
-    //     if (mem_ren) begin
-    //         temp1 = pmem_read(mem_raddr);
-    //         temp2 = pmem_read(mem_raddr+4);
-    //         case (mem_raddr[1:0])
-    //             2'b00: mem_rdata = temp1;
-    //             2'b01: mem_rdata = {{temp2[7:0]},{temp1[31:8]}};
-    //             2'b10: mem_rdata = {{temp2[15:0]},{temp1[31:16]}};
-    //             2'b11: mem_rdata = {{temp2[23:0]},{temp1[31:24]}};
-    //             default: ;
-    //         endcase
-    //     end
-    // end
+    temp1 = `ZeroWord;
+    temp2 = `ZeroWord;
     if (valid) begin
         if (mem_ren) begin
-            mem_rdata = pmem_read(mem_raddr);
+            temp1 = pmem_read(mem_raddr);
+            temp2 = pmem_read(mem_raddr+4);
+            case (mem_raddr[1:0])
+                2'b00: mem_rdata = temp1;
+                2'b01: mem_rdata = {{temp2[7:0]},{temp1[31:8]}};
+                2'b10: mem_rdata = {{temp2[15:0]},{temp1[31:16]}};
+                2'b11: mem_rdata = {{temp2[23:0]},{temp1[31:24]}};
+                default: ;
+            endcase
         end
     end
+    // if (valid) begin
+    //     if (mem_ren) begin
+    //         mem_rdata = pmem_read(mem_raddr);
+    //     end
+    // end
 end
 
 always @(posedge clk) begin
