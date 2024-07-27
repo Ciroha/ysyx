@@ -66,6 +66,10 @@ always @(*) begin
                     wdata = (op1 < op2) ? 32'h1: 32'h0;
                 end
 
+                `INST_XORI: begin
+                    wdata = op1 ^ op2;
+                end
+
                 `INST_ANDI: begin
                     wdata = op1 & op2;
                 end
