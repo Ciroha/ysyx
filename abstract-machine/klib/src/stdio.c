@@ -25,8 +25,6 @@ int printf(const char *fmt, ...) {
     va_list ap;
     int n;
     char buf[65];
-    // char buf_out1[65];
-    // char *buf_out = NULL;
     int cnt = 0;
     char *s;
 
@@ -43,15 +41,12 @@ int printf(const char *fmt, ...) {
                     n = va_arg(ap, int);
                     if (n < 0)
                     {
-                        // *buf = '-';
                         putch('-');
-                        // buf_out++;
                         cnt++;
                         n = -n;
                     }
                     itoa(n, buf);
                     putch(*buf);
-                    // memcpy(buf_out, buf, strlen(buf));
                     cnt += strlen(buf);
                     break;
                 }
@@ -59,7 +54,6 @@ int printf(const char *fmt, ...) {
                 {
                     s = va_arg(ap, char *);
                     putch(*s);
-                    // memcpy(buf_out, s, strlen(s));
                     cnt += strlen(s);
                     break;
                 }
@@ -70,18 +64,12 @@ int printf(const char *fmt, ...) {
         else
         {
             putch(*fmt);
-            // buf_out++;
             cnt++;
         }
         fmt++;
     }
-    // *buf_out = '\0';
     va_end(ap);
-    // j = strlen(buf_out);
-    // while (*buf_out != '\0') {
-    //     putch(*buf_out);
-    //     buf_out++;
-    // }
+
     return cnt;
     // panic("Not implemented");
 }
