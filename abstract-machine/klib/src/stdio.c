@@ -37,8 +37,11 @@ int printf(const char *fmt, ...) {
 		if (*fmt == '%' || in_format == true)
 		{
 			in_format = true;
-			if (*fmt == '%')
+			if (*fmt == '%') {
+				memset(format, '\0', sizeof(format));
+				format_cnt = 0;
 				fmt++;
+			}
 			switch (*fmt)
 			{
 				case 'd':
