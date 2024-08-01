@@ -51,9 +51,12 @@ int printf(const char *fmt, ...) {
 					}
 					itoa(n, buf);
 					if (format != NULL && strlen(buf) < format[1]) {
-						for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
-							putch(format[0]);
-						}
+						// for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
+
+						// 	putch(format[0]);
+						// }
+						putch(format[0]);
+						putch(format[1]);
 					}
 					for (int i = 0; i < strlen(buf); i++)
 					{
