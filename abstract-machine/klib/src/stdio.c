@@ -42,8 +42,8 @@ int printf(const char *fmt, ...) {
             n = va_arg(ap, int);
             if (n < 0)
             {
-                *buf_out = '-';
-                putch(*buf_out);
+                *buf = '-';
+                putch(*buf);
                 buf_out++;
                 n = -n;
             }
