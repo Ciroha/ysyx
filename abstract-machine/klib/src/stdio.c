@@ -34,41 +34,41 @@ int printf(const char *fmt, ...) {
     {
         if (*fmt == '%')
         {
-        fmt++;
-        switch (*fmt)
-        {
-            case 'd':
+            fmt++;
+            switch (*fmt)
             {
-            n = va_arg(ap, int);
-            if (n < 0)
-            {
-                // *buf = '-';
-                putch('-');
-                buf_out++;
-                n = -n;
+                case 'd':
+                {
+                n = va_arg(ap, int);
+                if (n < 0)
+                {
+                    // *buf = '-';
+                    putch('-');
+                    buf_out++;
+                    n = -n;
+                }
+                itoa(n, buf);
+                putch(*buf);
+                memcpy(buf_out, buf, strlen(buf));
+                buf_out += strlen(buf);
+                break;
+                }
+                case 's':
+                {
+                s = va_arg(ap, char *);
+                putch(*s);
+                memcpy(buf_out, s, strlen(s));
+                buf_out += strlen(s);
+                break;
+                }
+                default:
+                break;
             }
-            itoa(n, buf);
-            putch(*buf);
-            memcpy(buf_out, buf, strlen(buf));
-            buf_out += strlen(buf);
-            break;
-            }
-            case 's':
-            {
-            s = va_arg(ap, char *);
-            putch(*s);
-            memcpy(buf_out, s, strlen(s));
-            buf_out += strlen(s);
-            break;
-            }
-            default:
-            break;
-        }
         }
         else
         {
-        *buf_out = *fmt;
-        buf_out++;
+            putch(*fmt);
+            // buf_out++;
         }
         fmt++;
     }
