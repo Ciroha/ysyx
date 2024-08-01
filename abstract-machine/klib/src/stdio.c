@@ -79,6 +79,10 @@ int printf(const char *fmt, ...) {
 				}
 				default: {
 					format[format_cnt] = *fmt;
+					putch(format[0]);
+					putch('\n');
+					putch(format[1]);
+					putch('\n');
 					format_cnt++;
 					break;
 				}
