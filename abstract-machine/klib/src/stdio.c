@@ -39,27 +39,27 @@ int printf(const char *fmt, ...) {
             {
                 case 'd':
                 {
-                n = va_arg(ap, int);
-                if (n < 0)
-                {
-                    // *buf = '-';
-                    putch('-');
-                    buf_out++;
-                    n = -n;
-                }
-                itoa(n, buf);
-                putch(*buf);
-                memcpy(buf_out, buf, strlen(buf));
-                buf_out += strlen(buf);
-                break;
+                    n = va_arg(ap, int);
+                    if (n < 0)
+                    {
+                        // *buf = '-';
+                        putch('-');
+                        buf_out++;
+                        n = -n;
+                    }
+                    itoa(n, buf);
+                    putch(*buf);
+                    // memcpy(buf_out, buf, strlen(buf));
+                    // buf_out += strlen(buf);
+                    break;
                 }
                 case 's':
                 {
-                s = va_arg(ap, char *);
-                putch(*s);
-                memcpy(buf_out, s, strlen(s));
-                buf_out += strlen(s);
-                break;
+                    s = va_arg(ap, char *);
+                    putch(*s);
+                    // memcpy(buf_out, s, strlen(s));
+                    // buf_out += strlen(s);
+                    break;
                 }
                 default:
                 break;
