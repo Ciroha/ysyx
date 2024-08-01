@@ -81,59 +81,57 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
+    // panic("Not implemented");
+    int n,j;
+    char buf[65];
+    char *s;
+
+    while(*fmt != '\0') {
+        if (*fmt == '%') {
+            fmt++;
+            switch (*fmt) {
+                case 'd': {
+                    n = va_arg(ap, int);
+                    if (n < 0)
+                    {
+                        *out = '-';
+                        out++;
+                        n = -n;
+                    }
+                    itoa(n, buf);
+                    memcpy(out, buf, strlen(buf));
+                    out += strlen(buf);
+                    break;
+                }
+                case 's': {
+                    s = va_arg(ap, char *);
+                    memcpy(out, s, strlen(s));
+                    out += strlen(s);
+                    break;
+                }
+                default:
+                break;
+            }
+        }
+        else {
+            *out = *fmt;
+            out++;
+        }
+        fmt++;
+    }
+    *out = '\0';
+    // va_end(ap);
+    j = strlen(out);
+    return j;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  va_list ap;
-  int n,j;
-  char buf[65];
-  char *s;
-
-  va_start(ap, fmt);
-  while(*fmt != '\0')
-  {
-    if (*fmt == '%')
-    {
-      fmt++;
-      switch (*fmt)
-      {
-        case 'd':
-        {
-          n = va_arg(ap, int);
-          if (n < 0)
-          {
-            *out = '-';
-            out++;
-            n = -n;
-          }
-          itoa(n, buf);
-          memcpy(out, buf, strlen(buf));
-          out += strlen(buf);
-          break;
-        }
-        case 's':
-        {
-          s = va_arg(ap, char *);
-          memcpy(out, s, strlen(s));
-          out += strlen(s);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-    else
-    {
-      *out = *fmt;
-      out++;
-    }
-    fmt++;
-  }
-  *out = '\0';
-  va_end(ap);
-  j = strlen(out);
-  return j;
+    va_list ap;
+    va_start(ap, fmt);
+    vsprintf(out, fmt, ap);
+    va_end(ap);
+    int j = strlen(out);
+    return j;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
