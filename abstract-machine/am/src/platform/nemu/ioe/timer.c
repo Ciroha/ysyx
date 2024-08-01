@@ -8,7 +8,7 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uptime->us = cnt;
-  cnt += 1000;
+  cnt += 100;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
