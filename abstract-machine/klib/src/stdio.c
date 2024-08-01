@@ -85,56 +85,55 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  // va_list ap;
-  // int n,j;
-  // char buf[65];
-  // char *s;
+  va_list ap;
+  int n,j;
+  char buf[65];
+  char *s;
 
-  // va_start(ap, fmt);
-  // while(*fmt != '\0')
-  // {
-  //   if (*fmt == '%')
-  //   {
-  //     fmt++;
-  //     switch (*fmt)
-  //     {
-  //       case 'd':
-  //       {
-  //         n = va_arg(ap, int);
-  //         if (n < 0)
-  //         {
-  //           *out = '-';
-  //           out++;
-  //           n = -n;
-  //         }
-  //         itoa(n, buf);
-  //         memcpy(out, buf, strlen(buf));
-  //         out += strlen(buf);
-  //         break;
-  //       }
-  //       case 's':
-  //       {
-  //         s = va_arg(ap, char *);
-  //         memcpy(out, s, strlen(s));
-  //         out += strlen(s);
-  //         break;
-  //       }
-  //       default:
-  //         break;
-  //     }
-  //   }
-  //   else
-  //   {
-  //     *out = *fmt;
-  //     out++;
-  //   }
-  //   fmt++;
-  // }
-  // *out = '\0';
-  // va_end(ap);
-  // j = strlen(out);
-  // return j;
-  panic("Not implemented");
+  va_start(ap, fmt);
+  while(*fmt != '\0')
+  {
+    if (*fmt == '%')
+    {
+      fmt++;
+      switch (*fmt)
+      {
+        case 'd':
+        {
+          n = va_arg(ap, int);
+          if (n < 0)
+          {
+            *out = '-';
+            out++;
+            n = -n;
+          }
+          itoa(n, buf);
+          memcpy(out, buf, strlen(buf));
+          out += strlen(buf);
+          break;
+        }
+        case 's':
+        {
+          s = va_arg(ap, char *);
+          memcpy(out, s, strlen(s));
+          out += strlen(s);
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    else
+    {
+      *out = *fmt;
+      out++;
+    }
+    fmt++;
+  }
+  *out = '\0';
+  va_end(ap);
+  j = strlen(out);
+  return j;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
