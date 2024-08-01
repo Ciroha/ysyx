@@ -74,10 +74,10 @@ int printf(const char *fmt, ...) {
     *buf_out = '\0';
     va_end(ap);
     j = strlen(buf_out);
-    while (*buf_out != '\0') {
-        putch(*buf_out);
-        buf_out++;
-    }
+    // while (*buf_out != '\0') {
+    //     putch(*buf_out);
+    //     buf_out++;
+    // }
     return j;
     // panic("Not implemented");
 }
