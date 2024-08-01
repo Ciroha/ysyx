@@ -51,7 +51,7 @@ int printf(const char *fmt, ...) {
 						n = -n;
 					}
 					itoa(n, buf);
-					if (format != NULL && strlen(buf) < format[1]) {	//TODO 需要后续修改
+					if (format != NULL && (strlen(buf) < format[1])) {	//TODO 需要后续修改
 						for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
 							putch(format[0]);
 						}
