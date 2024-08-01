@@ -78,7 +78,7 @@ int printf(const char *fmt, ...) {
 					break;
 				}
 				default: {
-					*(format+format_cnt) = *fmt;
+					format[format_cnt] = *fmt;
 					format_cnt++;
 					break;
 				}
