@@ -7,77 +7,77 @@
 
 int itoa(unsigned int n, char *buf)
 {
-  int i;
-  if (n < 10)
-  {
-    buf[0] = n + '0';
-    buf[1] = '\0';
+    int i;
+    if (n < 10)
+    {
+        buf[0] = n + '0';
+        buf[1] = '\0';
+        return 0;
+    }
+    itoa(n/10, buf);
+    for (i = 0; buf[i] != '\0'; i++); //找到末尾的位置
+    buf[i] = (n % 10) + '0';
+    buf[i+1] = '\0';
     return 0;
-  }
-  itoa(n/10, buf);
-  for (i = 0; buf[i] != '\0'; i++); //找到末尾的位置
-  buf[i] = (n % 10) + '0';
-  buf[i+1] = '\0';
-  return 0;
 }
 
 int printf(const char *fmt, ...) {
-  va_list ap;
-  int n,j;
-  char buf[65];
-  // char buf_out1[65];
-  char *buf_out = NULL;
-  char *s;
+    va_list ap;
+    int n,j;
+    char buf[65];
+    // char buf_out1[65];
+    char *buf_out = NULL;
+    char *s;
 
-  va_start(ap, fmt);
-  while(*fmt != '\0')
-  {
-    if (*fmt == '%')
+    va_start(ap, fmt);
+    while(*fmt != '\0')
     {
-      fmt++;
-      switch (*fmt)
-      {
-        case 'd':
+        if (*fmt == '%')
         {
-          n = va_arg(ap, int);
-          if (n < 0)
-          {
-            *buf_out = '-';
-            buf_out++;
-            n = -n;
-          }
-          itoa(n, buf);
-          memcpy(buf_out, buf, strlen(buf));
-          buf_out += strlen(buf);
-          break;
-        }
-        case 's':
+        fmt++;
+        switch (*fmt)
         {
-          s = va_arg(ap, char *);
-          memcpy(buf_out, s, strlen(s));
-          buf_out += strlen(s);
-          break;
+            case 'd':
+            {
+            n = va_arg(ap, int);
+            if (n < 0)
+            {
+                *buf_out = '-';
+                buf_out++;
+                n = -n;
+            }
+            itoa(n, buf);
+            memcpy(buf_out, buf, strlen(buf));
+            buf_out += strlen(buf);
+            break;
+            }
+            case 's':
+            {
+            s = va_arg(ap, char *);
+            memcpy(buf_out, s, strlen(s));
+            buf_out += strlen(s);
+            break;
+            }
+            default:
+            break;
         }
-        default:
-          break;
-      }
+        }
+        else
+        {
+        *buf_out = *fmt;
+        buf_out++;
+        }
+        fmt++;
     }
-    else
-    {
-      *buf_out = *fmt;
-      buf_out++;
+    *buf_out = '\0';
+    va_end(ap);
+    j = strlen(buf_out);
+    while (*buf_out != '\0') {
+        putch(*buf_out);
+        buf_out++;
     }
-    fmt++;
-  }
-  *buf_out = '\0';
-  va_end(ap);
-  j = strlen(buf_out);
-  while (*buf_out != '\0') {
-    putch(*buf_out);
-    buf_out++;
-  }
-  return j;
-  // panic("Not implemented");
+    return j;
+    // panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
