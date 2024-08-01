@@ -25,8 +25,9 @@ int printf(const char *fmt, ...) {
 	va_list ap;
 	int n;
 	char buf[65];
-	char *format = NULL;
+	char format[65];
 	int cnt = 0;
+	int format_cnt = 0;
 	char *s;
 
 	va_start(ap, fmt);
@@ -65,8 +66,8 @@ int printf(const char *fmt, ...) {
 					break;
 				}
 				default: {
-					*format = *fmt;
-					format++;
+					*(format+format_cnt) = *fmt;
+					format_cnt++;
 					break;
 				}
 			}
