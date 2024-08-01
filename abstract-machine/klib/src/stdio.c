@@ -56,7 +56,10 @@ int printf(const char *fmt, ...) {
                 case 's':
                 {
                     s = va_arg(ap, char *);
-                    putch(*s);
+                    for (int j = 0; j < strlen(s); j++)
+                    {
+                        putch(*(s+j));
+                    }
                     cnt += strlen(s);
                     break;
                 }
