@@ -1,14 +1,13 @@
 #include <am.h>
 #include <nemu.h>
 
-int cnt = 0;
+// int cnt = 0;
 
 void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us += cnt;
-  cnt ++;
+  uptime->us = 100000;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
