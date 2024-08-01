@@ -25,8 +25,8 @@ int printf(const char *fmt, ...) {
   va_list ap;
   int n,j;
   char buf[65];
-  char buf_out1[65];
-  char *buf_out = buf_out1;
+  // char buf_out1[65];
+  char *buf_out = buf;
   char *s;
 
   va_start(ap, fmt);
