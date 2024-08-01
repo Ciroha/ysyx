@@ -7,7 +7,7 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us += 100;
+  uptime->us += 75;
   // cnt += 0;
 }
 
