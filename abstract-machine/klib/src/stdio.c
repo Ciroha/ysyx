@@ -25,7 +25,7 @@ int printf(const char *fmt, ...) {
 	va_list ap;
 	int n;
 	char buf[65];
-	char format[65];
+	char format[65];	//后续可能需要调大
 	int cnt = 0;
 	int format_cnt = 0;
 	bool in_format = false;
@@ -50,6 +50,11 @@ int printf(const char *fmt, ...) {
 						n = -n;
 					}
 					itoa(n, buf);
+					if (format != NULL && strlen(buf) < format[1]) {
+						for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
+							putch(format[0]);
+						}
+					}
 					for (int i = 0; i < strlen(buf); i++)
 					{
 						putch(*(buf+i));
