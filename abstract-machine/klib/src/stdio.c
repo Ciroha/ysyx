@@ -77,7 +77,6 @@ int printf(const char *fmt, ...) {
   //   buf_out++;
   // }
   // return j;
-  putch('1');
   panic("Not implemented");
 }
 
