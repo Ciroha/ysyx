@@ -56,6 +56,7 @@ int printf(const char *fmt, ...) {
             case 's':
             {
             s = va_arg(ap, char *);
+            putch(*s);
             memcpy(buf_out, s, strlen(s));
             buf_out += strlen(s);
             break;
