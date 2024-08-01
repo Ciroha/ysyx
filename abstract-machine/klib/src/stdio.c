@@ -46,7 +46,10 @@ int printf(const char *fmt, ...) {
                         n = -n;
                     }
                     itoa(n, buf);
-                    putch(*buf);
+                    for (int i = 0; i < strlen(buf); i++)
+                    {
+                        putch(*(buf+i));
+                    }
                     cnt += strlen(buf);
                     break;
                 }
