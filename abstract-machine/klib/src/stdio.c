@@ -36,8 +36,9 @@ int printf(const char *fmt, ...) {
 	{
 		if (*fmt == '%' || in_format == true)
 		{
-			fmt++;
 			in_format = true;
+			if (*fmt == '%')
+				fmt++;
 			switch (*fmt)
 			{
 				case 'd':
