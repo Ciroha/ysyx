@@ -43,10 +43,12 @@ int printf(const char *fmt, ...) {
             if (n < 0)
             {
                 *buf_out = '-';
+                putch(*buf_out);
                 buf_out++;
                 n = -n;
             }
             itoa(n, buf);
+            putch(*buf);
             memcpy(buf_out, buf, strlen(buf));
             buf_out += strlen(buf);
             break;
