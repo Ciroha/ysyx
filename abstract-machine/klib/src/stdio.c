@@ -23,10 +23,11 @@ int itoa(unsigned int n, char *buf)
 
 int printf(const char *fmt, ...) {
     va_list ap;
-    int n,j;
+    int n;
     char buf[65];
     // char buf_out1[65];
-    char *buf_out = NULL;
+    // char *buf_out = NULL;
+    int cnt = 0;
     char *s;
 
     va_start(ap, fmt);
@@ -44,13 +45,14 @@ int printf(const char *fmt, ...) {
                     {
                         // *buf = '-';
                         putch('-');
-                        buf_out++;
+                        // buf_out++;
+                        cnt++;
                         n = -n;
                     }
                     itoa(n, buf);
                     putch(*buf);
                     // memcpy(buf_out, buf, strlen(buf));
-                    // buf_out += strlen(buf);
+                    cnt += strlen(buf);
                     break;
                 }
                 case 's':
@@ -58,7 +60,7 @@ int printf(const char *fmt, ...) {
                     s = va_arg(ap, char *);
                     putch(*s);
                     // memcpy(buf_out, s, strlen(s));
-                    // buf_out += strlen(s);
+                    cnt += strlen(s);
                     break;
                 }
                 default:
@@ -69,17 +71,18 @@ int printf(const char *fmt, ...) {
         {
             putch(*fmt);
             // buf_out++;
+            cnt++;
         }
         fmt++;
     }
-    *buf_out = '\0';
+    // *buf_out = '\0';
     va_end(ap);
-    j = strlen(buf_out);
+    // j = strlen(buf_out);
     // while (*buf_out != '\0') {
     //     putch(*buf_out);
     //     buf_out++;
     // }
-    return j;
+    return cnt;
     // panic("Not implemented");
 }
 
