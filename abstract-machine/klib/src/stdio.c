@@ -28,14 +28,16 @@ int printf(const char *fmt, ...) {
 	char format[65];
 	int cnt = 0;
 	int format_cnt = 0;
+	bool in_format = false;
 	char *s;
 
 	va_start(ap, fmt);
 	while(*fmt != '\0')
 	{
-		if (*fmt == '%')
+		if (*fmt == '%' || in_format == true)
 		{
 			fmt++;
+			in_format = true;
 			switch (*fmt)
 			{
 				case 'd':
@@ -53,6 +55,7 @@ int printf(const char *fmt, ...) {
 						putch(*(buf+i));
 					}
 					cnt += strlen(buf);
+					in_format = false;
 					break;
 				}
 				case 's':
@@ -63,6 +66,7 @@ int printf(const char *fmt, ...) {
 						putch(*(s+j));
 					}
 					cnt += strlen(s);
+					in_format = false;
 					break;
 				}
 				default: {
