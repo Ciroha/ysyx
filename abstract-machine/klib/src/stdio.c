@@ -22,7 +22,60 @@ int itoa(unsigned int n, char *buf)
 }
 
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  va_list ap;
+  int n,j;
+  char buf[65];
+  char *buf_out = NULL;
+  char *s;
+
+  va_start(ap, fmt);
+  while(*fmt != '\0')
+  {
+    if (*fmt == '%')
+    {
+      fmt++;
+      switch (*fmt)
+      {
+        case 'd':
+        {
+          n = va_arg(ap, int);
+          if (n < 0)
+          {
+            *buf_out = '-';
+            buf_out++;
+            n = -n;
+          }
+          itoa(n, buf);
+          memcpy(buf_out, buf, strlen(buf));
+          buf_out += strlen(buf);
+          break;
+        }
+        case 's':
+        {
+          s = va_arg(ap, char *);
+          memcpy(buf_out, s, strlen(s));
+          buf_out += strlen(s);
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    else
+    {
+      *buf_out = *fmt;
+      buf_out++;
+    }
+    fmt++;
+  }
+  *buf_out = '\0';
+  va_end(ap);
+  j = strlen(buf_out);
+  while (*buf_out != '\0') {
+    putch(*buf_out);
+    buf_out++;
+  }
+  return j;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
