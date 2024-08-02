@@ -5,6 +5,29 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+int inttohex(unsigned int n, char *buf) {
+	int i;
+	if (n < 16) {
+		if (n <= 9) {
+			buf[0] = n + '0';
+		} else {
+			buf[0] = n - 10 + 'a';
+		}
+		buf[1] = '\0';
+		return 0;
+	}
+	inttohex(n/16, buf);
+	for (i = 0; buf[i] != '\0'; i++); //找到末尾的位置
+	if ((n % 16) <= 9) {
+		buf[i] = (n % 16) + '0';
+	} else {
+		buf[i] = (n % 16) - 10 + 'a';
+	}
+	// buf[i] = (n % 16) + '0';
+	buf[i+1] = '\0';
+	return 0;
+}
+
 int itoa(unsigned int n, char *buf)
 {
 	int i;
@@ -30,6 +53,8 @@ int printf(const char *fmt, ...) {
 	int format_cnt = 0;
 	bool in_format = false;
 	char *s;
+	char c;
+	int x;
 
 	va_start(ap, fmt);
 	while(*fmt != '\0')
@@ -69,6 +94,14 @@ int printf(const char *fmt, ...) {
 					in_format = false;
 					break;
 				}
+				case 'c':
+				{
+					c = va_arg(ap, int);
+					putch(c);
+					cnt ++;
+					in_format = false;
+					break;
+				}
 				case 's':
 				{
 					s = va_arg(ap, char *);
@@ -80,14 +113,34 @@ int printf(const char *fmt, ...) {
 					in_format = false;
 					break;
 				}
+				case 'x':
+				{
+					x = va_arg(ap, int);
+					char x_buf[65];
+					inttohex(x, x_buf);
+					for (int i = 0; i < strlen(x_buf); i++) {
+						putch(*(x_buf+i));
+					}
+					cnt += strlen(x_buf);
+					in_format = false;
+					break;
+				}
 				default: {
-					format[format_cnt] = *fmt;
+					// assert(!((*fmt <= '9') && (*fmt >= '0')));
+					if((*fmt <= '9') && (*fmt >= '0')) {
+						format[format_cnt] = *fmt;
 					// putch(format[0]);
 					// putch('\n');
 					// putch(format[1]);
 					// putch('\n');
-					format_cnt++;
-					break;
+						format_cnt++;
+						break;
+					}else{
+						putch('\n');
+						putch(*fmt);
+						putch('\n');
+						assert(0);
+					}
 				}
 			}
 		}
