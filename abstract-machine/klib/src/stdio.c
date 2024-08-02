@@ -30,6 +30,7 @@ int printf(const char *fmt, ...) {
 	int format_cnt = 0;
 	bool in_format = false;
 	char *s;
+	char c;
 
 	va_start(ap, fmt);
 	while(*fmt != '\0')
@@ -66,6 +67,14 @@ int printf(const char *fmt, ...) {
 						putch(*(buf+i));
 					}
 					cnt += strlen(buf);
+					in_format = false;
+					break;
+				}
+				case 'c':
+				{
+					c = va_arg(ap, int);
+					putch(c);
+					cnt ++;
 					in_format = false;
 					break;
 				}
