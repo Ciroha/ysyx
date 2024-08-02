@@ -40,7 +40,7 @@ void *malloc(size_t size) {
 //   return NULL;
   if (temp == NULL) temp = heap.start;
   char *start = temp;
-  memset(start, '\0', size);
+  memset(start, '0', size);
   temp += size;
   return start;
 }
