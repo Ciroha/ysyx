@@ -81,13 +81,18 @@ int printf(const char *fmt, ...) {
 					break;
 				}
 				default: {
-					format[format_cnt] = *fmt;
+					if((*fmt <= '9') && (*fmt >= '0')) {
+						format[format_cnt] = *fmt;
 					// putch(format[0]);
 					// putch('\n');
 					// putch(format[1]);
 					// putch('\n');
-					format_cnt++;
-					break;
+						format_cnt++;
+						break;
+					}else{
+						assert(0);
+					}
+
 				}
 			}
 		}
