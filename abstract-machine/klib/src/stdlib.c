@@ -38,9 +38,10 @@ void *malloc(size_t size) {
 //   panic("Not implemented");
 // #endif
 //   return NULL;
-  if (temp == NULL) temp = heap.start;
+  if (temp == NULL) temp = (void *)ROUNDUP(heap.start,8);
+  size  = (size_t)ROUNDUP(size, 8);
   char *start = temp;
-  memset(start, '0', size);
+  memset(start, '\0', size);
   temp += size;
   return start;
 }
