@@ -39,8 +39,10 @@ void *malloc(size_t size) {
 // #endif
 //   return NULL;
   if (temp == NULL) temp = heap.start;
-  memset(temp, '\0', size);
-  return temp;
+  char *start = temp;
+  memset(start, '\0', size);
+  temp += size;
+  return start;
 }
 
 void free(void *ptr) {
