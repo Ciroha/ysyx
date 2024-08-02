@@ -19,9 +19,9 @@ int inttohex(unsigned int n, char *buf) {
 	inttohex(n/16, buf);
 	for (i = 0; buf[i] != '\0'; i++); //找到末尾的位置
 	if ((n % 16) <= 9) {
-		buf[0] = (n % 16) + '0';
+		buf[i] = (n % 16) + '0';
 	} else {
-		buf[0] = (n % 16) - 10 + 'a';
+		buf[i] = (n % 16) - 10 + 'a';
 	}
 	// buf[i] = (n % 16) + '0';
 	buf[i+1] = '\0';
