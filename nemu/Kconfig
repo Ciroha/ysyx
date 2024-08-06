@@ -172,6 +172,16 @@ config IRINGBUF
   bool "Enable iringbuf"
   default y
 
+config DTRACE_READ
+  depends on TRACE
+  bool "Enable devide tracer read"
+  default n
+
+config DTRACE_WRITE
+  depends on TRACE
+  bool "Enable devide tracer write"
+  default n
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
