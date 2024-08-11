@@ -9,14 +9,11 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   if (temp == AM_KEY_NONE) {
     kbd->keydown = false;
     kbd->keycode = AM_KEY_NONE;
-    printf("%x", temp);
   } else if (temp & KEYDOWN_MASK) {
     kbd->keydown = false;
     kbd->keycode = temp;
-    printf("%x\n", temp);
   } else {
     kbd->keydown = true;
     kbd->keycode = temp & ~KEYDOWN_MASK;
-    printf("%x\n", temp);
   }
 }
