@@ -15,12 +15,15 @@ void __am_gpu_init() {
   // uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   // for (i = 0; i < w * h; i ++) fb[i] = i;
   // outl(SYNC_ADDR, 1);
-}
-
-void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   screen = inl(VGACTL_ADDR);
   screen_h = screen & 0xffff;
   screen_w = screen >> 16;
+}
+
+void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
+  // screen = inl(VGACTL_ADDR);
+  // screen_h = screen & 0xffff;
+  // screen_w = screen >> 16;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = screen_w, .height = screen_h,
