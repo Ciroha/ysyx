@@ -3,6 +3,8 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 #define N 32
+#define WIDTH 400
+#define HIGH  300
 
 uint32_t screen, screen_h, screen_w;
 
@@ -27,16 +29,16 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->w;
-  uint32_t *pixels = ctl->pixels;
-  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (int i = y; i < y + h; i++) {
-    for (int j = x; j < x + w; j++) {
-      fb[screen_w*i + j] = pixels[w * (i-y) + (j-x)];
-    }
-  }
+  int i,j;
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
+  }
+  uint32_t *p = (uint32_t *)ctl->pixels; 
+  uint32_t *fb = (uint32_t *)(uintptr_t)(FB_ADDR + (ctl->y*WIDTH + ctl->x) * sizeof(uint32_t));
+  for(i = 0;i < ctl->h;i++){
+    for(j = 0;j < ctl->w;j++)
+      fb[j] = *p++;
+    fb += WIDTH;
   }
 }
 
