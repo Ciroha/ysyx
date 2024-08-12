@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 // #define __NATIVE_USE_KLIB__
+//TODO 目前klib实现有误，导致native使用klib会出现错误，可能是在malloc处
 
 // string.h
 void  *memset    (void *s, int c, size_t n);
