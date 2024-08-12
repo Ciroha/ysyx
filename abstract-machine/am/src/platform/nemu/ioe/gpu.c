@@ -6,7 +6,7 @@
 #define WIDTH 400
 #define HIGH  300
 
-uint32_t screen, screen_h, screen_w;
+// uint32_t screen, screen_h, screen_w;
 
 void __am_gpu_init() {
   // int i;
@@ -15,15 +15,16 @@ void __am_gpu_init() {
   // uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   // for (i = 0; i < w * h; i ++) fb[i] = i;
   // outl(SYNC_ADDR, 1);
-  screen = inl(VGACTL_ADDR);
-  screen_h = screen & 0xffff;
-  screen_w = screen >> 16;
-}
-
-void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   // screen = inl(VGACTL_ADDR);
   // screen_h = screen & 0xffff;
   // screen_w = screen >> 16;
+}
+
+void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
+  uint32_t screen, screen_h, screen_w;
+  screen = inl(VGACTL_ADDR);
+  screen_h = screen & 0xffff;
+  screen_w = screen >> 16;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = screen_w, .height = screen_h,
@@ -32,6 +33,9 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
+  uint32_t screen, screen_w;
+  screen = inl(VGACTL_ADDR);
+  screen_w = screen >> 16;
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
