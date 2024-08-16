@@ -160,7 +160,7 @@ config MTRACE_READ
 config MTRACE_WRITE
   depends on TRACE
   bool "Enable write memory tracer"
-  default y
+  default n
 
 config FTRACE
   depends on TRACE
