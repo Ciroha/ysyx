@@ -41,7 +41,7 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
-void wp_difftest();
+// void wp_difftest();
 #ifdef CONFIG_IRINGBUF
 void display_ringbuf() {
   if (!full && !ringcount) return;
@@ -71,7 +71,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftes
   
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   
-  IFDEF(CONFIG_WATCHPOINT, wp_difftest();)  //这里可以在menuconfig中修改
+  // IFDEF(CONFIG_WATCHPOINT, wp_difftest();)  //这里可以在menuconfig中修改
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
