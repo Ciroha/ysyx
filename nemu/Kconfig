@@ -247,8 +247,9 @@ config RT_CHECK
 endmenu
 
 config WATCHPOINT
+  depends on TARGET_NATIVE_ELF
   bool "Enable watchpoint"
-  default y
+  default n
 
 config BATCHMODE
   bool "Enable batchmode"
