@@ -30,6 +30,7 @@ void init_ftrace(char *elf_file) {
         elf_header.e_ident[3] != 'F')
         assert(0);
     
+    Log("Test3");
     //Section header初始化
     Elf32_Shdr *shdr = (Elf32_Shdr*) malloc(sizeof(Elf32_Shdr) * elf_header.e_shnum);   //shdr指针初始化
     assert(shdr != NULL);
