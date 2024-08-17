@@ -1,6 +1,5 @@
 #include <ftrace.h>
 #include <elf.h>
-#include <debug.h>
 
 struct func
 {
@@ -20,6 +19,7 @@ void init_ftrace(char *elf_file) {
     }
 
     FILE *fp = fopen(elf_file, "rb");
+    Log("Test");
     Assert(fp, "Can't Open ELF File %s!", elf_file);
     
     Elf32_Ehdr elf_header;
