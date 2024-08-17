@@ -14,12 +14,11 @@ int space = 0;
 void init_ftrace(char *elf_file) {
     if (elf_file == NULL)
     {
-        // Log("No elf file!!!");
+        Log("No elf file!!!");
         assert(0);
     }
 
     FILE *fp = fopen(elf_file, "rb");
-    Log("Test");
     Assert(fp, "Can't Open ELF File %s!", elf_file);
     
     Elf32_Ehdr elf_header;
@@ -30,7 +29,6 @@ void init_ftrace(char *elf_file) {
         elf_header.e_ident[3] != 'F')
         assert(0);
     
-    Log("Test3");
     //Section header初始化
     Elf32_Shdr *shdr = (Elf32_Shdr*) malloc(sizeof(Elf32_Shdr) * elf_header.e_shnum);   //shdr指针初始化
     assert(shdr != NULL);
@@ -63,8 +61,6 @@ void init_ftrace(char *elf_file) {
         }
     }
 
-    Log("Test4");
-
     //symbol table
     Elf32_Sym *symtab = (Elf32_Sym*) malloc(symsize);
     ret = fseek(fp, symoff, SEEK_SET);
@@ -79,8 +75,6 @@ void init_ftrace(char *elf_file) {
     ret = fread(strtab, strsize, 1, fp);
     assert(ret == 1);
 
-    Log("Test6");
-
     //func 初始化
     for (int i = 0; i < symsize/sizeof(Elf32_Sym); i++){
         if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC){
@@ -91,11 +85,8 @@ void init_ftrace(char *elf_file) {
             count++;
         }
     }
-
-    Log("Test5");
     
     fclose(fp);
-    Log("Test2");
     return;
 }
 

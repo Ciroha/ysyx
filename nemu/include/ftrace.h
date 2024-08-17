@@ -1,5 +1,5 @@
 #include <common.h>
-#define MAX_FUNC 100
+#define MAX_FUNC 100 //TODO 如果出现vfprintf的错误，可能是函数不够导致的
 enum{
     JAL, JALR,
     CALL, RET
