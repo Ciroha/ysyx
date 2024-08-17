@@ -65,7 +65,6 @@ static long load_img() {
   assert(ret == 1);
 
   fclose(fp);
-  Log("Test");
   return size;
 }
 
@@ -147,7 +146,7 @@ void init_monitor(int argc, char *argv[]) {
 #endif
 
   /* Display welcome message. */
-  Log("Test ");
+  Log("Test");
   welcome();
 }
 #else // CONFIG_TARGET_AM
