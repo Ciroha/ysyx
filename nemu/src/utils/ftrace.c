@@ -106,7 +106,7 @@ void ftrace_write(int type, char *fname, vaddr_t caddr, vaddr_t addr){
         //     printf(" ");
         // }
         space--;
-        printf("ret [%s] [%d]\n", fname, space);
+        printf("ret  [%s] [%d]\n", fname, space);
     }
     if(space < 0) assert(0);
 }
