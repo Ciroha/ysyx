@@ -65,6 +65,7 @@ static long load_img() {
   assert(ret == 1);
 
   fclose(fp);
+  Log("Test");
   return size;
 }
 
