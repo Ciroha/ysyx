@@ -91,21 +91,21 @@ void init_ftrace(char *elf_file) {
 }
 
 void ftrace_write(int type, char *fname, vaddr_t caddr, vaddr_t addr){
-    int i;
+    // int i;
     if (type == CALL){
         printf("%#x:", addr);
-        space++;
-        for(i = 0; i < space * 2; i++){
-            printf(" ");
-        }
+        // space++;
+        // for(i = 0; i < space * 2; i++){
+        //     printf(" ");
+        // }
         printf("call [%s@%#x]\n", fname, caddr);
     }
     else if (type == RET){
         printf("%#x:", addr);
-        for(i = 0; i < space; i++){
-            printf(" ");
-        }
-        space--;
+        // for(i = 0; i < space; i++){
+        //     printf(" ");
+        // }
+        // space--;
         printf("ret [%s]\n", fname);
     }
     if(space < 0) assert(0);
