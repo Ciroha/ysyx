@@ -102,7 +102,7 @@ void ftrace_write(int type, char *fname, vaddr_t caddr, vaddr_t addr){
     }
     else if (type == RET){
         printf("%#x:", addr);
-        for(i = 0; i < space * 2; i++){
+        for(i = 0; i < space; i++){
             printf(" ");
         }
         space--;
