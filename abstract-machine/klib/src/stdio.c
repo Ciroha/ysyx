@@ -55,6 +55,7 @@ int printf(const char *fmt, ...) {
 	char *s;
 	char c;
 	int x;
+	int long_flag = 0;
 
 	va_start(ap, fmt);
 	while(*fmt != '\0')
@@ -71,7 +72,12 @@ int printf(const char *fmt, ...) {
 			{
 				case 'd':
 				{
-					n = va_arg(ap, int);
+					assert(long_flag <= 2);
+					if (long_flag == 2) {
+						n = va_arg(ap, int64_t);
+					} else {
+						n = va_arg(ap, int32_t);
+					}
 					if (n < 0)
 					{
 						putch('-');
@@ -92,6 +98,7 @@ int printf(const char *fmt, ...) {
 					}
 					cnt += strlen(buf);
 					in_format = false;
+					long_flag = 0;
 					break;
 				}
 				case 'c':
@@ -124,6 +131,10 @@ int printf(const char *fmt, ...) {
 					cnt += strlen(x_buf);
 					in_format = false;
 					break;
+				}
+				case 'l':
+				{
+					long_flag += 1;
 				}
 				default: {
 					// assert(!((*fmt <= '9') && (*fmt >= '0')));
