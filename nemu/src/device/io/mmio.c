@@ -61,6 +61,7 @@ word_t mmio_read(paddr_t addr, int len) {
 }
 
 void mmio_write(paddr_t addr, int len, word_t data) {
-  IFDEF(CONFIG_DTRACE_WRITE, Log("[%s] write %x to addr: %#x", maps->name, data, addr);)
-  map_write(addr, len, data, fetch_mmio_map(addr));
+  IOMap* temp = fetch_mmio_map(addr);
+  IFDEF(CONFIG_DTRACE_WRITE, Log("[%s] write %x to addr: %#x", temp->name, data, addr);)
+  map_write(addr, len, data, temp);
 }
