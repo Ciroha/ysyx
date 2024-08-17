@@ -88,6 +88,7 @@ void init_ftrace(char *elf_file) {
     }
     
     fclose(fp);
+    Log("Test2");
     return;
 }
 
