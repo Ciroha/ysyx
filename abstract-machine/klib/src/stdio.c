@@ -136,6 +136,7 @@ int printf(const char *fmt, ...) {
 				case 'l':
 				{
 					long_flag += 1;
+					break;
 				}
 				default: {
 					// assert(!((*fmt <= '9') && (*fmt >= '0')));
