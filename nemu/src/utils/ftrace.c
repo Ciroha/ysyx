@@ -1,5 +1,6 @@
 #include <ftrace.h>
 #include <elf.h>
+#include <debug.h>
 
 struct func
 {
@@ -14,7 +15,7 @@ int space = 0;
 void init_ftrace(char *elf_file) {
     if (elf_file == NULL)
     {
-        Log("No elf file!!!");
+        // Log("No elf file!!!");
         assert(0);
     }
 
