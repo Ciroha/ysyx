@@ -1,5 +1,5 @@
 #include <common.h>
-#define MAX_FUNC 40
+#define MAX_FUNC 100
 enum{
     JAL, JALR,
     CALL, RET
