@@ -146,8 +146,7 @@ void init_monitor(int argc, char *argv[]) {
 #endif
 
   /* Display welcome message. */
-    IFDEF(CONFIG_TRACE, Log("If trace is enabled, a log file will be generated "
-        ));
+  Log("Test ");
   welcome();
 }
 #else // CONFIG_TARGET_AM
