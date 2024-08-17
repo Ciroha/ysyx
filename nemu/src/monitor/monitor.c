@@ -146,6 +146,9 @@ void init_monitor(int argc, char *argv[]) {
 #endif
 
   /* Display welcome message. */
+    IFDEF(CONFIG_TRACE, Log("If trace is enabled, a log file will be generated "
+        "to record the trace. This may lead to a large log file. "
+        "If it is not necessary, you can disable it in menuconfig"));
   welcome();
 }
 #else // CONFIG_TARGET_AM
