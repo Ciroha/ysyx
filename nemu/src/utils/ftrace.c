@@ -94,19 +94,19 @@ void ftrace_write(int type, char *fname, vaddr_t caddr, vaddr_t addr){
     // int i;
     if (type == CALL){
         printf("%#x:", addr);
-        // space++;
+        space++;
         // for(i = 0; i < space * 2; i++){
         //     printf(" ");
         // }
-        printf("call [%s@%#x]\n", fname, caddr);
+        printf("call [%s@%#x] [%d]\n", fname, caddr, space);
     }
     else if (type == RET){
         printf("%#x:", addr);
         // for(i = 0; i < space; i++){
         //     printf(" ");
         // }
-        // space--;
-        printf("ret [%s]\n", fname);
+        space--;
+        printf("ret [%s] [%d]\n", fname, space);
     }
     if(space < 0) assert(0);
 }
