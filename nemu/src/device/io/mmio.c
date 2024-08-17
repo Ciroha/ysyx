@@ -55,8 +55,9 @@ void add_mmio_map(const char *name, paddr_t addr, void *space, uint32_t len, io_
 
 /* bus interface */
 word_t mmio_read(paddr_t addr, int len) {
-  IFDEF(CONFIG_DTRACE_READ, Log("[%s] read from addr: %#x", maps->name, addr);)
-  return map_read(addr, len, fetch_mmio_map(addr));
+  IOMap* temp = fetch_mmio_map(addr);
+  IFDEF(CONFIG_DTRACE_READ, Log("[%s] read from addr: %#x", temp->name, addr);)
+  return map_read(addr, len, temp);
 }
 
 void mmio_write(paddr_t addr, int len, word_t data) {
