@@ -63,6 +63,8 @@ void init_ftrace(char *elf_file) {
         }
     }
 
+    Log("Test4");
+
     //symbol table
     Elf32_Sym *symtab = (Elf32_Sym*) malloc(symsize);
     ret = fseek(fp, symoff, SEEK_SET);
