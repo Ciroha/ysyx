@@ -102,6 +102,31 @@ int printf(const char *fmt, ...) {
 					long_flag = 0;
 					break;
 				}
+				case 'u':
+				{
+					assert(long_flag <= 2);
+					if (long_flag == 2) {
+						n = va_arg(ap, uint64_t);
+					} else {
+						n = va_arg(ap, uint32_t);
+					}
+					itoa(n, buf);
+					if (format != NULL && (strlen(buf) < format[1])) {	//TODO 需要后续修改
+						for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
+							putch(format[0]);
+						}
+						// putch(format[0]);
+						// putch(format[1]);
+					}
+					for (int i = 0; i < strlen(buf); i++)
+					{
+						putch(*(buf+i));
+					}
+					cnt += strlen(buf);
+					in_format = false;
+					long_flag = 0;
+					break;
+				}
 				case 'c':
 				{
 					c = va_arg(ap, int);
