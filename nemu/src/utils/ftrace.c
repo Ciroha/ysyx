@@ -79,6 +79,8 @@ void init_ftrace(char *elf_file) {
     ret = fread(strtab, strsize, 1, fp);
     assert(ret == 1);
 
+    Log("Test6");
+
     //func 初始化
     for (int i = 0; i < symsize/sizeof(Elf32_Sym); i++){
         if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC){
