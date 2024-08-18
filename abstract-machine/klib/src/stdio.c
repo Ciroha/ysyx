@@ -2,6 +2,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
@@ -55,6 +56,7 @@ int printf(const char *fmt, ...) {
 	char *s;
 	char c;
 	int x;
+	int long_flag = 0;
 
 	va_start(ap, fmt);
 	while(*fmt != '\0')
@@ -71,7 +73,12 @@ int printf(const char *fmt, ...) {
 			{
 				case 'd':
 				{
-					n = va_arg(ap, int);
+					assert(long_flag <= 2);
+					if (long_flag == 2) {
+						n = va_arg(ap, int64_t);
+					} else {
+						n = va_arg(ap, int32_t);
+					}
 					if (n < 0)
 					{
 						putch('-');
@@ -92,6 +99,30 @@ int printf(const char *fmt, ...) {
 					}
 					cnt += strlen(buf);
 					in_format = false;
+					long_flag = 0;
+					break;
+				}
+				case 'u':
+				{
+					assert(long_flag <= 2);
+					if (long_flag == 2) {
+						n = va_arg(ap, uint64_t);
+					} else {
+						n = va_arg(ap, uint32_t);
+					}
+					itoa(n, buf);
+					if (format != NULL && (strlen(buf) < format[1])) {	//TODO 需要后续修改
+						for (int k=0; k < (format[1]-'0')-strlen(buf); k++) {
+							putch(format[0]);
+						}
+					}
+					for (int i = 0; i < strlen(buf); i++)
+					{
+						putch(*(buf+i));
+					}
+					cnt += strlen(buf);
+					in_format = false;
+					long_flag = 0;
 					break;
 				}
 				case 'c':
@@ -123,6 +154,11 @@ int printf(const char *fmt, ...) {
 					}
 					cnt += strlen(x_buf);
 					in_format = false;
+					break;
+				}
+				case 'l':
+				{
+					long_flag += 1;
 					break;
 				}
 				default: {

@@ -160,7 +160,7 @@ config MTRACE_READ
 config MTRACE_WRITE
   depends on TRACE
   bool "Enable write memory tracer"
-  default y
+  default n
 
 config FTRACE
   depends on TRACE
@@ -247,8 +247,9 @@ config RT_CHECK
 endmenu
 
 config WATCHPOINT
+  depends on TARGET_NATIVE_ELF
   bool "Enable watchpoint"
-  default y
+  default n
 
 config BATCHMODE
   bool "Enable batchmode"
