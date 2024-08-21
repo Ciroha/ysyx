@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <debug.h>
+#include <../../include/generated/autoconf.h>
 
 #define word_t uint32_t
 #define vaddr_t uint32_t
