@@ -66,7 +66,7 @@ static size_t load_img(){
 
 void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
-    init_mem(409600);   //TODO 需要分配足够大的内存
+    init_mem(409600000000);   //TODO 需要分配足够大的内存
     long img_size = load_img();
 	init_difftest(diff_so_file, img_size, difftest_port);
 	init_ftrace(elf_file);
