@@ -41,7 +41,8 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
   int rd = BITS(i, 11, 7);
   int imm = BITS(i, 31, 20);
   char *prev_fname = find_func(pc);
-  char *now_fname = find_func(dnpc); 
+  char *now_fname = find_func(dnpc);
+#ifdef CONFIG_FTRACE
   if(type == JAL) ftrace_write(CALL, now_fname, dnpc, pc);
   else if(type == JALR){
     if(rs1 == 1 && imm == 0 && rd == 0)
@@ -49,6 +50,7 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
     else
       ftrace_write(CALL, now_fname, dnpc, pc);
   }
+#endif
 }
 
 void trace_and_difftest() {

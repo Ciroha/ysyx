@@ -38,7 +38,9 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
   	// 总是往地址为`waddr & ~0x3u`的4字节按写掩码`wmask`写入`wdata`
   	// `wmask`中每比特表示`wdata`中1个字节的掩码,
   	// 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
-	Log("Address is: %#010x, write mem is %#010x, mask is %d", waddr, wdata, wmask);
+#ifdef CONFIG_DTRACE_WRITE
+	Log("Address is: %#010x, write mem is %#010x", waddr, wdata);
+#endif
 	if (waddr == 0xa00003f8) {putchar(wdata); return;}
 	int temp = waddr & ~0x3u;
 #ifdef CONFIG_MTRACE_WRITE
