@@ -18,19 +18,13 @@ static Vysyx_23060332_top dut;
 uint32_t* init_monitor(int argc, char *argv[]);
 void sdb_mainloop();
 void init_wave();
-void open_wave();
 void close_wave();
 
 int main(int argc, char *argv[]){
+	init_wave();
 	init_monitor(argc, argv);
 	init_disasm("riscv32");
-	Log("Test0");
-	init_wave();
-	Log("Test1");
-	// open_wave();
 	reset(5);
-	Log("Test2");
 	sdb_mainloop();
-	Log("Test3");
 	close_wave();
 }
