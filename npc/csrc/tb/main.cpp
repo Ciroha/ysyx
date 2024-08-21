@@ -23,6 +23,7 @@ void close_wave();
 int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
 	init_disasm("riscv32");
+	Log("Test0");
 	init_wave();
 	Log("Test1");
 	reset(5);
