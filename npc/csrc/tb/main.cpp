@@ -24,7 +24,10 @@ int main(int argc, char *argv[]){
 	init_monitor(argc, argv);
 	init_disasm("riscv32");
 	init_wave();
+	Log("Test1");
 	reset(5);
+	Log("Test2");
 	sdb_mainloop();
+	Log("Test3");
 	close_wave();
 }
