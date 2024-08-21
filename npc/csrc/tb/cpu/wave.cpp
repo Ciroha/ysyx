@@ -8,14 +8,14 @@ void init_wave() {
 	Verilated::traceEverOn(true);
 	contextp = new VerilatedContext;
 	tfp = new VerilatedVcdC;
-	cpu.trace(tfp, 5);
+	cpu.trace(tfp, 2);
 	Log("Test6");
 	// tfp->open("builds/waveform.vcd");
 	Log("Test7");
 }
 
 void open_wave() {
-	tfp->open("builds/waveform1.vcd");
+	tfp->open("builds/waveform.vcd");
 }
 
 void wave_dump() {
