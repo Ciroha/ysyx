@@ -17,7 +17,8 @@ import "DPI-C" function int pmem_read(input int raddr);
 import "DPI-C" function void pmem_write(input int waddr, input int wdata, input byte wmask);
 
 wire valid;
-assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff);
+assign valid = (mem_raddr >= 32'h80000000) && (mem_raddr <= 32'h87ffffff) 
+|| (mem_raddr == 32'ha0000048) || (mem_raddr == 32'ha000004c);
 reg [31:0] temp1, temp2;
 
 always @(*) begin 
