@@ -10,7 +10,7 @@ void init_wave() {
 	tfp = new VerilatedVcdC;
 	cpu.trace(tfp, 5);
 	Log("Test6");
-	tfp->open("builds/waveform.vcd");
+	// tfp->open("builds/waveform.vcd");
 	Log("Test7");
 }
 
