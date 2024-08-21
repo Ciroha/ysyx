@@ -1,7 +1,6 @@
 #include "memory.h"
 #include "common.h"
 #include "host.h"
-#include <time.h>
 
 static uint32_t *memory = NULL;
 
@@ -26,11 +25,9 @@ void init_mem(size_t size) {
 }
 
 extern "C" int pmem_read(int raddr){
-	time_t current_time;
-	time(&current_time);
 	// Log("Address is: %#010x", raddr);
-	if (raddr == 0xa0000048) {Log("Address is: %#010x", raddr);return (current_time&&0xffffffff);}
-	if (raddr == 0xa000004c) {Log("Address is: %#010x", raddr);return (current_time>>32);}
+	if (raddr == 0xa0000048) {Log("Address is: %#010x", raddr);return 0;}
+	if (raddr == 0xa000004c) {Log("Address is: %#010x", raddr);return 0;}
 	// Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
