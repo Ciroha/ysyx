@@ -5,6 +5,8 @@
 
 static uint32_t *memory = NULL;
 static uint64_t timer = 0;
+static int32_t device_read = 0;
+static int32_t device_write;
 
 static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
@@ -13,6 +15,13 @@ static uint32_t img[] = {
 	0b00000000010100001000000100010011, //addi x2 x1 5 0x8000000c
 	0b00000000000100000000000001110011,	//ebreak
 };
+
+void init_flag(){ //bug fix
+	if(device_write < 0)
+		device_write = 0;
+	if(device_read < 0)
+		device_read = 0;
+}
 
 static uint8_t pmem[MSIZE] PG_ALIGN = {};
 
@@ -30,9 +39,22 @@ void init_mem(size_t size) {
 extern "C" int pmem_read(int raddr){
 	if(!((raddr >= 0x80000000 && raddr <= 0x87ffffff) || (raddr == 0xa0000048) || (raddr == 0xa0000048 + 4))) 
 		return 0;
-	timer = get_time();
-	if (raddr == 0xa0000048) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (uint32_t)timer;}
-	if (raddr == 0xa000004c) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (timer>>32);}
+	init_flag();
+	if(device_read == 3) device_read = 0;
+	if(raddr == 0xa0000048+4 && device_read == 0) {
+		device_read++; 
+		timer = get_time(); 
+		return (uint32_t)(timer >> 32);
+	}
+	else if(raddr == 0xa0000048) {
+		device_read++;
+		return (uint32_t)timer;
+	}
+	else if(raddr == 0xa0000048 + 4 && device_read != 0){
+		device_read++;
+		return (uint32_t)(timer >> 32);
+	}
+	else if(raddr == 0xa00003f8) return 0;
 	// Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
