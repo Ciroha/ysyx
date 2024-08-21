@@ -30,13 +30,13 @@ void isa_reg_display() {
 uint32_t isa_reg_str2val(const char *s, bool *success) {
     for (int i = 0; i < 32; i++) {
         if (strcmp(s, regs[i]) == 0) {
-            printf("Success! result = %d\n", gpr[i]);
+            Log("Reg Read Success! result = %d", gpr[i]);
             *success = true;
             return gpr[i];
         }
     }
     *success = false;
-    printf("Read fail!\n");
+    Log("Reg Read fail!");
     return 0;
 }
 
