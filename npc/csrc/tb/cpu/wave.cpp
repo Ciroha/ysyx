@@ -9,7 +9,9 @@ void init_wave() {
 	contextp = new VerilatedContext;
 	tfp = new VerilatedVcdC;
 	cpu.trace(tfp, 5);
+	Log("Test6");
 	tfp->open("builds/waveform.vcd");
+	Log("Test7");
 }
 
 void open_wave() {
