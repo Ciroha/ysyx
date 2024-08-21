@@ -17,8 +17,8 @@ void open_wave() {
 }
 
 void wave_dump() {
-    tfp->dump(contextp->time());
-    contextp->timeInc(1);
+    // tfp->dump(contextp->time());
+    // contextp->timeInc(1);
 }
 
 void close_wave() {
