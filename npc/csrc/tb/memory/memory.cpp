@@ -4,6 +4,7 @@
 #include <time.h>
 
 static uint32_t *memory = NULL;
+static uint64_t timer = 0;
 
 static uint32_t img[] = {
 	0b00000000010100000000000010010011, //addi x1 x0 5 0x80000000
@@ -18,6 +19,7 @@ static uint8_t pmem[MSIZE] PG_ALIGN = {};
 // uint32_t *guest_to_host(uint32_t addr){return memory + (addr-0x80000000)/4;}
 uint8_t* guest_to_host(uint32_t paddr) { return pmem + paddr - MBASE; }
 uint32_t host_to_guest(uint8_t *haddr) { return haddr - pmem + MBASE; }
+uint64_t get_time();
 
 void init_mem(size_t size) {
 	memory = (uint32_t*)malloc(size * sizeof(uint32_t));
@@ -28,11 +30,9 @@ void init_mem(size_t size) {
 extern "C" int pmem_read(int raddr){
 	if(!((raddr >= 0x80000000 && raddr <= 0x87ffffff) || (raddr == 0xa0000048) || (raddr == 0xa0000048 + 4))) 
 		return 0;
-	time_t current_time;
-	time(&current_time);
-	// Log("Address is: %#010x", raddr);
-	if (raddr == 0xa0000048) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (current_time&&0xffffffff);}
-	if (raddr == 0xa000004c) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (current_time>>32);}
+	timer = get_time();
+	if (raddr == 0xa0000048) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (uint32_t)timer;}
+	if (raddr == 0xa000004c) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (timer>>32);}
 	// Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
