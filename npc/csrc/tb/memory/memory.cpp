@@ -30,6 +30,7 @@ extern "C" int pmem_read(int raddr){
 	// time(&current_time);
 	// if (raddr == 0xa0000048) {return (current_time&&0xffffffff);}
 	// if (raddr == 0xa000004c) {return (current_time>>32);}
+	Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
 #ifdef CONFIG_MTRACE_READ
