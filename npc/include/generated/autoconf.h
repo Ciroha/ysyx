@@ -41,6 +41,7 @@
 #define CONFIG_CC "gcc"
 #define CONFIG_DTRACE_READ 1
 #define CONFIG_DIFFTEST_REF_PATH "none"
+#define CONFIG_MTRACE_READ 1
 #define CONFIG_TRACE_START 0
 #define CONFIG_DISK_IMG_PATH ""
 #define CONFIG_CC_GCC 1
