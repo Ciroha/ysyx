@@ -1,6 +1,7 @@
 #include "memory.h"
 #include "common.h"
 #include "host.h"
+#include <time.h>
 
 static uint32_t *memory = NULL;
 
@@ -25,7 +26,9 @@ void init_mem(size_t size) {
 }
 
 extern "C" int pmem_read(int raddr){
-	// if (raddr == ) {}
+	// time_t current_time;
+	// time(&current_time);
+	// if (raddr == 0xa0000048) {}
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
 #ifdef CONFIG_MTRACE_READ
