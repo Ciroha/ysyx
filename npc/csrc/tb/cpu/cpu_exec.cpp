@@ -53,7 +53,9 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
 
 void trace_and_difftest() {
     //difftest
+#ifdef CONFIG_DIFFTEST
     difftest_step();
+#endif
 
     //ftrace
     opcode = BITS(inst_temp, 6, 0);
