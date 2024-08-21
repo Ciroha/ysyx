@@ -28,7 +28,7 @@ extern "C" int pmem_read(int raddr){
 	// Log("Address is: %#010x", raddr);
 	if (raddr == 0xa0000048) {Log("Address is: %#010x", raddr);return 0;}
 	if (raddr == 0xa000004c) {Log("Address is: %#010x", raddr);return 0;}
-	// Log("Address is: %#010x", raddr);
+	Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);
 #ifdef CONFIG_MTRACE_READ
