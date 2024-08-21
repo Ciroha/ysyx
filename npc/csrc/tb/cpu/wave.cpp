@@ -1,8 +1,8 @@
 #include <common.h>
 #include "cpu.h"
 
-VerilatedContext* contextp = NULL;
-VerilatedVcdC* tfp = NULL;
+static VerilatedContext* contextp = NULL;
+static VerilatedVcdC* tfp = NULL;
 
 void init_wave() {
 	Verilated::traceEverOn(true);
