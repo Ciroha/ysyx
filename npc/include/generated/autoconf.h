@@ -1,7 +1,7 @@
 /*
  *
  * Automatically generated file; DO NOT EDIT.
- * NEMU Configuration Menu
+ * NPC Configuration Menu
  *
  */
 #define CONFIG_AUDIO_CTL_MMIO 0xa0000200
@@ -48,4 +48,5 @@
 #define CONFIG_TRACE 1
 #define CONFIG_ISA "riscv32"
 #define CONFIG_VGA_CTL_MMIO 0xa0000100
+#define CONFIG_MTRACE_WRITE 1
 #define CONFIG_PMEM_GARRAY 1
