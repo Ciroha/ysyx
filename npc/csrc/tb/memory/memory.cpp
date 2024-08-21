@@ -25,10 +25,12 @@ void init_mem(size_t size) {
 }
 
 extern "C" int pmem_read(int raddr){
+	// if (raddr == ) {}
 	int temp = raddr & ~0x3u;
-	// Log("Address is: %#010x", temp);
 	int ret = host_read(guest_to_host(temp), 4);
-	// Log("Address is: %#010x, read mem is %#010x", temp, ret);
+#ifdef CONFIG_MTRACE_READ
+	Log("Address is: %#010x, read mem is %#010x", temp, ret);
+#endif
 	return ret;
 }
 
@@ -36,6 +38,7 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
   	// 总是往地址为`waddr & ~0x3u`的4字节按写掩码`wmask`写入`wdata`
   	// `wmask`中每比特表示`wdata`中1个字节的掩码,
   	// 如`wmask = 0x3`代表只写入最低2个字节, 内存中的其它字节保持不变
+	if (waddr == 0xa00003f8) {putchar(wdata);}
 	int temp = waddr & ~0x3u;
 #ifdef CONFIG_MTRACE_WRITE
 	Log("Address is: %#010x, write mem is %#010x, mask is %d", temp, wdata, wmask);
