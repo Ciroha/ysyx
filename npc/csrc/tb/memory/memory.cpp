@@ -28,7 +28,7 @@ void init_mem(size_t size) {
 extern "C" int pmem_read(int raddr){
 	time_t current_time;
 	time(&current_time);
-	Log("Address is: %#010x", raddr);
+	// Log("Address is: %#010x", raddr);
 	if (raddr == 0xa0000048) {Log("Address is: %#010x", raddr);return (current_time&&0xffffffff);}
 	if (raddr == 0xa000004c) {Log("Address is: %#010x", raddr);return (current_time>>32);}
 	// Log("Address is: %#010x", raddr);
