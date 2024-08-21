@@ -30,7 +30,7 @@ void isa_reg_display() {
 uint32_t isa_reg_str2val(const char *s, bool *success) {
     for (int i = 0; i < 32; i++) {
         if (strcmp(s, regs[i]) == 0) {
-            Log("Reg Read Success! result = %d", gpr[i]);
+            Log("Reg Read Success! [%s]'s result = %d", regs[i], gpr[i]);
             *success = true;
             return gpr[i];
         }
