@@ -1,10 +1,16 @@
 #include <am.h>
+#include <stdint.h>
+#define RTC_ADDR 0xa0000048
+
+static inline uint32_t inl(uintptr_t addr) { return *(volatile uint32_t *)addr; }
 
 void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = 10000000;
+  uint32_t high_part = inl(RTC_ADDR + 4);
+  uint32_t low_part = inl(RTC_ADDR);
+  uptime->us = ((uint64_t)high_part << 32) | low_part;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
