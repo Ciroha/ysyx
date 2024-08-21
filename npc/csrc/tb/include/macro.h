@@ -1,6 +1,7 @@
 #ifndef __MACRO_H__
 #define __MACRO_H__
 
+// calculate the length of an array
 #include <string.h>
 
 // macro stringizing
@@ -91,5 +92,10 @@
 #define io_write(reg, ...) \
   ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
     ioe_write(reg, &__io_param); })
+
+#define MBASE 0x80000000
+#define MSIZE 0x8000000
+
+#define PG_ALIGN __attribute((aligned(4096)))
 
 #endif
