@@ -1,7 +1,6 @@
 #include "memory.h"
 #include "common.h"
 #include "host.h"
-#include <stdio.h>
 #include <time.h>
 
 static uint32_t *memory = NULL;
