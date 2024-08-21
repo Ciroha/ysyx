@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	Log("Test0");
 	init_wave();
 	Log("Test1");
-	open_wave();
+	// open_wave();
 	reset(5);
 	Log("Test2");
 	sdb_mainloop();
