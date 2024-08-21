@@ -45,7 +45,7 @@ extern "C" void pmem_write(int waddr, int wdata, char wmask) {
 #ifdef CONFIG_DTRACE_WRITE
 	Log("Address is: %#010x, write mem is %#010x", waddr, wdata);
 #endif
-	if (waddr == 0xa00003f8) {putchar(wdata); return;}
+	if (waddr == 0xa00003f8) { return;}
 	int temp = waddr & ~0x3u;
 #ifdef CONFIG_MTRACE_WRITE
 	Log("Address is: %#010x, write mem is %#010x, mask is %d", temp, wdata, wmask);
