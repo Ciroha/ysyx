@@ -53,6 +53,7 @@ VM_USER_CLASSES = \
 	reg \
 	disasm \
 	ftrace \
+	timer \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
@@ -94,6 +95,8 @@ reg.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/riscv/reg.c
 disasm.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/disasm.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 ftrace.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/ftrace.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+timer.o: /home/ciroha/ysyx-workbench/npc/csrc/tb/utils/timer.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)

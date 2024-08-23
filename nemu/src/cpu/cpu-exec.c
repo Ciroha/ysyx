@@ -42,7 +42,7 @@ static bool g_print_step = false;
 
 void device_update();
 void wp_difftest();
-
+#ifdef CONFIG_IRINGBUF
 void display_ringbuf() {
   if (!full && !ringcount) return;
   int end = ringcount;
@@ -61,6 +61,7 @@ void display_ringbuf() {
   } while ((i = (i+1)%MAX_IRINGBUF) != end);
   puts(ANSI_NONE);
 }
+#endif
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) { //跟踪和difftest相关函数定义
 #ifdef CONFIG_ITRACE_COND

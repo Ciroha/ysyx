@@ -160,7 +160,7 @@ config MTRACE_READ
 config MTRACE_WRITE
   depends on TRACE
   bool "Enable write memory tracer"
-  default y
+  default n
 
 config FTRACE
   depends on TRACE
@@ -171,6 +171,16 @@ config IRINGBUF
   depends on TRACE && ITRACE
   bool "Enable iringbuf"
   default y
+
+config DTRACE_READ
+  depends on TRACE
+  bool "Enable devide tracer read"
+  default n
+
+config DTRACE_WRITE
+  depends on TRACE
+  bool "Enable devide tracer write"
+  default n
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
@@ -237,8 +247,9 @@ config RT_CHECK
 endmenu
 
 config WATCHPOINT
+  depends on TARGET_NATIVE_ELF
   bool "Enable watchpoint"
-  default y
+  default n
 
 config BATCHMODE
   bool "Enable batchmode"

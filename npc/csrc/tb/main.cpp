@@ -21,9 +21,9 @@ void init_wave();
 void close_wave();
 
 int main(int argc, char *argv[]){
+	init_wave();
 	init_monitor(argc, argv);
 	init_disasm("riscv32");
-	init_wave();
 	reset(5);
 	sdb_mainloop();
 	close_wave();

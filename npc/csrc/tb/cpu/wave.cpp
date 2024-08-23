@@ -17,8 +17,10 @@ void open_wave() {
 }
 
 void wave_dump() {
+#ifdef CONFIG_WAVE
     tfp->dump(contextp->time());
     contextp->timeInc(1);
+#endif
 }
 
 void close_wave() {
