@@ -18,6 +18,9 @@ void (*ref_difftest_memcpy)(uint32_t addr, void *buf, size_t n, bool direction) 
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
+
+#ifdef CONFIG_DIFFTEST
+
 void isa_reg_display();
 
 void init_difftest(char *ref_so_file, long img_size, int port) {
@@ -86,3 +89,6 @@ void difftest_step() {
     ref_difftest_exec(1);
     // checkmem(ref_pmem, sim_cpu.pc);
 }
+#else
+void init_difftest(char *ref_so_file, long img_size, int port) { }
+#endif

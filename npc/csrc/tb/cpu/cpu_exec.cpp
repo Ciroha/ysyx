@@ -41,7 +41,8 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
   int rd = BITS(i, 11, 7);
   int imm = BITS(i, 31, 20);
   char *prev_fname = find_func(pc);
-  char *now_fname = find_func(dnpc); 
+  char *now_fname = find_func(dnpc);
+#ifdef CONFIG_FTRACE
   if(type == JAL) ftrace_write(CALL, now_fname, dnpc, pc);
   else if(type == JALR){
     if(rs1 == 1 && imm == 0 && rd == 0)
@@ -49,11 +50,14 @@ void ftrace(int type, uint32_t pc, uint32_t dnpc, uint32_t inst){
     else
       ftrace_write(CALL, now_fname, dnpc, pc);
   }
+#endif
 }
 
 void trace_and_difftest() {
     //difftest
+#ifdef CONFIG_DIFFTEST
     difftest_step();
+#endif
 
     //ftrace
     opcode = BITS(inst_temp, 6, 0);
@@ -137,11 +141,11 @@ extern "C" void npc_trap(){
     wave_dump();
 	close_wave();
     reg_read();
-    isa_reg_display();
 	uint32_t reg_val = isa_reg_str2val("a0", &reg_success);
 	if (reg_success && (reg_val == 0)) {
 		Log(ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) " at pc = %#x\n", cpu.pc);
 	}else{
+        isa_reg_display();
 		Log(ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED) " at pc = %#x\n", cpu.pc);
 	}
 	exit(0);
