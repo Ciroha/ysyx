@@ -20,7 +20,8 @@
 
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)]; //通用寄存器
-  vaddr_t pc;
+  vaddr_t pc; //由于在difftest_regcpy里将通用寄存器和pc寄存器视为同一个寄存器，所以不能调换位置
+  word_t csr[4096]; //
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
 
 // decode

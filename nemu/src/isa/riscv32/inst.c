@@ -20,6 +20,7 @@
 #include <ftrace.h>
 
 #define R(i) gpr(i)
+#define SR(i) csr(i)
 #define Mr vaddr_read
 #define Mw vaddr_write
 #define XLEN 32
@@ -55,11 +56,12 @@ void ftrace(int type, Decode *s, word_t imm, int rd){
 }
 
 
-static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
+static void decode_operand(Decode *s, int *rd, int *csri, word_t *src1, word_t *src2, word_t *imm, int type) {
   uint32_t i = s->isa.inst.val;
   int rs1 = BITS(i, 19, 15);
   int rs2 = BITS(i, 24, 20);
   *rd     = BITS(i, 11, 7);
+  *csri   = BITS(i, 31, 20);
   switch (type) {
     case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
@@ -72,12 +74,13 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
 
 static int decode_exec(Decode *s) {
   int rd = 0;
+  int csri = 0;
   word_t src1 = 0, src2 = 0, imm = 0;
   s->dnpc = s->snpc;
 
 #define INSTPAT_INST(s) ((s)->isa.inst.val)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
-  decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
+  decode_operand(s, &rd, &csri, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
 
@@ -134,6 +137,10 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000001 ????? ????? 111 ????? 01100 11", remu   , R, R(rd) = src1 % src2);
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = SR(MEPC));
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(EVENT_YIELD, s->pc));
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, int t = SR(csri); SR(csri) = src1; R(rd) = t);
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, int t = SR(csri); SR(csri) = t | src1; R(rd) = t);
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
 

@@ -37,7 +37,10 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc){
     if(flag == false){
         printf("ref-pc=%x,dut-pc=%x\n",ref_r->pc, cpu.pc);
         for(int i = 0; i < reg_num; i++){
-            printf("ref-reg-%3s     %d\n",regs1[i],ref_r->gpr[i]);
+            if (ref_r->gpr[i] >= 0x80000000)
+                printf("ref-reg-%3s     %x\n",regs1[i],ref_r->gpr[i]);
+            else
+                printf("ref-reg-%3s     %d\n",regs1[i],ref_r->gpr[i]);
         }
     }
     return flag;
