@@ -55,6 +55,11 @@ void ftrace(int type, Decode *s, word_t imm, int rd){
   }
 }
 
+void etrace(Decode *s) {
+  IFNDEF(CONFIG_ETRACE, return);
+  Log("Exception calling at %x! Enter the exception handler function at %x.", s->pc, s->dnpc);
+}
+
 
 static void decode_operand(Decode *s, int *rd, int *csri, word_t *src1, word_t *src2, word_t *imm, int type) {
   uint32_t i = s->isa.inst.val;
@@ -138,7 +143,7 @@ static int decode_exec(Decode *s) {
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = SR(MEPC));
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(EVENT_YIELD, s->pc));
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(EVENT_YIELD, s->pc); etrace(s));
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, int t = SR(csri); SR(csri) = src1; R(rd) = t);
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, int t = SR(csri); SR(csri) = t | src1; R(rd) = t);
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
