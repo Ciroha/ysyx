@@ -68,8 +68,10 @@ void init_monitor(int argc, char *argv[]){
     parse_args(argc, argv);
     init_mem(40960);   //TODO 需要分配足够大的内存
     long img_size = load_img();
+	Log("test1");
 	init_difftest(diff_so_file, img_size, difftest_port);
-	init_ftrace(elf_file);
-	Log("test");
+	Log("test2");
+	// init_ftrace(elf_file);
+	Log("test3");
     return;
 }

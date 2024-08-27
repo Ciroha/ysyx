@@ -14,15 +14,19 @@ uint32_t isa_reg_str2val(const char *s, bool *success);
 extern "C" void init_disasm(const char *triple);
 
 static Vysyx_23060332_top dut;
+uint64_t boot_time = 0;
 
 uint32_t* init_monitor(int argc, char *argv[]);
 void sdb_mainloop();
 void init_wave();
 void close_wave();
+void log_time();
 
 int main(int argc, char *argv[]){
+	// log_time();
 	init_wave();
 	init_monitor(argc, argv);
+	// log_time();
 	init_disasm("riscv32");
 	reset(5);
 	sdb_mainloop();

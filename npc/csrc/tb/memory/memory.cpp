@@ -30,9 +30,9 @@ void init_mem(size_t size) {
 extern "C" int pmem_read(int raddr){
 	if(!((raddr >= 0x80000000 && raddr <= 0x87ffffff) || (raddr == 0xa0000048) || (raddr == 0xa0000048 + 4))) 
 		return 0;
-	timer = get_time();
-	if (raddr == 0xa0000048) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (uint32_t)timer;}
-	if (raddr == 0xa000004c) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x", raddr));return (uint32_t)(timer>>32);}
+	// Log("Time is %lx", timer);
+	if (raddr == 0xa0000048) {IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x, data is %#010x", raddr, (uint32_t)timer));return (uint32_t)timer;}
+	if (raddr == 0xa000004c) {timer = get_time();IFDEF(CONFIG_DTRACE_READ, Log("Address is: %#010x, data is %#010x", raddr, (uint32_t)(timer>>32)));return (uint32_t)(timer>>32);}
 	// Log("Address is: %#010x", raddr);
 	int temp = raddr & ~0x3u;
 	int ret = host_read(guest_to_host(temp), 4);

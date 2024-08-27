@@ -70,6 +70,10 @@ always @(*) begin
                     wdata = op1 ^ op2;
                 end
 
+                `INST_ORI: begin
+                    wdata = op1 | op2;
+                end
+
                 `INST_ANDI: begin
                     wdata = op1 & op2;
                 end

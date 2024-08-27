@@ -16,7 +16,7 @@
 #include <common.h>
 #include <sys/time.h>
 
-static uint64_t boot_time = 0;
+extern uint64_t boot_time;
 
 static uint64_t get_time_internal() {
   struct timeval now;
@@ -25,9 +25,15 @@ static uint64_t get_time_internal() {
   return us;
 }
 
+void log_time() {
+  Log("Boot time is %lx", boot_time);
+}
+
 uint64_t get_time() {
+  // Log("Boot time is %lx", boot_time);
   if (boot_time == 0) boot_time = get_time_internal();
   uint64_t now = get_time_internal();
+  // Log("Now is %lx", now);
   return now - boot_time;
 }
 

@@ -39,7 +39,6 @@
 #define CONFIG_ITRACE_COND "true"
 #define CONFIG_SB_SIZE 0x10000
 #define CONFIG_CC "gcc"
-#define CONFIG_DTRACE_READ 1
 #define CONFIG_DIFFTEST_REF_PATH "none"
 #define CONFIG_TRACE_START 0
 #define CONFIG_DISK_IMG_PATH ""
