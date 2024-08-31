@@ -58,7 +58,15 @@ int strcmp(const char *s1, const char *s2) {
 }
 
 int strncmp(const char *s1, const char *s2, size_t n) {
-  panic("Not implemented");
+  const unsigned char *temp1 = (const unsigned char *)s1;  //转换成无符号数，防止最后结果负值字符比正值大
+  const unsigned char *temp2 = (const unsigned char *)s2;
+  if(!n) return 0;
+  while (--n && *temp1 && (*temp1 == *temp2))
+  {
+    temp1++;
+    temp2++;
+  }
+  return *temp1 - *temp2;  
 }
 
 void *memset(void *s, int c, size_t n) {

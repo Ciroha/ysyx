@@ -29,7 +29,7 @@ int inttohex(unsigned int n, char *buf) {
 	return 0;
 }
 
-int itoa(unsigned int n, char *buf)
+static int itoa(unsigned int n, char *buf)
 {
 	int i;
 	if (n < 10)
