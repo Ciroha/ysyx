@@ -18,6 +18,16 @@
 `define JumpDisable     1'b0
 `define JumpEnable      1'b1
 
+//CSR
+`define CsrAddrBus  11:0
+`define ZeroCsr     12'b0
+`define IrqEnable   1'b1
+`define IrqDisable  1'b0
+`define Csr_Mstatus 12'h300
+`define Csr_Mtvec   12'h305
+`define Csr_Mcause  12'h342
+`define Csr_Mepc    12'h341
+
 //R-Type
 `define INST_TYPE_R 7'b0110011
 `define INST_ADD_SUB    3'b000
@@ -73,3 +83,11 @@
 `define INST_JALR   7'b1100111
 `define INST_EBREAK 32'h00100073
 `define INST_NOP    32'h0
+
+//CSR
+`define INST_TYPE_CSR   7'b1110011
+`define INST_ECALL_MRET 3'b000
+`define INST_ECALL  12'b0
+`define INST_MRET   12'b001100000010
+`define INST_CSRRW  3'b001
+`define INST_CSRRS  3'b010

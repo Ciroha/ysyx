@@ -8,6 +8,9 @@ module ysyx_23060332_idu (
     input wire [`RegDataBus]    reg_rdata1_i,
     input wire [`RegDataBus]    reg_rdata2_i,
 
+    //From csr
+    input wire [`RegDataBus]    rdata_csr_i,
+
     //To EXU
     output reg [`RegDataBus]    op1,
     output reg [`RegDataBus]    op2,
@@ -18,6 +21,12 @@ module ysyx_23060332_idu (
     output reg                  reg_wen,
     output reg [`RegAddrBus]    waddr,
     output reg [`InstBus]       inst_o,
+    output reg [`CsrAddrBus]    waddr_csr,
+    output reg [`RegDataBus]    rdata_csr_o,
+    output reg                  reg_csr_wen,
+
+    //To csr
+    output reg [`CsrAddrBus]    raddr_csr,
 
     //To reg
     output reg [`RegAddrBus]    raddr1,
@@ -30,6 +39,7 @@ wire    [2:0]   func3   =   inst_i[14:12];
 wire    [4:0]   rs1     =   inst_i[19:15];
 wire    [4:0]   rs2     =   inst_i[24:20];
 wire    [11:0]  imm     =   inst_i[31:20];
+wire    [11:0]  csr     =   inst_i[31:20];
 
 import "DPI-C" function void npc_trap();
 import "DPI-C" function void invalid_inst();
@@ -45,6 +55,7 @@ always @(*) begin
     inst_o = inst_i;
     reg_rdata1_o = reg_rdata1_i;
     reg_rdata2_o = reg_rdata2_i;
+    rdata_csr_o = rdata_csr_i;
     reg_wen = `WriteDisable;
     waddr = `ZeroReg;
     raddr1 = `ZeroReg;
@@ -53,7 +64,9 @@ always @(*) begin
     op2 = `ZeroWord;
     op1_jump = `ZeroWord;
     op2_jump = `ZeroWord;
-
+    waddr_csr = `ZeroCsr;
+    raddr_csr = `ZeroCsr;
+    reg_csr_wen = `WriteDisable;
     case (opcode)
         `INST_TYPE_I: begin
             case (func3)
@@ -120,6 +133,41 @@ always @(*) begin
                     op2 = reg_rdata2_i;
                     op1_jump = inst_addr;
                     op2_jump = {{19{inst_i[31]}},{inst_i[31]},{inst_i[7]},{inst_i[30:25]},{inst_i[11:8]},1'b0};
+                end
+                default: invalid_inst();
+            endcase
+        end
+
+        `INST_TYPE_CSR: begin
+            case (func3)
+                `INST_ECALL_MRET: begin
+                    case (csr)
+                        `INST_ECALL: begin
+                            
+                        end 
+                        `INST_MRET: begin
+                            raddr_csr = `Csr_Mepc;
+                        end
+                        default: invalid_inst();
+                    endcase
+                end
+                `INST_CSRRW: begin
+                    reg_wen = `WriteEnable;
+                    waddr_csr = csr;
+                    waddr = rd;
+                    raddr1 = rs1;
+
+                    reg_csr_wen = `WriteEnable;
+                    raddr_csr = csr;
+                end
+                `INST_CSRRS: begin
+                    reg_wen = `WriteEnable;
+                    waddr_csr = csr;
+                    waddr = rd;
+                    raddr1 = rs1;
+
+                    reg_csr_wen = `WriteEnable;
+                    raddr_csr = csr;
                 end
                 default: invalid_inst();
             endcase

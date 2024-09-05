@@ -11,9 +11,15 @@ module ysyx_23060332_exu (
     input wire                  reg_wen_i,
     input wire [`RegAddrBus]    waddr_i,
     input wire [`InstBus]       inst_i,
+    input wire [`CsrAddrBus]    waddr_csr_i,
+    input wire [`RegDataBus]    rdata_csr,
+    input wire                  reg_csr_wen_i,
 
     //From mem
     input wire [`MemDataBus]    mem_rdata,
+
+    //From csr
+    input wire [`RegDataBus]    mtvec,
 
     //To pc
     output reg [`InstAddrBus]   jump_addr,
@@ -28,6 +34,14 @@ module ysyx_23060332_exu (
     output reg                  mem_ren,
     // output reg                  valid,
 
+    //To csr
+    output reg                  irq,
+    output reg [7:0]            irq_no,
+    output reg [`CsrAddrBus]    waddr_csr_o,
+    // output reg [`RegDataBus]    rdata_csr_o,
+    output reg [`RegDataBus]    wdata_csr,
+    output reg                  reg_csr_wen_o,
+
     //To reg
     output reg [`RegAddrBus]    waddr_o,
     output reg [`RegDataBus]    wdata,
@@ -39,7 +53,8 @@ wire    [6:0]   opcode  =   inst_i[6:0];
 wire    [2:0]   func3   =   inst_i[14:12];
 // wire    [4:0]   rs1     =   inst_i[19:15];
 // wire    [4:0]   rs2     =   inst_i[24:20];
-// wire    [11:0]  imm     =   inst_i[31:20];
+wire    [11:0]  func12  =   inst_i[31:20];
+reg     [`RegDataBus]   temp;
 
 always @(*) begin
     //初始化
@@ -48,12 +63,18 @@ always @(*) begin
     mem_ren = `ReadDisable;
     reg_wen_o = reg_wen_i;
     waddr_o = waddr_i;
+    waddr_csr_o = waddr_csr_i;
+    // rdata_csr_o = rdata_csr_i;
+    reg_csr_wen_o = reg_csr_wen_i;
     wdata = `ZeroWord;
+    wdata_csr = `ZeroWord;
     mem_wen = `WriteDisable;
     mem_waddr = `ZeroWord;
     mem_wdata = `ZeroWord;
     mem_wmask = 8'b0;
     mem_raddr = `ZeroWord;
+    irq = `IrqDisable;
+    irq_no = 8'b0;
     // valid = `ReadDisable;
     case (opcode)
         `INST_TYPE_I: begin
@@ -206,6 +227,37 @@ always @(*) begin
                 `INST_BGEU: begin
                     jump_en = (op1 >= op2) ? `JumpEnable : `JumpDisable;
                     jump_addr = (op1 >= op2) ? (op1_jump + op2_jump) : `ZeroWord;
+                end
+                default: ;
+            endcase
+        end
+
+        `INST_TYPE_CSR: begin
+            case (func3)
+                `INST_ECALL_MRET: begin
+                    case (func12)
+                        `INST_ECALL: begin
+                            irq = `IrqEnable;
+                            irq_no = 8'd11;
+                            jump_en = `JumpEnable;
+                            jump_addr = mtvec;
+                        end 
+                        `INST_MRET: begin
+                            jump_en = `JumpEnable;
+                            jump_addr = rdata_csr;
+                        end
+                        default: ;
+                    endcase
+                end
+                `INST_CSRRW: begin
+                    temp = rdata_csr;
+                    wdata_csr = reg_rdata1_i;
+                    wdata = temp;
+                end
+                `INST_CSRRS: begin
+                    temp = rdata_csr;
+                    wdata_csr = reg_rdata1_i | temp;
+                    wdata = temp;
                 end
                 default: ;
             endcase
